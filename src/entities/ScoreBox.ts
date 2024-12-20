@@ -26,7 +26,7 @@ export default class ScoreBox extends Container {
 		this.add(background);
 		this.setDepth(9.99);
 
-		this.text = scene.add.bitmapText(0, 0, 'rubik', `score: ${this.score}`);
+		this.text = scene.add.bitmapText(0, 0, 'main-font', `score: ${this.score}`, 10);
 		this.text.setOrigin(0.5, 0.5);
 		this.add(this.text);
 

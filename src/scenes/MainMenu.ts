@@ -51,7 +51,7 @@ export default class MainMenu extends BaseScene {
 			.bitmapText(
 				this.game.renderer.width / 2,
 				100,
-				'rubik',
+				'main-font',
 				'a game by tesserex, slowback1,\n bugvevo, and mafcho',
 				10
 			)
