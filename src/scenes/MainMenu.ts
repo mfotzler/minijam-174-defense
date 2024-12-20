@@ -15,7 +15,6 @@ export default class MainMenu extends BaseScene {
 		this.addTitle();
 		this.addIntroButton();
 		this.addPlayButton();
-		this.addCoins();
 	}
 
 	override preload() {
@@ -46,25 +45,28 @@ export default class MainMenu extends BaseScene {
 	}
 
 	private addTitle() {
-		this.add.image(this.game.renderer.width / 2, 100, 'textures', 'title');
+		this.add.image(this.game.renderer.width / 2, 40, 'textures', 'title')
+			.setRotation(Math.PI * 14 / 4)
+			.setScale(-.1, 8);
 		this.add
 			.bitmapText(
 				this.game.renderer.width / 2,
-				200,
-				'rubik',
-				'a game by tesserex, slowback1, and mafcho'
+				100,
+				'main-font',
+				'a game by tesserex, slowback1,\n bugvevo, and mafcho',
+				10
 			)
 			.setOrigin(0.5, 0.5);
 	}
 
 	private addIntroButton() {
-		UIHelpers.addCenteredButton(this, 300, 'Intro', () => {
+		UIHelpers.addCenteredButton(this, 160, 'Intro', () => {
 			this.scene.start(TutorialScene.key);
 		});
 	}
 
 	private addPlayButton() {
-		UIHelpers.addCenteredButton(this, 400, 'Play', () => {
+		UIHelpers.addCenteredButton(this, 220, 'Play', () => {
 			GameStateSystem.clearState();
 			this.fadeToScene(BugScene.key, { fadeInDuration: 300 });
 		});

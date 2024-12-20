@@ -1,13 +1,13 @@
-# Minijam 163 - Dessert
+# Minijam 174 - Defense
 
 Minijam is a 72-hour game development contest.
 
-Theme - Dessert
+Theme - Defense
 
-Limitation - Sharing is Caring
+Limitation - Only one resource
 
-For our game, the Shady Vegetable Empire has kidnapped all the grandmas! No one will ever have dessert again! 
-It's up to the hero to save the grandmas and save dessert!
+For our game, we dunno yet. It's something about bugs and corpses.
+
 ## Available Commands
 
 | Command | Description |

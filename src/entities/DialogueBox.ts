@@ -45,11 +45,11 @@ export default class DialogueBox extends Container {
 		background.setOrigin(0, 0);
 		this.add(background);
 
-		this.nameText = scene.add.bitmapText(200, 5, 'rubik', '');
+		this.nameText = scene.add.bitmapText(200, 5, 'main-font', '', 10);
 		this.nameText.setOrigin(0, 0);
 		this.add(this.nameText);
 
-		this.text = scene.add.bitmapText(200, 70, 'rubik', '');
+		this.text = scene.add.bitmapText(200, 70, 'main-font', '', 10);
 		this.text.setOrigin(0, 0);
 		this.add(this.text);
 
@@ -64,8 +64,9 @@ export default class DialogueBox extends Container {
 		this.clickIndicator = scene.add.bitmapText(
 			background.width - 420,
 			340,
-			'rubik',
+			'main-font',
 			'Click to Continue'
+			, 10
 		);
 		this.clickIndicator.setOrigin(0, 0);
 		this.add(this.clickIndicator);

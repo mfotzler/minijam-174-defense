@@ -17,8 +17,8 @@ new Phaser.Game({
 	backgroundColor: '#aaaaee',
 	title: 'Something About Wind!',
 	scale: {
-		width: 1024,
-		height: 512,
+		width: 256,
+		height: 256,
 		mode: Phaser.Scale.ScaleModes.FIT,
 		autoCenter: Phaser.Scale.Center.CENTER_BOTH
 	},

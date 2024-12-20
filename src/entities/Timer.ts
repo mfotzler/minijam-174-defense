@@ -27,7 +27,7 @@ export default class Timer extends Container {
 		);
 		this.add(background);
 		this.setDepth(10);
-		this.text = scene.add.bitmapText(0, 0, 'rubik', `Time: ${this.timeRemaining}`);
+		this.text = scene.add.bitmapText(0, 0, 'main-font', `Time: ${this.timeRemaining}`);
 		this.text.setOrigin(0.5, 0.5);
 		this.add(this.text);
 
