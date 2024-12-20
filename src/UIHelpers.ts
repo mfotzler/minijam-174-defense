@@ -21,7 +21,7 @@ export default class UIHelpers {
 		button.setPosition(x, y);
 		button.setInteractive();
 		button.on('pointerdown', onClick);
-		scene.add.bitmapText(x, y, 'rubik', text, 24).setOrigin(0.5, 0.5);
+		scene.add.bitmapText(x, y, 'main-font', text, 20).setOrigin(0.5, 0.5);
 
 		return button;
 	}
