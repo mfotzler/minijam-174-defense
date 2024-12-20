@@ -7,6 +7,7 @@ import GameWon from './scenes/GameWon';
 import MessageBus from './messageBus/MessageBus';
 import getRealStorageProvider from './messageBus/realStorageProvider';
 import LevelWon from './scenes/LevelWon';
+import BugScene from './scenes/BugScene';
 
 MessageBus.initialize(getRealStorageProvider());
 
@@ -22,7 +23,7 @@ new Phaser.Game({
 		autoCenter: Phaser.Scale.Center.CENTER_BOTH
 	},
 	zoom: 1,
-	scene: [GameScene, MainScene, GameOver, TutorialScene, GameWon, LevelWon],
+	scene: [GameScene, MainScene, GameOver, TutorialScene, GameWon, LevelWon, BugScene],
 	pixelArt: true,
 	physics: {
 		default: 'arcade',
