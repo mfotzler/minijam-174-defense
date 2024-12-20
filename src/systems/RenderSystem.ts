@@ -1,5 +1,5 @@
 import { EventType, StepData, System } from '../engine/types';
-import { DessertComponents, Direction, RenderComponent } from '../entities/types';
+import { BugComponents, Direction, RenderComponent } from '../entities/types';
 import { EntityCollection } from '../engine/world';
 import BaseScene from '../scenes/BaseScene';
 import { EntityDefinition } from '../engine/entities/types';
@@ -11,12 +11,12 @@ export default class RenderSystem implements System {
 
 	constructor(
 		scene: BaseScene,
-		private entityProvider: EntityCollection<DessertComponents>,
+		private entityProvider: EntityCollection<BugComponents>,
 		private renderer: Renderer
 	) {
 		MessageBus.subscribe(
 			EventType.ADD_ENTITY,
-			({ entity }: { entity: EntityDefinition<DessertComponents> }) => {
+			({ entity }: { entity: EntityDefinition<BugComponents> }) => {
 				const { id, position, movement, render, projectile } = entity;
 				if (!this.sprites[id] && render) {
 					const entitySprite = this.renderer.create(entity);
@@ -59,7 +59,7 @@ export default class RenderSystem implements System {
 		MessageBus.subscribe(EventType.ENTITY_DELETED, ({ entityId: id }) => {
 			const entitySprite = this.sprites[id];
 			if (entitySprite) {
-				entitySprite.destroy();
+				this.renderer.destroy(id, entitySprite);
 				delete this.sprites[id];
 			}
 		});
@@ -76,7 +76,7 @@ export default class RenderSystem implements System {
 		});
 	}
 
-	private ensureEntityHasSprite(entity: EntityDefinition<DessertComponents>) {
+	private ensureEntityHasSprite(entity: EntityDefinition<BugComponents>) {
 		if (!this.sprites[entity.id]) {
 			this.sprites[entity.id] = this.renderer.create(entity);
 		}

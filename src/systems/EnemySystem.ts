@@ -1,7 +1,7 @@
 import { EntityDefinition } from '../engine/entities/types';
 import { EventType, System } from '../engine/types';
 import { Pea } from '../entities/Enemies';
-import { DessertComponents } from '../entities/types';
+import { BugComponents } from '../entities/types';
 import MessageBus from '../messageBus/MessageBus';
 import BaseScene from '../scenes/BaseScene';
 import { World } from '../world';
@@ -70,7 +70,7 @@ export class EnemySystem implements System {
 }
 
 const enemyBehaviors = {
-	asparatato: (world: World, entity: EntityDefinition<DessertComponents>) => {
+	asparatato: (world: World, entity: EntityDefinition<BugComponents>) => {
 		const { enemy, render } = entity;
 		if (!enemy || !render?.sprite) return;
 
@@ -87,7 +87,7 @@ const enemyBehaviors = {
 
 		enemy.stateTime = (enemy.stateTime ?? 0) + 1;
 	},
-	brussel: (world: World, entity: EntityDefinition<DessertComponents>) => {
+	brussel: (world: World, entity: EntityDefinition<BugComponents>) => {
 		const { collision, render, enemy } = entity;
 		if (!collision || !render?.sprite) return;
 
@@ -98,7 +98,7 @@ const enemyBehaviors = {
 
 		enemy.stateTime = (enemy.stateTime ?? 1) - 1;
 	},
-	carrot: (world: World, entity: EntityDefinition<DessertComponents>) => {
+	carrot: (world: World, entity: EntityDefinition<BugComponents>) => {
 		const { collision, render, enemy } = entity;
 		const currentLevel = GameStateSystem.state.level;
 

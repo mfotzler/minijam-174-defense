@@ -3,7 +3,7 @@ import BaseScene from '../scenes/BaseScene';
 import { World } from '../world';
 import MessageBus from '../messageBus/MessageBus';
 import * as Phaser from 'phaser';
-import { DessertComponents } from '../entities/types';
+import { BugComponents } from '../entities/types';
 
 export class CollisionSystem implements System {
 	constructor(
@@ -31,7 +31,7 @@ export class CollisionSystem implements System {
 		});
 	}
 
-	private checkForProjectileCollision(entity: DessertComponents & { id: string }) {
+	private checkForProjectileCollision(entity: BugComponents & { id: string }) {
 		if (!entity?.projectile) return;
 		const entitySprite = entity.render?.sprite;
 
@@ -71,7 +71,7 @@ export class CollisionSystem implements System {
 		});
 	}
 
-	private checkForPlayerCollision(entity: DessertComponents & { id: string }) {
+	private checkForPlayerCollision(entity: BugComponents & { id: string }) {
 		if (entity.collision?.player && entity.render?.sprite) {
 			const player = this.world.entityProvider.getEntity(this.world.playerId);
 			if (!player?.render?.sprite) return;

@@ -21,6 +21,7 @@ import { SoundEffectSystem } from '../systems/SoundEffectSystem';
 import { GrandmaSystem } from '../systems/GrandmaSystem';
 import { GameStateSystem } from '../systems/GameStateSystem';
 import { DebugRenderer } from '../systems/DebugRenderer';
+import { Corpse } from '../entities/Corpse';
 
 export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
@@ -54,17 +55,21 @@ export default class BugScene extends BaseScene {
 
 		this.world.createEntity(
 			{
+				movement: {},
+				input: {},
 				render: {
 					fillColor: 0x0000ff,
-					width: 50,
-					height: 50
+					width: 32,
+					height: 32
 				}
 			},
 			{
 				x: 100,
-				y: 200
+				y: 100
 			}
 		);
+
+		this.world.createEntity(Corpse, { x: 256, y: 256 });
 	}
 
 	protected startMusic() {

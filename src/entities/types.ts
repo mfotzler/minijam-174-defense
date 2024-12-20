@@ -6,7 +6,7 @@ export enum Direction {
 	RIGHT = 1
 }
 
-export interface DessertComponents {
+export interface BugComponents {
 	player?: PlayerComponent;
 	position?: PositionComponent;
 	movement?: MovementComponent;

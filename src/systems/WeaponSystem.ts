@@ -1,6 +1,6 @@
 import { System, EventType } from '../engine/types';
 import { WeaponType, Weapons } from '../entities/Weapons';
-import { DessertComponents, Direction } from '../entities/types';
+import { BugComponents, Direction } from '../entities/types';
 import MessageBus from '../messageBus/MessageBus';
 import { World } from '../world';
 
@@ -37,7 +37,7 @@ export class WeaponSystem implements System {
 }
 
 const weaponBehaviors = {
-	frosting: (mousePos: { x: number; y: number }, world: World, playerEntity: DessertComponents) => {
+	frosting: (mousePos: { x: number; y: number }, world: World, playerEntity: BugComponents) => {
 		const { render } = playerEntity;
 		const weapon = Weapons.frosting;
 		const velocityDirection = {
@@ -61,7 +61,7 @@ const weaponBehaviors = {
 			{ x: (render?.sprite?.x ?? 0) + Math.sign(initialVelocity.x) * 50, y: render?.sprite?.y ?? 0 }
 		);
 	},
-	sprinkle: (_, world: World, playerEntity: DessertComponents) => {
+	sprinkle: (_, world: World, playerEntity: BugComponents) => {
 		const { render, facing } = playerEntity;
 		const weapon = Weapons.sprinkle;
 

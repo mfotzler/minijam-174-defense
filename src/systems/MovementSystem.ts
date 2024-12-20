@@ -1,4 +1,4 @@
-import { DessertComponents, Direction } from '../entities/types';
+import { BugComponents, Direction } from '../entities/types';
 import { EventType, StepData, System } from '../engine/types';
 import { EntityProvider } from '../engine/world/types';
 import BaseScene from '../scenes/BaseScene';
@@ -8,7 +8,7 @@ import MessageBus from '../messageBus/MessageBus';
 export class MovementSystem implements System {
 	private gravity: number = PHYSICS_CONSTANTS.GRAVITY;
 	constructor(
-		private world: EntityProvider<DessertComponents>,
+		private world: EntityProvider<BugComponents>,
 		private scene: BaseScene
 	) {}
 

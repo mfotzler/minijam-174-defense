@@ -1,6 +1,6 @@
-import { DessertComponents } from './types';
+import { BugComponents } from './types';
 
-export const Asparatato: DessertComponents = {
+export const Asparatato: BugComponents = {
 	position: { x: 0, y: 0 },
 	movement: { hasGravity: true },
 	collision: { tiles: true, player: true, tags: ['projectile'] },
@@ -12,7 +12,7 @@ export const Asparatato: DessertComponents = {
 	}
 };
 
-export const Pea: DessertComponents = {
+export const Pea: BugComponents = {
 	movement: { initialVelocity: { x: 0, y: 200 } },
 	collision: { killOnCollision: true, player: true },
 	render: { spriteKey: 'pea1', scale: 1, currentAnimation: 'pea' },
@@ -21,7 +21,7 @@ export const Pea: DessertComponents = {
 	}
 };
 
-export const Brussel: DessertComponents = {
+export const Brussel: BugComponents = {
 	position: { x: 0, y: 0 },
 	movement: { hasGravity: true },
 	collision: { tiles: true, player: true, tags: ['projectile'] },
@@ -33,7 +33,7 @@ export const Brussel: DessertComponents = {
 	}
 };
 
-export const Carrot: DessertComponents = {
+export const Carrot: BugComponents = {
 	position: { x: 0, y: 0 },
 	movement: { hasGravity: true },
 	collision: { tiles: true, player: true, tags: ['projectile'] },
