@@ -7,6 +7,8 @@ import PHYSICS_CONSTANTS from '../utils/physicsConstants';
 
 export default class InputSystem implements System {
 	private arrows: Phaser.Types.Input.Keyboard.CursorKeys;
+	private clockwise: Phaser.Input.Keyboard.Key;
+	private counterClockwise: Phaser.Input.Keyboard.Key;
 	private incrementHealthKey: Phaser.Input.Keyboard.Key;
 	private decrementHealthKey: Phaser.Input.Keyboard.Key;
 
@@ -15,6 +17,9 @@ export default class InputSystem implements System {
 		private entityProvider: EntityProvider<BugComponents>
 	) {
 		this.arrows = scene.input.keyboard.createCursorKeys();
+		this.clockwise = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+		this.counterClockwise = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+
 		this.incrementHealthKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 		this.decrementHealthKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 	}
@@ -31,7 +36,7 @@ export default class InputSystem implements System {
 					);
 				}
 
-				const body = entity.render.sprite.body;
+				const { transform, body } = entity.render.sprite;
 				if (this.arrows.right.isDown) {
 					body.velocity.x = moveSpeed;
 					//entity.render.currentAnimation = 'player-walk';
@@ -54,6 +59,12 @@ export default class InputSystem implements System {
 				if (body.velocity.x !== 0 && body.velocity.y !== 0) {
 					body.velocity.x *= 0.7071;
 					body.velocity.y *= 0.7071;
+				}
+
+				if (Phaser.Input.Keyboard.JustDown(this.clockwise)) {
+					MessageBus.sendMessage(EventType.PLAYER_ROTATE, { clockwise: true });
+				} else if (Phaser.Input.Keyboard.JustDown(this.counterClockwise)) {
+					MessageBus.sendMessage(EventType.PLAYER_ROTATE, { clockwise: false });
 				}
 
 				if (Phaser.Input.Keyboard.JustDown(this.incrementHealthKey))
