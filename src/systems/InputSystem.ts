@@ -22,12 +22,21 @@ export default class InputSystem implements System {
 	step({}: StepData): Promise<void> | void {
 		this.entityProvider.entities.forEach((entity) => {
 			if (entity.render?.sprite && entity.input) {
+				let moveSpeed = PHYSICS_CONSTANTS.PLAYER_RUN_SPEED;
+				if (entity.player?.parts?.length) {
+					// slow the movespeed by half for every 10 parts
+					moveSpeed = Math.max(
+						PHYSICS_CONSTANTS.PLAYER_RUN_SPEED / Math.pow(2, entity.player.parts.length / 10),
+						PHYSICS_CONSTANTS.PLAYER_RUN_SPEED / 16
+					);
+				}
+
 				const body = entity.render.sprite.body;
 				if (this.arrows.right.isDown) {
-					body.velocity.x = PHYSICS_CONSTANTS.PLAYER_RUN_SPEED;
+					body.velocity.x = moveSpeed;
 					//entity.render.currentAnimation = 'player-walk';
 				} else if (this.arrows.left.isDown) {
-					body.velocity.x = -PHYSICS_CONSTANTS.PLAYER_RUN_SPEED;
+					body.velocity.x = -moveSpeed;
 					//entity.render.currentAnimation = 'player-walk';
 				} else {
 					body.velocity.x = 0;
@@ -35,11 +44,16 @@ export default class InputSystem implements System {
 				}
 
 				if (this.arrows.up.isDown) {
-					body.velocity.y = -PHYSICS_CONSTANTS.PLAYER_RUN_SPEED;
+					body.velocity.y = -moveSpeed;
 				} else if (this.arrows.down.isDown) {
-					body.velocity.y = PHYSICS_CONSTANTS.PLAYER_RUN_SPEED;
+					body.velocity.y = moveSpeed;
 				} else {
 					body.velocity.y = 0;
+				}
+
+				if (body.velocity.x !== 0 && body.velocity.y !== 0) {
+					body.velocity.x *= 0.7071;
+					body.velocity.y *= 0.7071;
 				}
 
 				if (Phaser.Input.Keyboard.JustDown(this.incrementHealthKey))
