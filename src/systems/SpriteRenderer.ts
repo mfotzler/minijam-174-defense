@@ -4,7 +4,9 @@ import BaseScene from '../scenes/BaseScene';
 
 export type Renderable = {
 	body: Phaser.Physics.Arcade.Body;
-	transform: Phaser.GameObjects.Components.Transform & Phaser.GameObjects.Components.Origin;
+	transform: Phaser.GameObjects.Components.Transform &
+		Phaser.GameObjects.Components.Origin &
+		Phaser.GameObjects.Components.GetBounds;
 };
 
 export interface Renderer {

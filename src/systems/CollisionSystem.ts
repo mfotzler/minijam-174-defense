@@ -44,8 +44,8 @@ export class CollisionSystem implements System {
 		targets.forEach((target) => {
 			if (!target.render?.sprite) return;
 			const targetSprite = target.render.sprite;
-			const targetBox = targetSprite.getBounds();
-			const entityBoundingBox = entitySprite.getBounds();
+			const targetBox = targetSprite.transform.getBounds();
+			const entityBoundingBox = entitySprite.transform.getBounds();
 
 			const isOverlapping = Phaser.Geom.Intersects.RectangleToRectangle(
 				targetBox,
@@ -62,10 +62,10 @@ export class CollisionSystem implements System {
 				}
 				if (entity.projectile.knockback) {
 					const knockback = entity.projectile.knockback;
-					const dx = targetSprite.x - entitySprite.x;
-					const dy = targetSprite.y - entitySprite.y;
+					const dx = targetSprite.transform.x - entitySprite.transform.x;
+					const dy = targetSprite.transform.y - entitySprite.transform.y;
 					const angle = Math.atan2(dy, dx);
-					targetSprite.setVelocity(Math.cos(angle) * knockback, Math.sin(angle) * knockback);
+					targetSprite.body.setVelocity(Math.cos(angle) * knockback, Math.sin(angle) * knockback);
 				}
 			}
 		});
@@ -77,9 +77,9 @@ export class CollisionSystem implements System {
 			if (!player?.render?.sprite) return;
 
 			const playerSprite = player.render.sprite;
-			const playerBoundingBox = playerSprite.getBounds();
+			const playerBoundingBox = playerSprite.transform.getBounds();
 			const entitySprite = entity.render.sprite;
-			const entityBoundingBox = entitySprite.getBounds();
+			const entityBoundingBox = entitySprite.transform.getBounds();
 
 			// if the player is touching the entity, send a message
 			const isOverlapping = Phaser.Geom.Intersects.RectangleToRectangle(
