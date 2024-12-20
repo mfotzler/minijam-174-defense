@@ -20,6 +20,7 @@ import { MusicSystem } from '../systems/MusicSystem';
 import { SoundEffectSystem } from '../systems/SoundEffectSystem';
 import { GrandmaSystem } from '../systems/GrandmaSystem';
 import { GameStateSystem } from '../systems/GameStateSystem';
+import { DebugRenderer } from '../systems/DebugRenderer';
 
 export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
@@ -37,7 +38,9 @@ export default class BugScene extends BaseScene {
 		this.world = new World(this);
 
 		this.engine.addSystem(new MovementSystem(this.world.entityProvider, this));
-		this.engine.addSystem(new RenderSystem(this, this.world.entityProvider));
+		this.engine.addSystem(
+			new RenderSystem(this, this.world.entityProvider, new DebugRenderer(this))
+		);
 		this.engine.addSystem(new InputSystem(this, this.world.entityProvider));
 	}
 
@@ -48,6 +51,20 @@ export default class BugScene extends BaseScene {
 
 	create(): void {
 		super.create();
+
+		this.world.createEntity(
+			{
+				render: {
+					fillColor: 0x0000ff,
+					width: 50,
+					height: 50
+				}
+			},
+			{
+				x: 100,
+				y: 200
+			}
+		);
 	}
 
 	protected startMusic() {

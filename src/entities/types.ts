@@ -1,3 +1,4 @@
+import { Renderable } from '../systems/SpriteRenderer';
 import { WeaponType } from './Weapons';
 
 export enum Direction {
@@ -22,9 +23,12 @@ export interface RenderComponent {
 	scale?: number;
 	spriteSheet?: string;
 	spriteKey?: string;
-	sprite?: Phaser.Physics.Arcade.Sprite;
+	sprite?: Renderable;
 	followWithCamera?: boolean;
 	currentAnimation?: string;
+	width?: number;
+	height?: number;
+	fillColor?: number;
 }
 
 export interface FacingComponent {

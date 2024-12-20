@@ -4,38 +4,43 @@ import { EntityCollection } from '../engine/world';
 import BaseScene from '../scenes/BaseScene';
 import { EntityDefinition } from '../engine/entities/types';
 import MessageBus from '../messageBus/MessageBus';
+import { Renderable, Renderer } from './SpriteRenderer';
 
 export default class RenderSystem implements System {
-	private sprites: { [id: string]: Phaser.Physics.Arcade.Sprite } = {};
+	private sprites: { [id: string]: Renderable } = {};
 
 	constructor(
-		private scene: BaseScene,
-		private entityProvider: EntityCollection<DessertComponents>
+		scene: BaseScene,
+		private entityProvider: EntityCollection<DessertComponents>,
+		private renderer: Renderer
 	) {
 		MessageBus.subscribe(
 			EventType.ADD_ENTITY,
 			({ entity }: { entity: EntityDefinition<DessertComponents> }) => {
 				const { id, position, movement, render, projectile } = entity;
 				if (!this.sprites[id] && render) {
-					const entitySprite = this.createSprite(render);
-					entitySprite.setPosition(position?.x ?? 0, position?.y ?? 0);
+					const entitySprite = this.renderer.create(entity);
+					entitySprite.transform.setPosition(position?.x ?? 0, position?.y ?? 0);
 
 					if (render.followWithCamera) scene.cameras.main.startFollow(entitySprite);
 
 					if (movement?.initialVelocity) {
-						entitySprite.setVelocity(movement.initialVelocity.x, movement.initialVelocity.y);
+						entitySprite.body.setVelocity(movement.initialVelocity.x, movement.initialVelocity.y);
 					}
 
 					if (movement?.rotation?.startAngle) {
-						entitySprite.setAngle(movement.rotation.startAngle);
+						entitySprite.transform.setAngle(movement.rotation.startAngle);
 					}
 
 					if (movement?.rotation?.velocity) {
-						entitySprite.setAngularVelocity(movement.rotation.velocity);
+						entitySprite.body.setAngularVelocity(movement.rotation.velocity);
 					}
 
 					if (movement?.rotation?.origin) {
-						entitySprite.setOrigin(movement.rotation.origin.x, movement.rotation.origin.y);
+						entitySprite.transform.setOrigin(
+							movement.rotation.origin.x,
+							movement.rotation.origin.y
+						);
 					}
 
 					this.sprites[id] = entitySprite;
@@ -60,37 +65,23 @@ export default class RenderSystem implements System {
 		});
 	}
 
-	private createSprite(render: RenderComponent): Phaser.Physics.Arcade.Sprite {
-		return this.scene.physics.add
-			.sprite(0, 0, render.spriteSheet ?? 'textures', render.spriteKey)
-			.setScale(render.scale ?? 1);
-	}
-
 	step({}: StepData) {
 		this.entityProvider.entities.forEach((entity) => {
-			const { render, position, facing } = entity;
+			const { render, position } = entity;
 
 			if (render && position) {
-				this.ensureEntityHasSprite(entity.id, render);
-				if (render.currentAnimation) {
-					this.sprites[entity.id].anims.play(render.currentAnimation, true);
-				} else {
-					this.sprites[entity.id].anims.stop();
-				}
-
-				if (facing) {
-					this.sprites[entity.id].setFlipX(facing.direction === Direction.LEFT);
-				}
+				this.ensureEntityHasSprite(entity);
+				this.renderer.update(entity);
 			}
 		});
 	}
 
-	private ensureEntityHasSprite(entityId: string, render: RenderComponent) {
-		if (!this.sprites[entityId]) {
-			this.sprites[entityId] = this.createSprite(render);
+	private ensureEntityHasSprite(entity: EntityDefinition<DessertComponents>) {
+		if (!this.sprites[entity.id]) {
+			this.sprites[entity.id] = this.renderer.create(entity);
 		}
-		if (!render.sprite) {
-			render.sprite = this.sprites[entityId];
+		if (!entity.render.sprite) {
+			entity.render.sprite = this.sprites[entity.id];
 		}
 	}
 }
