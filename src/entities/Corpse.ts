@@ -6,8 +6,8 @@ export const Corpse: BugComponents = {
 	facing: { direction: Direction.RIGHT },
 	collision: { player: true },
 	render: {
-		width: 16,
-		height: 16,
+		width: 8,
+		height: 8,
 		fillColor: 0xff4400
 	}
 };

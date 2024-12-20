@@ -5,8 +5,8 @@ export const Player: BugComponents = {
 	input: {},
 	render: {
 		fillColor: 0x0000ff,
-		width: 32,
-		height: 32
+		width: 8,
+		height: 8
 	},
 	player: { parts: [] },
 	facing: { direction: Direction.RIGHT },

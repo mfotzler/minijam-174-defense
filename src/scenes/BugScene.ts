@@ -48,6 +48,8 @@ export default class BugScene extends BaseScene {
 		this.engine.addSystem(new InputSystem(this, this.world.entityProvider));
 		this.engine.addSystem(new PickupSystem(this, this.world));
 		this.engine.addSystem(new PartsSystem(this.world));
+		this.engine.addSystem(new MusicSystem(this));
+		this.engine.addSystem(new SoundEffectSystem(this));
 	}
 
 	preload() {
@@ -61,14 +63,14 @@ export default class BugScene extends BaseScene {
 		this.world.addPlayer();
 
 		for (let i = 0; i < 20; i++) {
-			const x = Phaser.Math.Between(0, 512);
-			const y = Phaser.Math.Between(0, 512);
+			const x = Phaser.Math.Between(0, 256);
+			const y = Phaser.Math.Between(0, 256);
 			this.world.createEntity(Corpse, { x, y });
 		}
 	}
 
 	protected startMusic() {
-		MessageBus.sendMessage(EventType.MUSIC_PLAY, 'theme_3');
+		MessageBus.sendMessage(EventType.MUSIC_PLAY, 'theme_2');
 	}
 
 	update(time: number, delta: number): void {
