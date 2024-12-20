@@ -22,6 +22,8 @@ import { GrandmaSystem } from '../systems/GrandmaSystem';
 import { GameStateSystem } from '../systems/GameStateSystem';
 import { DebugRenderer } from '../systems/DebugRenderer';
 import { Corpse } from '../entities/Corpse';
+import { Player } from '../entities/Player';
+import { PartsSystem } from '../systems/PartsSystem';
 
 export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
@@ -39,10 +41,13 @@ export default class BugScene extends BaseScene {
 		this.world = new World(this);
 
 		this.engine.addSystem(new MovementSystem(this.world.entityProvider, this));
+		this.engine.addSystem(new CollisionSystem(this, this.world));
 		this.engine.addSystem(
 			new RenderSystem(this, this.world.entityProvider, new DebugRenderer(this))
 		);
 		this.engine.addSystem(new InputSystem(this, this.world.entityProvider));
+		this.engine.addSystem(new PickupSystem(this, this.world));
+		this.engine.addSystem(new PartsSystem(this.world));
 	}
 
 	preload() {
@@ -53,21 +58,7 @@ export default class BugScene extends BaseScene {
 	create(): void {
 		super.create();
 
-		this.world.createEntity(
-			{
-				movement: {},
-				input: {},
-				render: {
-					fillColor: 0x0000ff,
-					width: 32,
-					height: 32
-				}
-			},
-			{
-				x: 100,
-				y: 100
-			}
-		);
+		this.world.addPlayer();
 
 		this.world.createEntity(Corpse, { x: 256, y: 256 });
 	}

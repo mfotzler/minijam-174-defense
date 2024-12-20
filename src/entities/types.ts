@@ -1,4 +1,5 @@
 import { Renderable } from '../systems/SpriteRenderer';
+import { Point } from '../world';
 import { WeaponType } from './Weapons';
 
 export enum Direction {
@@ -17,6 +18,7 @@ export interface BugComponents {
 	projectile?: ProjectileComponent;
 	weaponPickup?: WeaponPickupComponent;
 	enemy?: EnemyComponent;
+	isCorpse?: boolean;
 }
 
 export interface RenderComponent {
@@ -80,9 +82,10 @@ export interface ProjectileComponent {
 export interface InputComponent {}
 
 export interface PlayerComponent {
-	currentWeapon: WeaponType;
-	shotCooldown: number;
-	iframes: number;
+	parts: {
+		entityId: string;
+		positionOffset: Point;
+	}[];
 }
 
 export interface WeaponPickupComponent {

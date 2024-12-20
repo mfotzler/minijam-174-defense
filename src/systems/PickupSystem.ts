@@ -10,19 +10,23 @@ export class PickupSystem implements System {
 	) {
 		MessageBus.subscribe(EventType.PLAYER_COLLISION, ({ id }) => {
 			const playerEntity = world.entityProvider.getEntity(world.playerId);
-			const pickupEntity = world.entityProvider.getEntity(id);
-			if (!playerEntity?.player || !pickupEntity?.weaponPickup) return;
+			const corpseEntity = world.entityProvider.getEntity(id);
+			if (!playerEntity?.player || !corpseEntity?.isCorpse) return;
 
-			const { weaponType } = pickupEntity.weaponPickup;
-			playerEntity.player.currentWeapon = weaponType;
+			const offsetX =
+				corpseEntity?.render?.sprite?.transform.x - playerEntity?.render?.sprite?.transform.x;
+			const offsetY =
+				corpseEntity?.render?.sprite?.transform.y - playerEntity?.render?.sprite?.transform.y;
 
-			MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'weapon-pickup' });
-			MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, {
-				key: `get-${weaponType}`,
-				delay: 0.25
+			playerEntity.player.parts.push({
+				entityId: id,
+				positionOffset: { x: offsetX, y: offsetY }
 			});
+			corpseEntity.isCorpse = false;
 
-			MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId: id });
+			// MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'weapon-pickup' });
+
+			// MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId: id });
 		});
 	}
 
