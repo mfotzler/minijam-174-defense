@@ -149,7 +149,7 @@ export default class MainScene extends BaseScene {
 	}
 
 	protected startMusic() {
-		MessageBus.sendMessage(EventType.MUSIC_PLAY, 'theme_3');
+		MessageBus.sendMessage(EventType.MUSIC_PLAY, 'theme_2');
 	}
 
 	private initializeMapAndCameras(): void {

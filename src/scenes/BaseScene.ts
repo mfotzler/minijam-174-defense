@@ -17,7 +17,7 @@ export default class BaseScene extends Phaser.Scene {
 		this.load.bitmapFont('rubik', 'assets/rubik-font_0.png', 'assets/rubik-font.fnt');
 
 		for (const track of musicTracks) {
-			this.load.audio(track, `assets/music/${track}.mp3`);
+			this.load.audio(track, `assets/music/${track}.wav`);
 		}
 
 		for (const track of soundEffectTracks) {

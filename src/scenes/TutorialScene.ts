@@ -85,7 +85,7 @@ export default class TutorialScene extends BaseScene {
 		this.load.image('tutorial-graphic', 'assets/tutorial.png');
 
 		for (const track of musicTracks) {
-			this.load.audio(track, `assets/music/${track}.mp3`);
+			this.load.audio(track, `assets/music/${track}.wav`);
 		}
 	}
 
