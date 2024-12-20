@@ -6,24 +6,16 @@ import InputSystem from '../systems/InputSystem';
 import { MovementSystem } from '../systems/MovementSystem';
 import { World } from '../world';
 import { CollisionSystem } from '../systems/CollisionSystem';
-import PlayerHealthSystem from '../systems/PlayerHealthSystem';
 import MessageBus from '../messageBus/MessageBus';
 import { EventType } from '../engine/types';
-import { WeaponSystem } from '../systems/WeaponSystem';
-import HealthDisplay from '../entities/HealthDisplay';
-import { Grandma, SprinkeShotPickup } from '../entities/Pickups';
 import { PickupSystem } from '../systems/PickupSystem';
-import { MeleeSystem } from '../systems/MeleeSystem';
-import { Asparatato, Brussel, Carrot } from '../entities/Enemies';
 import { EnemySystem } from '../systems/EnemySystem';
 import { MusicSystem } from '../systems/MusicSystem';
 import { SoundEffectSystem } from '../systems/SoundEffectSystem';
-import { GrandmaSystem } from '../systems/GrandmaSystem';
-import { GameStateSystem } from '../systems/GameStateSystem';
 import { DebugRenderer } from '../systems/DebugRenderer';
 import { Corpse } from '../entities/Corpse';
-import { Player } from '../entities/Player';
 import { PartsSystem } from '../systems/PartsSystem';
+import { Ant } from '../entities/Enemies';
 
 export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
@@ -50,6 +42,7 @@ export default class BugScene extends BaseScene {
 		this.engine.addSystem(new PartsSystem(this.world));
 		this.engine.addSystem(new MusicSystem(this));
 		this.engine.addSystem(new SoundEffectSystem(this));
+		this.engine.addSystem(new EnemySystem(this, this.world));
 	}
 
 	preload() {
@@ -62,11 +55,13 @@ export default class BugScene extends BaseScene {
 
 		this.world.addPlayer();
 
-		for (let i = 0; i < 20; i++) {
+		for (let i = 0; i < 10; i++) {
 			const x = Phaser.Math.Between(0, 256);
 			const y = Phaser.Math.Between(0, 256);
 			this.world.createEntity(Corpse, { x, y });
 		}
+
+		this.world.createEntity(Ant, { x: 32, y: 32 });
 	}
 
 	protected startMusic() {

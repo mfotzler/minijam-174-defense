@@ -1,6 +1,6 @@
+import * as Phaser from 'phaser';
 import { EntityDefinition } from '../engine/entities/types';
 import { EventType, System } from '../engine/types';
-import { Pea } from '../entities/Enemies';
 import { BugComponents } from '../entities/types';
 import MessageBus from '../messageBus/MessageBus';
 import BaseScene from '../scenes/BaseScene';
@@ -9,11 +9,6 @@ import { cloneDeep } from 'lodash';
 import { GameStateSystem } from './GameStateSystem';
 
 export class EnemySystem implements System {
-	static readonly CARROT_SHOOTING_RANGE = 300;
-	static readonly CARROT_SHOT_COOLDOWN_EASY = 120;
-	static readonly CARROT_SHOT_COOLDOWN_HARD = 60;
-	static readonly CARROT_SHOT_SPEED = 200;
-
 	constructor(
 		scene: BaseScene,
 		private world: World
@@ -58,7 +53,7 @@ export class EnemySystem implements System {
 		this.world.entityProvider.entities.forEach((entity) => {
 			if (entity.enemy) {
 				if (entity.collision.blocked?.down) {
-					entity.render?.sprite?.setVelocityX(0);
+					entity.render?.sprite?.body.setVelocityX(0);
 				}
 				if (entity.enemy.type) {
 					enemyBehaviors[entity.enemy.type]?.(this.world, entity);
@@ -70,33 +65,40 @@ export class EnemySystem implements System {
 }
 
 const enemyBehaviors = {
-	asparatato: (world: World, entity: EntityDefinition<BugComponents>) => {
+	ant: (world: World, entity: EntityDefinition<BugComponents>) => {
 		const { enemy, render } = entity;
-		if (!enemy || !render?.sprite) return;
+		const player = world.entityProvider.getEntity(world.playerId);
 
-		const seconds = Math.floor((enemy.stateTime ?? 0) / 60);
-		const direction = (seconds % 2) * 2 - 1;
-		render.sprite.setVelocityX(direction * -100);
+		if (!enemy?.speed || !render?.sprite || !player) return;
 
-		if (enemy.stateTime % 30 === 0) {
-			world.createEntity(Pea, {
-				x: render.sprite.x,
-				y: render.sprite.y + 50
-			});
+		const closestPart = player.player?.parts.reduce(
+			(closest, part) => {
+				const partEntity = world.entityProvider.getEntity(part.entityId);
+				if (!partEntity?.render?.sprite) return closest;
+
+				const distance = Phaser.Math.Distance.BetweenPointsSquared(
+					render.sprite.transform,
+					partEntity.render.sprite.transform
+				);
+				return distance < closest.distance ? { distance, partEntity } : closest;
+			},
+			{ distance: Infinity, partEntity: player }
+		);
+
+		// get vector to closest part, rounded to 45 degrees
+		const dx = closestPart.partEntity.render.sprite.transform.x - render.sprite.transform.x;
+		const dy = closestPart.partEntity.render.sprite.transform.y - render.sprite.transform.y;
+		const angle = Math.atan2(dy, dx);
+		const roundedAngle = Math.round(angle / (Math.PI / 4)) * (Math.PI / 4);
+
+		if (closestPart.distance > 16) {
+			render.sprite.body.setVelocityX(Math.cos(roundedAngle) * enemy.speed);
+			render.sprite.body.setVelocityY(Math.sin(roundedAngle) * enemy.speed);
+		} else {
+			render.sprite.body.setVelocity(0, 0);
 		}
 
 		enemy.stateTime = (enemy.stateTime ?? 0) + 1;
-	},
-	brussel: (world: World, entity: EntityDefinition<BugComponents>) => {
-		const { collision, render, enemy } = entity;
-		if (!collision || !render?.sprite) return;
-
-		if (collision.blocked?.down && enemy?.stateTime <= 0) {
-			render.sprite.setVelocityY(-800);
-			enemy.stateTime = Math.random() * 180;
-		}
-
-		enemy.stateTime = (enemy.stateTime ?? 1) - 1;
 	},
 	carrot: (world: World, entity: EntityDefinition<BugComponents>) => {
 		const { collision, render, enemy } = entity;
@@ -110,8 +112,8 @@ const enemyBehaviors = {
 
 		if (!collision || !render?.sprite || !player) return;
 
-		const distanceFromPlayerX = player?.render?.sprite?.x - render?.sprite?.x;
-		const distanceFromPlayerY = player?.render?.sprite?.y - render?.sprite?.y;
+		const distanceFromPlayerX = player?.render?.sprite?.transform.x - render?.sprite?.transform.x;
+		const distanceFromPlayerY = player?.render?.sprite?.transform.y - render?.sprite?.transform.y;
 
 		const totalDistance = Math.sqrt(distanceFromPlayerX ** 2 + distanceFromPlayerY ** 2);
 		const cooldown = enemy?.shotCooldown ?? 0;
@@ -121,26 +123,26 @@ const enemyBehaviors = {
 			return;
 		}
 
-		if (totalDistance < EnemySystem.CARROT_SHOOTING_RANGE) {
-			const angle = Math.atan2(distanceFromPlayerY, distanceFromPlayerX);
-			const velocity = EnemySystem.CARROT_SHOT_SPEED;
+		// if (totalDistance < EnemySystem.CARROT_SHOOTING_RANGE) {
+		// 	const angle = Math.atan2(distanceFromPlayerY, distanceFromPlayerX);
+		// 	const velocity = EnemySystem.CARROT_SHOT_SPEED;
 
-			const peaClone = cloneDeep(Pea);
+		// 	const peaClone = cloneDeep(Pea);
 
-			peaClone.movement.initialVelocity = {
-				x: Math.cos(angle) * velocity,
-				y: Math.sin(angle) * velocity
-			};
+		// 	peaClone.movement.initialVelocity = {
+		// 		x: Math.cos(angle) * velocity,
+		// 		y: Math.sin(angle) * velocity
+		// 	};
 
-			world.createEntity(peaClone, {
-				x: render?.sprite?.x,
-				y: render?.sprite?.y
-			});
+		// 	world.createEntity(peaClone, {
+		// 		x: render?.sprite?.x,
+		// 		y: render?.sprite?.y
+		// 	});
 
-			entity.enemy.shotCooldown =
-				currentLevel === 1
-					? EnemySystem.CARROT_SHOT_COOLDOWN_EASY
-					: EnemySystem.CARROT_SHOT_COOLDOWN_HARD;
-		}
+		// 	entity.enemy.shotCooldown =
+		// 		currentLevel === 1
+		// 			? EnemySystem.CARROT_SHOT_COOLDOWN_EASY
+		// 			: EnemySystem.CARROT_SHOT_COOLDOWN_HARD;
+		// }
 	}
 };

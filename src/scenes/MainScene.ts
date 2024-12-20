@@ -14,7 +14,6 @@ import HealthDisplay from '../entities/HealthDisplay';
 import { Grandma, SprinkeShotPickup } from '../entities/Pickups';
 import { PickupSystem } from '../systems/PickupSystem';
 import { MeleeSystem } from '../systems/MeleeSystem';
-import { Asparatato, Brussel, Carrot } from '../entities/Enemies';
 import { EnemySystem } from '../systems/EnemySystem';
 import { MusicSystem } from '../systems/MusicSystem';
 import { SoundEffectSystem } from '../systems/SoundEffectSystem';
@@ -136,11 +135,8 @@ export default class MainScene extends BaseScene {
 	private readEnemyPlacementFromMap() {
 		this.world.map.getObjectLayer('data dog sponsored by DataDog').objects.forEach((enemy) => {
 			const entityTypes = {
-				Asparatato: Asparatato,
 				Grandma: Grandma,
-				Sprinkle: SprinkeShotPickup,
-				Brussel: Brussel,
-				Carrot: Carrot
+				Sprinkle: SprinkeShotPickup
 			};
 
 			if (entityTypes[enemy.name])
