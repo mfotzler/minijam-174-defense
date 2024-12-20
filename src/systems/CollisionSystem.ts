@@ -86,13 +86,28 @@ export class CollisionSystem implements System {
 				playerBoundingBox,
 				entityBoundingBox
 			);
-
 			if (isOverlapping) {
 				MessageBus.sendMessage(EventType.PLAYER_COLLISION, { id: entity.id });
 				if (entity.collision?.killOnCollision) {
 					MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId: entity.id });
 				}
+				return;
 			}
+
+			player.player.parts.forEach((part) => {
+				const partEntity = this.world.entityProvider.getEntity(part.entityId);
+				if (
+					Phaser.Geom.Intersects.RectangleToRectangle(
+						partEntity.render.sprite.transform.getBounds(),
+						entityBoundingBox
+					)
+				) {
+					MessageBus.sendMessage(EventType.PLAYER_COLLISION, { id: entity.id });
+					if (entity.collision?.killOnCollision) {
+						MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId: entity.id });
+					}
+				}
+			});
 		}
 	}
 }

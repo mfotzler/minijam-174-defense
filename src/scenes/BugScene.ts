@@ -60,7 +60,11 @@ export default class BugScene extends BaseScene {
 
 		this.world.addPlayer();
 
-		this.world.createEntity(Corpse, { x: 256, y: 256 });
+		for (let i = 0; i < 20; i++) {
+			const x = Phaser.Math.Between(0, 512);
+			const y = Phaser.Math.Between(0, 512);
+			this.world.createEntity(Corpse, { x, y });
+		}
 	}
 
 	protected startMusic() {
