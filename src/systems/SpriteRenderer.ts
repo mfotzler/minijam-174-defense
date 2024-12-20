@@ -1,16 +1,16 @@
 import { EntityDefinition } from '../engine/entities/types';
-import { DessertComponents, Direction, RenderComponent } from '../entities/types';
+import { BugComponents, Direction, RenderComponent } from '../entities/types';
 import BaseScene from '../scenes/BaseScene';
 
 export type Renderable = {
 	body: Phaser.Physics.Arcade.Body;
 	transform: Phaser.GameObjects.Components.Transform & Phaser.GameObjects.Components.Origin;
-	destroy: () => void;
 };
 
 export interface Renderer {
-	create(entity: EntityDefinition<DessertComponents>): Renderable;
-	update(entity: EntityDefinition<DessertComponents>): void;
+	create(entity: EntityDefinition<BugComponents>): Renderable;
+	update(entity: EntityDefinition<BugComponents>): void;
+	destroy(entityId: string, renderable: Renderable): void;
 }
 
 export class SpriteRenderer implements Renderer {
@@ -27,12 +27,11 @@ export class SpriteRenderer implements Renderer {
 
 		return {
 			body: sprite.body,
-			transform: sprite,
-			destroy: () => sprite.destroy()
+			transform: sprite
 		};
 	}
 
-	public update(entity: EntityDefinition<DessertComponents>): void {
+	public update(entity: EntityDefinition<BugComponents>): void {
 		const { render, facing } = entity;
 
 		if (render.currentAnimation) {
@@ -44,5 +43,9 @@ export class SpriteRenderer implements Renderer {
 		if (facing) {
 			this.sprites[entity.id].setFlipX(facing.direction === Direction.LEFT);
 		}
+	}
+
+	public destroy(entityId: string, renderable: Renderable): void {
+		this.sprites[entityId].destroy();
 	}
 }
