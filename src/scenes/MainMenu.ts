@@ -53,7 +53,7 @@ export default class MainMenu extends BaseScene {
 				100,
 				'rubik',
 				'a game by tesserex, slowback1,\n bugvevo, and mafcho',
-				24
+				10
 			)
 			.setOrigin(0.5, 0.5);
 	}
