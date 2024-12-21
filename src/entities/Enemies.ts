@@ -4,7 +4,7 @@ export const Ant: BugComponents = {
 	position: { x: 0, y: 0 },
 	movement: {
 	},
-	collision: { tiles: true, player: true, tags: ['projectile'] },
+	collision: { tiles: true, player: true, tags: ['projectile', 'baby'] },
 	render: { width: 8, height: 8, fillColor: 0x609020 },
 	enemy: {
 		type: 'ant',

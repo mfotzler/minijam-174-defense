@@ -28,6 +28,7 @@ export class CollisionSystem implements System {
 		this.world.entityProvider.entities.forEach((entity) => {
 			this.checkForPlayerCollision(entity);
 			this.checkForProjectileCollision(entity);
+			this.checkForBabyCollision(entity);
 		});
 	}
 
@@ -109,5 +110,39 @@ export class CollisionSystem implements System {
 				}
 			});
 		}
+	}
+	
+	private checkForBabyCollision(entity: BugComponents & { id: string }) {
+		if(!entity.isBaby) return;
+		
+		const entitySprite = entity.render?.sprite;
+		
+		if (!entitySprite) return;
+		
+		const targets = this.world.entityProvider.entities.filter((e) =>
+			e.collision?.tags?.includes('baby')
+		);
+		
+		targets.forEach((target) => {
+			if (!target.render?.sprite) return;
+			const targetSprite = target.render.sprite;
+			const targetBox = targetSprite.transform.getBounds();
+			const entityBoundingBox = entitySprite.transform.getBounds();
+			
+			const isOverlapping = Phaser.Geom.Intersects.RectangleToRectangle(
+				targetBox,
+				entityBoundingBox
+			);
+			
+			if (isOverlapping) {
+				MessageBus.sendMessage(EventType.BABY_COLLISION, {
+					id: entity.id,
+					damage: entity.enemy?.damage ?? 1
+				});
+				if (entity.collision?.killOnCollision) {
+					MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId: entity.id });
+				}
+			}
+		});
 	}
 }

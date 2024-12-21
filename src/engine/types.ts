@@ -55,6 +55,12 @@ export enum EventType {
 	PLAYER_COLLISION = 'playerCollision',
 	PLAYER_MELEE = 'playerMelee',
 	PLAYER_ROTATE = 'playerRotate',
+	
+	BABY_COLLISION = 'babyCollision',
+	BABY_DEATH = 'babyDeath',
+	LAST_BABY_DEATH = 'lastBabyDeath',
+	
+	GAME_OVER = 'gameOver',
 
 	// Game State Events
 	SAVE_GRANDMA = 'saveGrandma',

@@ -19,6 +19,7 @@ export interface BugComponents {
 	weaponPickup?: WeaponPickupComponent;
 	enemy?: EnemyComponent;
 	isCorpse?: boolean;
+	isBaby?: boolean;
 }
 
 export interface RenderComponent {
