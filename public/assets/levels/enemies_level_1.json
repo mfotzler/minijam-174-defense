@@ -1,24 +1,29 @@
 ﻿{
-  "spawns": [
-    {
-      "ticks": 1000,
-      "type": "ant",
-      "location": "north"
-    },
-    {
-      "ticks": 2000,
-      "type": "ant",
-      "location": "west"
-    },
-    {
-      "ticks": 3000,
-      "location": "east",
-      "type": "ant"
-    },
-    {
-      "ticks": 4000,
-      "location": "south",
-      "type": "ant" 
-    }
-  ]
+	"spawns": [
+		{
+			"ticks": 1000,
+			"type": "ant",
+			"location": "north"
+		},
+		{
+			"ticks": 2000,
+			"type": "ant",
+			"location": "west"
+		},
+		{
+			"ticks": 3000,
+			"location": "east",
+			"type": "ant"
+		},
+		{
+			"ticks": 4000,
+			"location": "south",
+			"type": "ant"
+		},
+		{
+			"ticks": 5000,
+			"location": "north",
+			"type": "beetle"
+		}
+	]
 }

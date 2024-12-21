@@ -15,7 +15,7 @@ import { SoundEffectSystem } from '../systems/SoundEffectSystem';
 import { DebugRenderer } from '../systems/DebugRenderer';
 import { Corpse } from '../entities/Corpse';
 import { PartsSystem } from '../systems/PartsSystem';
-import { Ant } from '../entities/Enemies';
+import { Ant, Beetle } from '../entities/Enemies';
 import SpawnListeningSystem from '../systems/SpawnListeningSystem';
 import EnemySpawnSystem from '../systems/EnemySpawnSystem';
 import { WeaponSystem } from '../systems/WeaponSystem';
@@ -66,8 +66,6 @@ export default class BugScene extends BaseScene {
 			const y = Phaser.Math.Between(0, 256);
 			this.world.createEntity(Corpse, { x, y });
 		}
-
-		this.world.createEntity(Ant, { x: 32, y: 32 });
 	}
 
 	protected startMusic() {
