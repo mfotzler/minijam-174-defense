@@ -49,7 +49,7 @@ export default class BabySystem implements System {
 		if (entity.baby.health <= 0) MessageBus.sendMessage(EventType.BABY_DEATH, { entityId: id });
 		else {
 			MessageBus.sendMessage(EventType.ENTITY_MAKE_INVINCIBLE, entity);
-			MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hit_1' });
+			MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hurt_1' });
 		}
 	}
 
