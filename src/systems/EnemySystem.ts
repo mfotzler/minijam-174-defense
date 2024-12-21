@@ -9,6 +9,7 @@ import { cloneDeep } from 'lodash';
 import { GameStateSystem } from './GameStateSystem';
 import { Corpse } from '../entities/Corpse';
 import { Acid } from '../entities/Weapons';
+import InvincibilitySystem from './InvincibilitySystem';
 
 export class EnemySystem implements System {
 	constructor(
@@ -43,17 +44,18 @@ export class EnemySystem implements System {
 	private onProjectileCollision({ id, damage }: { id: string; damage: number }) {
 		const enemyEntity = this.world.entityProvider.getEntity(id);
 
-		if (!enemyEntity?.enemy || enemyEntity.enemy.iframes > 0) return;
+		if (!enemyEntity?.enemy || InvincibilitySystem.isInvincible(enemyEntity)) return;
 
 		enemyEntity.enemy.health = (enemyEntity.enemy.health ?? 1) - damage;
-		enemyEntity.enemy.iframes = 20;
-
-		this.flashEnemy(enemyEntity, this.scene);
 
 		if (enemyEntity.enemy.health <= 0) {
 			MessageBus.sendMessage(EventType.KILL_ENEMY, { entityId: id });
 			MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hurt_2' });
 		} else {
+			if(InvincibilitySystem.canBeMadeInvincible(enemyEntity)) {
+				MessageBus.sendMessage(EventType.ENTITY_MAKE_INVINCIBLE, enemyEntity);
+			}
+			
 			MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hurt_1' });
 		}
 	}
