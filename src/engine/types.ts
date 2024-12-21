@@ -35,6 +35,7 @@ export enum EventType {
 	ENTITY_DELETED = 'entityDeleted',
 	ENTITY_PREINIT = 'entityPreInit',
 	ENTITY_ADDED = 'entityAdded',
+	ENTITY_KNOCKBACK = 'entityKnockback',
 	
 	SPAWN_ENEMY = 'spawnEnemy',
 	KILL_ENEMY = 'killEnemy',
@@ -53,6 +54,8 @@ export enum EventType {
 	PLAYER_SHOOT = 'playerShoot',
 	PLAYER_SWITCH_WEAPON = 'playerSwitchWeapon',
 	PLAYER_COLLISION = 'playerCollision',
+	PLAYER_PART_COLLISION = 'playerPartCollision',
+	PLAYER_PART_DESTROY = 'playerPartDestroy',
 	PLAYER_MELEE = 'playerMelee',
 	PLAYER_ROTATE = 'playerRotate',
 	

@@ -104,4 +104,5 @@ export interface EnemyComponent {
 	stateTime?: number;
 	iframes?: number;
 	shotCooldown?: number;
+	movementCooldown?: number;
 }

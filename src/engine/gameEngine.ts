@@ -13,6 +13,10 @@ export class GameEngine {
   addSystem(system: System, runWhenPaused: boolean = false): void {
     this.systems.push({ system, runWhenPaused });
   }
+  
+  addUseCase(useCase: any) {
+    //pretend something happens here.  This probably isn't needed but calling this method should hint to the developer that something is happening. 
+  }
 
   getSystem<T extends System>(name: string): T | undefined {
     return this.systems.find(({ system }) => system.constructor.name === name)?.system as T | undefined;

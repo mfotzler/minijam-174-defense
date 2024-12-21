@@ -4,6 +4,7 @@ import { World } from '../world';
 import MessageBus from '../messageBus/MessageBus';
 import * as Phaser from 'phaser';
 import { BugComponents } from '../entities/types';
+import { EntityKnockbackData } from '../useCases/EntityKnockbackUseCase';
 
 export class CollisionSystem implements System {
 	constructor(
@@ -103,7 +104,8 @@ export class CollisionSystem implements System {
 						entityBoundingBox
 					)
 				) {
-					MessageBus.sendMessage(EventType.PLAYER_COLLISION, { id: entity.id });
+					MessageBus.sendMessage(EventType.ENTITY_KNOCKBACK, {knockbackerId: part.entityId, knockbackeeId: entity.id} as EntityKnockbackData)
+					MessageBus.sendMessage(EventType.PLAYER_PART_COLLISION, { entityId: entity.id, partId: part.entityId });
 					if (entity.collision?.killOnCollision) {
 						MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId: entity.id });
 					}
@@ -112,35 +114,38 @@ export class CollisionSystem implements System {
 		}
 	}
 	
-	private checkForBabyCollision(entity: BugComponents & { id: string }) {
-		if(!entity.isBaby) return;
+	private checkForBabyCollision(maybeBaby: BugComponents & { id: string }) {
+		if(!maybeBaby.isBaby) return;
 		
-		const entitySprite = entity.render?.sprite;
+		const baby = maybeBaby;
 		
-		if (!entitySprite) return;
+		const babySprite = baby.render?.sprite;
 		
-		const targets = this.world.entityProvider.entities.filter((e) =>
+		if (!babySprite) return;
+		
+		const babyStealers = this.world.entityProvider.entities.filter((e) =>
 			e.collision?.tags?.includes('baby')
 		);
 		
-		targets.forEach((target) => {
-			if (!target.render?.sprite) return;
-			const targetSprite = target.render.sprite;
-			const targetBox = targetSprite.transform.getBounds();
-			const entityBoundingBox = entitySprite.transform.getBounds();
+		babyStealers.forEach((babyStealer) => {
+			if (!babyStealer.render?.sprite) return;
+			const babyStealerSprite = babyStealer.render.sprite;
+			const babyStealerBox = babyStealerSprite.transform.getBounds();
+			const babyBoundingBox = babySprite.transform.getBounds();
 			
 			const isOverlapping = Phaser.Geom.Intersects.RectangleToRectangle(
-				targetBox,
-				entityBoundingBox
+				babyStealerBox,
+				babyBoundingBox
 			);
 			
 			if (isOverlapping) {
+				MessageBus.sendMessage(EventType.ENTITY_KNOCKBACK, {knockbackerId: baby.id, knockbackeeId: babyStealer.id } as EntityKnockbackData)
 				MessageBus.sendMessage(EventType.BABY_COLLISION, {
-					id: entity.id,
-					damage: entity.enemy?.damage ?? 1
+					id: baby.id,
+					damage: baby.enemy?.damage ?? 1
 				});
-				if (entity.collision?.killOnCollision) {
-					MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId: entity.id });
+				if (baby.collision?.killOnCollision) {
+					MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId: baby.id });
 				}
 			}
 		});
