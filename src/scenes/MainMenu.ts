@@ -45,9 +45,7 @@ export default class MainMenu extends BaseScene {
 	}
 
 	private addTitle() {
-		this.add.image(this.game.renderer.width / 2, 40, 'textures', 'title')
-			.setRotation(Math.PI * 14 / 4)
-			.setScale(-.1, 8);
+		this.add.image(this.game.renderer.width / 2, 40, 'textures', 'title').setScale(0.8, 1);
 		this.add
 			.bitmapText(
 				this.game.renderer.width / 2,
