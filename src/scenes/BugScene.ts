@@ -131,6 +131,16 @@ export default class BugScene extends BaseScene {
 		});
 
 		this.anims.create({
+			key: 'baby-eater-walk-square',
+			frames: this.anims.generateFrameNames('textures', {
+				prefix: 'babyEaterSquare',
+				frames: [0, 1, 2, 1]
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
+
+		this.anims.create({
 			key: 'beetle-walk-square',
 			frames: this.anims.generateFrameNames('textures', {
 				prefix: 'beetleSquare',

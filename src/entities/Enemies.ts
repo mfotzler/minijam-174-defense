@@ -43,7 +43,9 @@ export const BabyEaterAnt: BugComponents = {
 	},
 	render: {
 		...AntBase.render,
-		fillColor: 0x902060
+		fillColor: 0x902060,
+		spriteKey: 'babyEaterSquare0',
+		currentAnimation: 'baby-eater-walk-square'
 	}
 };
 
