@@ -7,7 +7,8 @@ export const AntCorpse: BugComponents = {
 	render: {
 		width: 8,
 		height: 8,
-		fillColor: 0xff4400
+		fillColor: 0xff4400,
+		spriteKey: 'beetleSquare3'
 	},
 	corpse: {
 		weaponType: 'larvae'
