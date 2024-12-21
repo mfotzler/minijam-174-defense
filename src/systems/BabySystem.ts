@@ -63,6 +63,12 @@ export default class BabySystem implements System {
 
 		this.babiesLeft--;
 
+		const onlyOneThirdOfBabiesLeft = this.babiesLeft <= this.babySpawnLocations.length / 3;
+		const isPlayingTheme1 = MessageBus.getLastMessage(EventType.MUSIC_PLAY) === 'theme_1';
+
+		if (onlyOneThirdOfBabiesLeft && !isPlayingTheme1)
+			MessageBus.sendMessage(EventType.MUSIC_PLAY, 'theme_1');
+
 		if (this.babiesLeft <= 0) MessageBus.sendMessage(EventType.LAST_BABY_DEATH, {});
 	}
 
