@@ -1,7 +1,9 @@
 ﻿import { BugComponents } from './types';
 
 export const Baby : BugComponents = {
-	isBaby: true,
+	baby: {
+		health: 5
+	},
 	movement: {},
 	collision: {},
 	render: {

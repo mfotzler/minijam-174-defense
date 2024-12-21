@@ -19,8 +19,8 @@ export interface BugComponents {
 	weaponPickup?: WeaponPickupComponent;
 	enemy?: EnemyComponent;
 	invincibility?: InvincibilityComponent;
+	baby?: BabyComponent;
 	isCorpse?: boolean;
-	isBaby?: boolean;
 }
 
 export interface RenderComponent {
@@ -111,4 +111,8 @@ export interface EnemyComponent {
 export interface InvincibilityComponent {
   currentDuration?: number;
 	maxDuration?: number;
+}
+
+export interface BabyComponent {
+	health: number;
 }
