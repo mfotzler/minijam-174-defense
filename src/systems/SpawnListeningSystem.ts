@@ -6,13 +6,20 @@ export default class SpawnListeningSystem implements System {
 	private data: SpawnData[];
 	private spawnedIndexes: number[] = [];
 	private nextSpawnIndex: number;
+	
+	private infiniteSpawnMode = false;
 	constructor(level: number = 1) {
 		fetch(`/assets/levels/enemies_level_${level}.json`)
 			.then(res => res.json())
 			.then(json => {
 					this.data = json.spawns;
 					this.getNextSpawnIndex();
-			})
+			});
+		
+		MessageBus.subscribe(EventType.ENABLE_INFINITE_MODE, (shouldBeEnabled: boolean) => {
+			this.infiniteSpawnMode = shouldBeEnabled;
+		this.resetData();	
+		})
 	}
 	
 	step(data: StepData) {
@@ -21,6 +28,8 @@ export default class SpawnListeningSystem implements System {
 			if(this.isSpawnTime()) {
 				this.spawn();	
 			}
+			
+			this.checkIfShouldResetData();
 	}
 	
 	private spawn() {
@@ -52,6 +61,18 @@ export default class SpawnListeningSystem implements System {
 
 			return spawn.ticks === nextSpawnTick.ticks;
 		});
+	}
+	
+	private checkIfShouldResetData() {
+		if(this.infiniteSpawnMode && this.spawnedIndexes.length === this.data.length) {
+			this.resetData();
+		}
+	}
+	
+	private resetData() {
+		this.elapsedTicks = 0;
+		this.spawnedIndexes = [];
+		this.nextSpawnIndex = 0;
 	}
 	
 }

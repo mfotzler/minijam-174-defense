@@ -57,7 +57,8 @@ export enum EventType {
 	PLAYER_ROTATE = 'playerRotate',
 
 	// Game State Events
-	SAVE_GRANDMA = 'saveGrandma'
+	SAVE_GRANDMA = 'saveGrandma',
+	ENABLE_INFINITE_MODE = 'enableInfiniteMode',
 }
 
 export interface SpawnData {
