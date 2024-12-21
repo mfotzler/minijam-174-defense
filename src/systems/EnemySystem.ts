@@ -8,6 +8,7 @@ import { World } from '../world';
 import { cloneDeep } from 'lodash';
 import { GameStateSystem } from './GameStateSystem';
 import { Corpse } from '../entities/Corpse';
+import { Acid } from '../entities/Weapons';
 
 export class EnemySystem implements System {
 	constructor(
@@ -29,17 +30,17 @@ export class EnemySystem implements System {
 		
 		MessageBus.sendMessage(EventType.PLAYER_PART_DESTROY, {partId: partId});
 	}
-	
-	private onPlayerCollision({id}: {id: string}) {
- 		const playerEntity = this.world.entityProvider.getEntity(this.world.playerId);
+
+	private onPlayerCollision({ id }: { id: string }) {
+		const playerEntity = this.world.entityProvider.getEntity(this.world.playerId);
 		const enemyEntity = this.world.entityProvider.getEntity(id);
 
 		if (!playerEntity?.player || !enemyEntity?.enemy) return;
 
 		MessageBus.sendMessage(EventType.PLAYER_DAMAGE, { damage: enemyEntity.enemy.damage });
 	}
-	
-	private onProjectileCollision({id, damage}: {id: string, damage: number}) {
+
+	private onProjectileCollision({ id, damage }: { id: string; damage: number }) {
 		const enemyEntity = this.world.entityProvider.getEntity(id);
 
 		if (!enemyEntity?.enemy || enemyEntity.enemy.iframes > 0) return;
@@ -56,17 +57,17 @@ export class EnemySystem implements System {
 			MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hurt_1' });
 		}
 	}
-	
-	private onKillEnemy({entityId}: {entityId: string}) {
+
+	private onKillEnemy({ entityId }: { entityId: string }) {
 		const entity = this.world.entityProvider.getEntity(entityId);
 		if (!entity?.enemy) return;
-		
+
 		MessageBus.sendMessage(EventType.SPAWN_CORPSE, entity);
-		MessageBus.sendMessage(EventType.DELETE_ENTITY , {entityId});
+		MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId });
 	}
-	
+
 	private onSpawnCorpse(entity: EntityDefinition<BugComponents>) {
-		this.world.createEntity(Corpse, entity.render?.sprite?.transform ?? {x: 0, y: 0});
+		this.world.createEntity(Corpse, entity.render?.sprite?.transform ?? { x: 0, y: 0 });
 	}
 
 	private flashEnemy(enemyEntity: BugComponents & { id: string }, scene: BaseScene) {
@@ -81,7 +82,7 @@ export class EnemySystem implements System {
 			});
 		}
 	}
-	
+
 	private setTint(entity: EntityDefinition<BugComponents>, color: number) {
 		entity.render.fillColor = color;
 	}
@@ -143,49 +144,61 @@ const enemyBehaviors = {
 
 		enemy.stateTime = (enemy.stateTime ?? 0) + 1;
 	},
-	carrot: (world: World, entity: EntityDefinition<BugComponents>) => {
-		const { collision, render, enemy } = entity;
-		const currentLevel = GameStateSystem.state.level;
-
-		if (currentLevel === 0) {
-			return;
-		}
-
+	beetle: (world: World, entity: EntityDefinition<BugComponents>) => {
+		const { enemy, render } = entity;
 		const player = world.entityProvider.getEntity(world.playerId);
 
-		if (!collision || !render?.sprite || !player) return;
+		if (!enemy?.speed || !render?.sprite || !player) return;
 
-		const distanceFromPlayerX = player?.render?.sprite?.transform.x - render?.sprite?.transform.x;
-		const distanceFromPlayerY = player?.render?.sprite?.transform.y - render?.sprite?.transform.y;
-
-		const totalDistance = Math.sqrt(distanceFromPlayerX ** 2 + distanceFromPlayerY ** 2);
+		// just sit still after the shot before moving again
 		const cooldown = enemy?.shotCooldown ?? 0;
-
 		if (cooldown > 0) {
-			entity.enemy.shotCooldown = cooldown - 1;
+			enemy.shotCooldown = cooldown - 1;
 			return;
 		}
 
-		// if (totalDistance < EnemySystem.CARROT_SHOOTING_RANGE) {
-		// 	const angle = Math.atan2(distanceFromPlayerY, distanceFromPlayerX);
-		// 	const velocity = EnemySystem.CARROT_SHOT_SPEED;
+		// now we can move
+		const angle = Phaser.Math.Angle.BetweenPoints(
+			render.sprite.transform,
+			player.render.sprite.transform
+		);
+		const playerDistance = Phaser.Math.Distance.BetweenPoints(
+			render.sprite.transform,
+			player.render.sprite.transform
+		);
+		let moveAngleOffset = Math.PI / 2;
+		if (playerDistance > 64) {
+			moveAngleOffset = Math.PI / 4;
+		} else if (playerDistance < 32) {
+			moveAngleOffset = (Math.PI * 3) / 4;
+		}
+		const moveAngle = angle + moveAngleOffset;
 
-		// 	const peaClone = cloneDeep(Pea);
+		render.sprite.body.setVelocity(
+			Math.cos(moveAngle) * enemy.speed,
+			Math.sin(moveAngle) * enemy.speed
+		);
 
-		// 	peaClone.movement.initialVelocity = {
-		// 		x: Math.cos(angle) * velocity,
-		// 		y: Math.sin(angle) * velocity
-		// 	};
+		// we move for 60 frames before shooting
+		enemy.stateTime = (enemy.stateTime ?? 0) + 1;
+		if (enemy.stateTime < 60) return;
 
-		// 	world.createEntity(peaClone, {
-		// 		x: render?.sprite?.x,
-		// 		y: render?.sprite?.y
-		// 	});
+		enemy.stateTime = 0;
 
-		// 	entity.enemy.shotCooldown =
-		// 		currentLevel === 1
-		// 			? EnemySystem.CARROT_SHOT_COOLDOWN_EASY
-		// 			: EnemySystem.CARROT_SHOT_COOLDOWN_HARD;
-		// }
+		render.sprite.body.setVelocity(0, 0);
+
+		const acid = cloneDeep(Acid);
+
+		acid.movement.initialVelocity = {
+			x: Math.cos(angle) * acid.projectile?.speed,
+			y: Math.sin(angle) * acid.projectile?.speed
+		};
+
+		world.createEntity(acid, {
+			x: render?.sprite?.transform.x,
+			y: render?.sprite?.transform.y
+		});
+
+		entity.enemy.shotCooldown = acid.projectile.cooldown;
 	}
 };
