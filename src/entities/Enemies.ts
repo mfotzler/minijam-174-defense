@@ -16,7 +16,7 @@ export const Ant: BugComponents = {
 export const Beetle: BugComponents = {
 	position: { x: 0, y: 0 },
 	movement: {},
-	collision: { tiles: true, player: true },
+	collision: { tiles: true, player: true, tags: ['projectile'] },
 	render: { width: 8, height: 8, fillColor: 0x202060 },
 	enemy: {
 		type: 'beetle',
