@@ -35,6 +35,10 @@ export enum EventType {
 	ENTITY_DELETED = 'entityDeleted',
 	ENTITY_PREINIT = 'entityPreInit',
 	ENTITY_ADDED = 'entityAdded',
+	
+	SPAWN_ENEMY = 'spawnEnemy',
+	KILL_ENEMY = 'killEnemy',
+	SPAWN_CORPSE = 'spawnCorpse',
 
 	MUSIC_PLAY = 'musicPlay',
 	MUSIC_STOP = 'musicStop',
@@ -53,5 +57,12 @@ export enum EventType {
 	PLAYER_ROTATE = 'playerRotate',
 
 	// Game State Events
-	SAVE_GRANDMA = 'saveGrandma'
+	SAVE_GRANDMA = 'saveGrandma',
+	ENABLE_INFINITE_MODE = 'enableInfiniteMode',
+}
+
+export interface SpawnData {
+	ticks: number;
+	type: "ant";
+	location: "north" | "south" | "east" | "west";
 }

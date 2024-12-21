@@ -7,46 +7,73 @@ import BaseScene from '../scenes/BaseScene';
 import { World } from '../world';
 import { cloneDeep } from 'lodash';
 import { GameStateSystem } from './GameStateSystem';
+import { Corpse } from '../entities/Corpse';
 
 export class EnemySystem implements System {
 	constructor(
-		scene: BaseScene,
+		private scene: BaseScene,
 		private world: World
 	) {
-		MessageBus.subscribe(EventType.PLAYER_COLLISION, ({ id }) => {
-			const playerEntity = world.entityProvider.getEntity(world.playerId);
-			const enemyEntity = world.entityProvider.getEntity(id);
-			if (!playerEntity?.player || !enemyEntity?.enemy) return;
+		MessageBus.subscribe(EventType.PLAYER_COLLISION, this.onPlayerCollision.bind(this));
+		MessageBus.subscribe(EventType.PROJECTILE_COLLISION, this.onProjectileCollision.bind(this));
+		MessageBus.subscribe(EventType.KILL_ENEMY, this.onKillEnemy.bind(this));
+		MessageBus.subscribe(EventType.SPAWN_CORPSE, this.onSpawnCorpse.bind(this));
+	}
+	
+	private onPlayerCollision({id}: {id: string}) {
+ 		const playerEntity = this.world.entityProvider.getEntity(this.world.playerId);
+		const enemyEntity = this.world.entityProvider.getEntity(id);
 
-			MessageBus.sendMessage(EventType.PLAYER_DAMAGE, { damage: enemyEntity.enemy.damage });
-		});
+		if (!playerEntity?.player || !enemyEntity?.enemy) return;
 
-		MessageBus.subscribe(EventType.PROJECTILE_COLLISION, ({ id, damage }) => {
-			const enemyEntity = world.entityProvider.getEntity(id);
+		MessageBus.sendMessage(EventType.PLAYER_DAMAGE, { damage: enemyEntity.enemy.damage });
+	}
+	
+	private onProjectileCollision({id, damage}: {id: string, damage: number}) {
+		const enemyEntity = this.world.entityProvider.getEntity(id);
 
-			if (!enemyEntity?.enemy || enemyEntity.enemy.iframes > 0) return;
+		if (!enemyEntity?.enemy || enemyEntity.enemy.iframes > 0) return;
 
-			enemyEntity.enemy.health = (enemyEntity.enemy.health ?? 1) - damage;
-			enemyEntity.enemy.iframes = 20;
-			// add flashing
-			enemyEntity.render?.sprite?.setTintFill(0xffffff);
-			for (let i = 1; i <= 5; i++) {
-				scene.time.delayedCall(i * 50, () => {
-					if (i % 2 === 0) {
-						enemyEntity.render?.sprite?.setTintFill(0xffffff);
-					} else {
-						enemyEntity.render?.sprite?.clearTint();
-					}
-				});
-			}
+		enemyEntity.enemy.health = (enemyEntity.enemy.health ?? 1) - damage;
+		enemyEntity.enemy.iframes = 20;
 
-			if (enemyEntity.enemy.health <= 0) {
-				MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId: id });
-				MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hurt_2' });
-			} else {
-				MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hurt_1' });
-			}
-		});
+		this.flashEnemy(enemyEntity, this.scene);
+
+		if (enemyEntity.enemy.health <= 0) {
+			MessageBus.sendMessage(EventType.KILL_ENEMY, { entityId: id });
+			MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hurt_2' });
+		} else {
+			MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hurt_1' });
+		}
+	}
+	
+	private onKillEnemy({entityId}: {entityId: string}) {
+		const entity = this.world.entityProvider.getEntity(entityId);
+		if (!entity?.enemy) return;
+		
+		MessageBus.sendMessage(EventType.SPAWN_CORPSE, entity);
+		MessageBus.sendMessage(EventType.DELETE_ENTITY , {entityId});
+	}
+	
+	private onSpawnCorpse(entity: EntityDefinition<BugComponents>) {
+		this.world.createEntity(Corpse, entity.render?.sprite?.transform ?? {x: 0, y: 0});
+	}
+
+	private flashEnemy(enemyEntity: BugComponents & { id: string }, scene: BaseScene) {
+		this.setTint(enemyEntity, 0xff0000);
+		for (let i = 1; i <= 5; i++) {
+			scene.time.delayedCall(i * 50, () => {
+				if (i % 2 === 0) {
+					this.setTint(enemyEntity, 0xff0000);
+				} else {
+					this.setTint(enemyEntity, 0xffffff);
+				}
+			});
+		}
+	}
+	
+	private setTint(entity: EntityDefinition<BugComponents>, color: number) {
+		entity.render.fillColor = color;
 	}
 
 	step() {

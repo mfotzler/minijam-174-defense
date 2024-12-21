@@ -11,6 +11,7 @@ export default class InputSystem implements System {
 	private counterClockwise: Phaser.Input.Keyboard.Key;
 	private incrementHealthKey: Phaser.Input.Keyboard.Key;
 	private decrementHealthKey: Phaser.Input.Keyboard.Key;
+	private cheatCode: Phaser.Input.Keyboard.Key;
 
 	constructor(
 		private scene: Phaser.Scene,
@@ -22,6 +23,7 @@ export default class InputSystem implements System {
 
 		this.incrementHealthKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 		this.decrementHealthKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+		this.cheatCode = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
 	}
 
 	step({}: StepData): Promise<void> | void {
@@ -72,6 +74,10 @@ export default class InputSystem implements System {
 				if (Phaser.Input.Keyboard.JustDown(this.decrementHealthKey))
 					MessageBus.sendMessage(EventType.PLAYER_DAMAGE, { damage: 1 });
 
+				if(Phaser.Input.Keyboard.JustDown(this.cheatCode)) {
+					MessageBus.sendMessage(EventType.ENABLE_INFINITE_MODE, true);
+				}
+				
 				if (this.scene.input.mousePointer.primaryDown) {
 					MessageBus.sendMessage(EventType.PLAYER_SHOOT, {
 						mousePos: this.scene.input.mousePointer.positionToCamera(this.scene.cameras.main)
