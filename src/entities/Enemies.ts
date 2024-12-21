@@ -1,4 +1,4 @@
-import { BugComponents } from './types';
+import { BugComponents, Direction } from './types';
 
 export const Ant: BugComponents = {
 	position: { x: 0, y: 0 },
@@ -9,7 +9,7 @@ export const Ant: BugComponents = {
 		height: 8,
 		fillColor: 0x609020,
 		spriteKey: 'shieldBugSquare0',
-		currentAnimation: 'shield-bug-walk-square'
+		currentAnimation: 'ant-walk-square'
 	},
 	enemy: {
 		type: 'ant',
@@ -31,7 +31,8 @@ export const Beetle: BugComponents = {
 		width: 8,
 		height: 8,
 		fillColor: 0x202060,
-		spriteKey: 'beetleSquare0'
+		spriteKey: 'beetleSquare0',
+		currentAnimation: 'beetle-walk-square'
 	},
 	enemy: {
 		type: 'beetle',

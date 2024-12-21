@@ -83,6 +83,8 @@ export default class BugScene extends BaseScene {
 
 			this.world.createEntity(corpse, { x, y });
 		}
+
+		this.initializeAnimations();
 	}
 
 	protected startMusic() {
@@ -91,5 +93,47 @@ export default class BugScene extends BaseScene {
 
 	update(time: number, delta: number): void {
 		this.engine.step(delta);
+	}
+
+	private initializeAnimations() {
+		this.anims.create({
+			key: 'player-walk-square',
+			frames: this.anims.generateFrameNames('textures', {
+				prefix: 'mainCharacterSquare',
+				frames: [0, 1, 2, 1]
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
+
+		this.anims.create({
+			key: 'larvae-wiggle',
+			frames: this.anims.generateFrameNames('textures', {
+				prefix: 'larvae',
+				frames: [0, 1]
+			}),
+			frameRate: 4,
+			repeat: -1
+		});
+
+		this.anims.create({
+			key: 'ant-walk-square',
+			frames: this.anims.generateFrameNames('textures', {
+				prefix: 'shieldBugSquare',
+				frames: [0, 1, 2, 1]
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
+
+        this.anims.create({
+			key: 'beetle-walk-square',
+			frames: this.anims.generateFrameNames('textures', {
+				prefix: 'beetleSquare',
+				frames: [0, 1, 2, 1]
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
 	}
 }

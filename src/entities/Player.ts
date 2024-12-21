@@ -7,7 +7,8 @@ export const Player: BugComponents = {
 		fillColor: 0x0000ff,
 		width: 8,
 		height: 8,
-		spriteKey: 'mainCharacterSquare0'
+		spriteKey: 'mainCharacterSquare0',
+		currentAnimation: 'player-walk-square'
 	},
 	player: { parts: [], shotCooldown: 0 },
 	facing: { direction: Direction.RIGHT },
