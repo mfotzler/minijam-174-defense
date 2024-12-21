@@ -20,6 +20,7 @@ import SpawnListeningSystem from '../systems/SpawnListeningSystem';
 import EnemySpawnSystem from '../systems/EnemySpawnSystem';
 import { WeaponSystem } from '../systems/WeaponSystem';
 import BabySystem from '../systems/BabySystem';
+import { GameStateSystem } from '../systems/GameStateSystem';
 
 export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
@@ -51,6 +52,7 @@ export default class BugScene extends BaseScene {
 		this.engine.addSystem(new EnemySpawnSystem(this.world));
 		this.engine.addSystem(new WeaponSystem(this.world));
 		this.engine.addSystem(new BabySystem(this.world));
+		this.engine.addSystem(new GameStateSystem(this));
 	}
 
 	preload() {

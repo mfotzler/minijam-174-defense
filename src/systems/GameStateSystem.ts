@@ -26,6 +26,12 @@ export class GameStateSystem implements System {
 		MessageBus.subscribe(EventType.PLAYER_DEAD, () => {
 			this.onPlayerDeath();
 		});
+		
+		MessageBus.subscribe(EventType.GAME_OVER, this.onGameOver.bind(this));
+	}
+	
+	private onGameOver() {
+		this.scene.fadeToScene(GameOver.key, { fadeInDuration: 300 });
 	}
 
 	private onSaveGrandma() {
