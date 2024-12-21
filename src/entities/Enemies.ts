@@ -21,6 +21,6 @@ export const Beetle: BugComponents = {
 	enemy: {
 		type: 'beetle',
 		health: 5,
-		speed: 80
+		speed: 120
 	}
 };

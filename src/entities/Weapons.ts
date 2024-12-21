@@ -12,7 +12,7 @@ export const Acid: BugComponents = {
 	movement: {},
 	collision: { tiles: true, player: true },
 	render: { width: 8, height: 4, fillColor: 0x90b040 },
-	projectile: { type: 'acid', speed: 128, cooldown: 45, lifetime: 750, damage: 1 }
+	projectile: { type: 'acid', speed: 256, cooldown: 30, lifetime: 1000, damage: 1 }
 };
 
 export const Weapons = {

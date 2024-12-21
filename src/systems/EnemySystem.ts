@@ -134,22 +134,42 @@ const enemyBehaviors = {
 
 		if (!enemy?.speed || !render?.sprite || !player) return;
 
+		// just sit still after the shot before moving again
+		const cooldown = enemy?.shotCooldown ?? 0;
+		if (cooldown > 0) {
+			enemy.shotCooldown = cooldown - 1;
+			return;
+		}
+
+		// now we can move
 		const angle = Phaser.Math.Angle.BetweenPoints(
 			render.sprite.transform,
 			player.render.sprite.transform
 		);
-		const moveAngle = angle + Math.PI / 2;
+		const playerDistance = Phaser.Math.Distance.BetweenPoints(
+			render.sprite.transform,
+			player.render.sprite.transform
+		);
+		let moveAngleOffset = Math.PI / 2;
+		if (playerDistance > 64) {
+			moveAngleOffset = Math.PI / 4;
+		} else if (playerDistance < 32) {
+			moveAngleOffset = (Math.PI * 3) / 4;
+		}
+		const moveAngle = angle + moveAngleOffset;
+
 		render.sprite.body.setVelocity(
 			Math.cos(moveAngle) * enemy.speed,
 			Math.sin(moveAngle) * enemy.speed
 		);
 
-		const cooldown = enemy?.shotCooldown ?? 0;
+		// we move for 60 frames before shooting
+		enemy.stateTime = (enemy.stateTime ?? 0) + 1;
+		if (enemy.stateTime < 60) return;
 
-		if (cooldown > 0) {
-			enemy.shotCooldown = cooldown - 1;
-			return;
-		}
+		enemy.stateTime = 0;
+
+		render.sprite.body.setVelocity(0, 0);
 
 		const acid = cloneDeep(Acid);
 
@@ -164,50 +184,5 @@ const enemyBehaviors = {
 		});
 
 		entity.enemy.shotCooldown = acid.projectile.cooldown;
-	},
-	carrot: (world: World, entity: EntityDefinition<BugComponents>) => {
-		const { collision, render, enemy } = entity;
-		const currentLevel = GameStateSystem.state.level;
-
-		if (currentLevel === 0) {
-			return;
-		}
-
-		const player = world.entityProvider.getEntity(world.playerId);
-
-		if (!collision || !render?.sprite || !player) return;
-
-		const distanceFromPlayerX = player?.render?.sprite?.transform.x - render?.sprite?.transform.x;
-		const distanceFromPlayerY = player?.render?.sprite?.transform.y - render?.sprite?.transform.y;
-
-		const totalDistance = Math.sqrt(distanceFromPlayerX ** 2 + distanceFromPlayerY ** 2);
-		const cooldown = enemy?.shotCooldown ?? 0;
-
-		if (cooldown > 0) {
-			entity.enemy.shotCooldown = cooldown - 1;
-			return;
-		}
-
-		// if (totalDistance < EnemySystem.CARROT_SHOOTING_RANGE) {
-		// 	const angle = Math.atan2(distanceFromPlayerY, distanceFromPlayerX);
-		// 	const velocity = EnemySystem.CARROT_SHOT_SPEED;
-
-		// 	const peaClone = cloneDeep(Pea);
-
-		// 	peaClone.movement.initialVelocity = {
-		// 		x: Math.cos(angle) * velocity,
-		// 		y: Math.sin(angle) * velocity
-		// 	};
-
-		// 	world.createEntity(peaClone, {
-		// 		x: render?.sprite?.x,
-		// 		y: render?.sprite?.y
-		// 	});
-
-		// 	entity.enemy.shotCooldown =
-		// 		currentLevel === 1
-		// 			? EnemySystem.CARROT_SHOT_COOLDOWN_EASY
-		// 			: EnemySystem.CARROT_SHOT_COOLDOWN_HARD;
-		// }
 	}
 };
