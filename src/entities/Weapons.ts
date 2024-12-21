@@ -3,8 +3,8 @@ import { BugComponents } from './types';
 export const LarvaeShot: BugComponents = {
 	movement: { hasGravity: false },
 	collision: { killOnCollision: true, tiles: false },
-	render: { spriteKey: 'larvae', scale: 2 },
-	projectile: { type: 'larvae', speed: 800, cooldown: 30, lifetime: 750, damage: 1 }
+	render: { spriteKey: 'larvae', scale: 1 },
+	projectile: { type: 'larvae', speed: 800, cooldown: 500, lifetime: 750, damage: 1 }
 };
 
 export const Acid: BugComponents = {

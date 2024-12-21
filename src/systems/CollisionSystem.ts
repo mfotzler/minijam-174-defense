@@ -5,6 +5,7 @@ import MessageBus from '../messageBus/MessageBus';
 import * as Phaser from 'phaser';
 import { BugComponents } from '../entities/types';
 import { EntityKnockbackData } from '../useCases/EntityKnockbackUseCase';
+import InvincibilitySystem from './InvincibilitySystem';
 
 export class CollisionSystem implements System {
 	constructor(
@@ -104,8 +105,14 @@ export class CollisionSystem implements System {
 						entityBoundingBox
 					)
 				) {
-					MessageBus.sendMessage(EventType.ENTITY_KNOCKBACK, {knockbackerId: part.entityId, knockbackeeId: entity.id} as EntityKnockbackData)
-					MessageBus.sendMessage(EventType.PLAYER_PART_COLLISION, { entityId: entity.id, partId: part.entityId });
+					MessageBus.sendMessage(EventType.ENTITY_KNOCKBACK, {
+						knockbackerId: part.entityId,
+						knockbackeeId: entity.id
+					} as EntityKnockbackData);
+					MessageBus.sendMessage(EventType.PLAYER_PART_COLLISION, {
+						entityId: entity.id,
+						partId: part.entityId
+					});
 					if (entity.collision?.killOnCollision) {
 						MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId: entity.id });
 					}
@@ -113,36 +120,41 @@ export class CollisionSystem implements System {
 			});
 		}
 	}
-	
+
 	private checkForBabyCollision(maybeBaby: BugComponents & { id: string }) {
-		if(!maybeBaby.isBaby) return;
-		
+		if (!maybeBaby.baby) return;
+
 		const baby = maybeBaby;
-		
+
 		const babySprite = baby.render?.sprite;
-		
+
 		if (!babySprite) return;
-		
+
 		const babyStealers = this.world.entityProvider.entities.filter((e) =>
 			e.collision?.tags?.includes('baby')
 		);
-		
+
 		babyStealers.forEach((babyStealer) => {
 			if (!babyStealer.render?.sprite) return;
 			const babyStealerSprite = babyStealer.render.sprite;
 			const babyStealerBox = babyStealerSprite.transform.getBounds();
 			const babyBoundingBox = babySprite.transform.getBounds();
-			
+
 			const isOverlapping = Phaser.Geom.Intersects.RectangleToRectangle(
 				babyStealerBox,
 				babyBoundingBox
 			);
-			
-			if (isOverlapping) {
-				MessageBus.sendMessage(EventType.ENTITY_KNOCKBACK, {knockbackerId: baby.id, knockbackeeId: babyStealer.id } as EntityKnockbackData)
+
+			const babyIsInvincible = InvincibilitySystem.isInvincible(baby);
+
+			if (isOverlapping && !babyIsInvincible) {
+				MessageBus.sendMessage(EventType.ENTITY_KNOCKBACK, {
+					knockbackerId: baby.id,
+					knockbackeeId: babyStealer.id
+				} as EntityKnockbackData);
 				MessageBus.sendMessage(EventType.BABY_COLLISION, {
 					id: baby.id,
-					damage: baby.enemy?.damage ?? 1
+					damage: babyStealer.enemy?.damage ?? 1
 				});
 				if (baby.collision?.killOnCollision) {
 					MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId: baby.id });

@@ -9,7 +9,7 @@ export const Player: BugComponents = {
 		height: 8,
 		spriteKey: 'mainCharacterSquare0'
 	},
-	player: { parts: [] },
+	player: { parts: [], shotCooldown: 0 },
 	facing: { direction: Direction.RIGHT },
 	collision: { tiles: true }
 };

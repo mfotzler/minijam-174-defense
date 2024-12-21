@@ -18,8 +18,9 @@ export interface BugComponents {
 	projectile?: ProjectileComponent;
 	weaponPickup?: WeaponPickupComponent;
 	enemy?: EnemyComponent;
-	isCorpse?: boolean;
-	isBaby?: boolean;
+	invincibility?: InvincibilityComponent;
+	baby?: BabyComponent;
+	corpse?: CorpseComponent;
 }
 
 export interface RenderComponent {
@@ -77,10 +78,17 @@ export interface ProjectileComponent {
 	damage?: number;
 	// how much knockback speed it deals enemies
 	knockback?: number;
+	// how much cooldown is left before can shoot again
+	currentCooldown?: number;
 }
 
 // just exists to say input controls it
 export interface InputComponent {}
+
+export interface PlayerPart {
+	entityId: string;
+	positionOffset: Point;
+}
 
 export interface PlayerComponent {
 	parts: {
@@ -105,4 +113,19 @@ export interface EnemyComponent {
 	iframes?: number;
 	shotCooldown?: number;
 	movementCooldown?: number;
+	corpseType?: string;
+}
+
+export interface InvincibilityComponent {
+	currentDuration?: number;
+	maxDuration?: number;
+}
+
+export interface BabyComponent {
+	health: number;
+}
+
+export interface CorpseComponent {
+	weaponType: WeaponType;
+	isPickedUp?: boolean;
 }

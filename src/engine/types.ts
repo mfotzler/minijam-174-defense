@@ -36,6 +36,7 @@ export enum EventType {
 	ENTITY_PREINIT = 'entityPreInit',
 	ENTITY_ADDED = 'entityAdded',
 	ENTITY_KNOCKBACK = 'entityKnockback',
+	ENTITY_MAKE_INVINCIBLE = 'entityMakeInvincible',
 	
 	SPAWN_ENEMY = 'spawnEnemy',
 	KILL_ENEMY = 'killEnemy',

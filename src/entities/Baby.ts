@@ -1,7 +1,9 @@
 ﻿import { BugComponents } from './types';
 
 export const Baby: BugComponents = {
-	isBaby: true,
+	baby: {
+		health: 5
+	},
 	movement: {},
 	collision: {},
 	render: {
@@ -9,5 +11,8 @@ export const Baby: BugComponents = {
 		height: 4,
 		fillColor: 0x69420e,
 		spriteKey: 'larvae0'
+	},
+	invincibility: {
+		maxDuration: 1000
 	}
 };
