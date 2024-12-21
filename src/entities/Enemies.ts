@@ -39,7 +39,8 @@ export const BabyEaterAnt: BugComponents = {
 	enemy: {
 		...AntBase.enemy,
 		damage: 2,
-		type: BabyEaterAntBehavior.key
+		type: BabyEaterAntBehavior.key,
+		corpseType: 'babyEaterAnt'
 	},
 	render: {
 		...AntBase.render,

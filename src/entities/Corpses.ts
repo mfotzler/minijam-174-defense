@@ -15,6 +15,21 @@ export const AntCorpse: BugComponents = {
 	}
 };
 
+export const BabyEaterAntCorpse: BugComponents = {
+	movement: {},
+	facing: { direction: Direction.RIGHT },
+	collision: { player: true },
+	render: {
+		width: 8,
+		height: 8,
+		fillColor: 0xff4400,
+		spriteKey: 'babyEaterSquare3'
+	},
+	corpse: {
+		weaponType: 'larvae'
+	}
+};
+
 export const BeetleCorpse: BugComponents = {
 	movement: {},
 	facing: { direction: Direction.RIGHT },

@@ -5,7 +5,7 @@ import { BugComponents } from '../entities/types';
 import MessageBus from '../messageBus/MessageBus';
 import BaseScene from '../scenes/BaseScene';
 import { World } from '../world';
-import { AntCorpse, BeetleCorpse } from '../entities/Corpses';
+import { AntCorpse, BabyEaterAntCorpse, BeetleCorpse } from '../entities/Corpses';
 import InvincibilitySystem from './InvincibilitySystem';
 import EnemyBehaviorFactory from './EnemyBehaviors/EnemyBehaviorFactory';
 
@@ -68,7 +68,8 @@ export class EnemySystem implements System {
 
 	private corpseTypes: Record<string, BugComponents> = {
 		ant: AntCorpse,
-		beetle: BeetleCorpse
+		beetle: BeetleCorpse,
+		babyEaterAnt: BabyEaterAntCorpse
 	};
 
 	private onSpawnCorpse(entity: EntityDefinition<BugComponents>) {
