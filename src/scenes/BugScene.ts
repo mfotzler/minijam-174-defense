@@ -12,14 +12,12 @@ import { CorpsePickupUseCase } from '../useCases/CorpsePickupUseCase';
 import { EnemySystem } from '../systems/EnemySystem';
 import { MusicSystem } from '../systems/MusicSystem';
 import { SoundEffectSystem } from '../systems/SoundEffectSystem';
-import { DebugRenderer } from '../systems/DebugRenderer';
 import { AntCorpse, BeetleCorpse } from '../entities/Corpses';
 import { PartsSystem } from '../systems/PartsSystem';
 import SpawnListeningSystem from '../systems/SpawnListeningSystem';
 import EnemySpawnSystem from '../systems/EnemySpawnSystem';
 import { WeaponSystem } from '../systems/WeaponSystem';
 import BabySystem from '../systems/BabySystem';
-import PlayerHealthSystem from '../systems/PlayerHealthSystem';
 import EntityKnockbackUseCase from '../useCases/EntityKnockbackUseCase';
 import PlayerPartDestroyUseCase from '../useCases/PlayerPartDestroyUseCase';
 import PlayerPartRotationUseCase from '../useCases/PlayerPartRotationUseCase';
@@ -28,6 +26,7 @@ import EnemyCountUseCase from '../useCases/EnemyCountUseCase';
 import WinConditionUseCase from '../useCases/WinConditionUseCase';
 import GameOverUseCase from '../useCases/GameOverUseCase';
 import { SpriteRenderer } from '../systems/SpriteRenderer';
+import PlayerHealthUseCase from '../useCases/PlayerHealthUseCase';
 
 export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
@@ -58,7 +57,6 @@ export default class BugScene extends BaseScene {
 		this.engine.addSystem(new EnemySpawnSystem(this.world));
 		this.engine.addSystem(new WeaponSystem(this.world));
 		this.engine.addSystem(new BabySystem(this.world));
-		this.engine.addSystem(new PlayerHealthSystem(this.world));
 		this.engine.addSystem(new InvincibilitySystem(this.world, this));
 
 		this.engine.addUseCase(new CorpsePickupUseCase(this.world));
@@ -68,6 +66,7 @@ export default class BugScene extends BaseScene {
 		this.engine.addUseCase(new EnemyCountUseCase());
 		this.engine.addUseCase(new WinConditionUseCase(this));
 		this.engine.addUseCase(new GameOverUseCase(this));
+		this.engine.addUseCase(new PlayerHealthUseCase(this.world));
 	}
 
 	preload() {

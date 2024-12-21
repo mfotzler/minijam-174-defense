@@ -1,18 +1,15 @@
 import * as Phaser from 'phaser';
 import BaseScene from './BaseScene';
 import { GameEngine } from '../engine/gameEngine';
-import RenderSystem from '../systems/RenderSystem';
 import InputSystem from '../systems/InputSystem';
 import { MovementSystem } from '../systems/MovementSystem';
 import { World } from '../world';
 import { CollisionSystem } from '../systems/CollisionSystem';
-import PlayerHealthSystem from '../systems/PlayerHealthSystem';
 import MessageBus from '../messageBus/MessageBus';
 import { EventType } from '../engine/types';
 import { WeaponSystem } from '../systems/WeaponSystem';
 import HealthDisplay from '../entities/HealthDisplay';
 import { Grandma, SprinkeShotPickup } from '../entities/Pickups';
-import { CorpsePickupUseCase } from '../useCases/CorpsePickupUseCase';
 import { MeleeSystem } from '../systems/MeleeSystem';
 import { EnemySystem } from '../systems/EnemySystem';
 import { MusicSystem } from '../systems/MusicSystem';
@@ -38,11 +35,11 @@ export default class MainScene extends BaseScene {
 
 		this.engine.addSystem(new MovementSystem(this.world.entityProvider, this));
 		this.engine.addSystem(new CollisionSystem(this, this.world));
-		this.engine.addSystem(new RenderSystem(this, this.world.entityProvider));
+		// this.engine.addSystem(new RenderSystem(this, this.world.entityProvider));
 		this.engine.addSystem(new InputSystem(this, this.world.entityProvider));
-		this.engine.addSystem(new PlayerHealthSystem(this.world));
+		// this.engine.addSystem(new PlayerHealthSystem(this.world));
 		this.engine.addSystem(new WeaponSystem(this.world));
-		this.engine.addSystem(new CorpsePickupUseCase(this, this.world));
+		// this.engine.addSystem(new CorpsePickupUseCase(this, this.world));
 		this.engine.addSystem(new MeleeSystem(this.world));
 		this.engine.addSystem(new EnemySystem(this, this.world));
 		this.engine.addSystem(new MusicSystem(this));

@@ -12,5 +12,8 @@ export const Player: BugComponents = {
 	},
 	player: { parts: [], shotCooldown: 0 },
 	facing: { direction: Direction.RIGHT },
-	collision: { tiles: true }
+	collision: { tiles: true },
+	invincibility: {
+		maxDuration: 1000
+	}
 };

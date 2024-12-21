@@ -1,8 +1,9 @@
-﻿import { EventType, StepData, System } from '../engine/types';
+﻿import { World } from '../world';
 import MessageBus from '../messageBus/MessageBus';
-import { World } from '../world';
+import { EventType } from '../engine/types';
+import InvincibilitySystem from '../systems/InvincibilitySystem';
 
-export default class PlayerHealthSystem implements System {
+export default class PlayerHealthUseCase {
 	private currentHealth: number;
 	constructor(private world: World) {
 		this.initializePlayerHealth();
@@ -14,7 +15,7 @@ export default class PlayerHealthSystem implements System {
 	}
 
 	private initializePlayerHealth() {
-		MessageBus.sendMessage(EventType.PLAYER_HEALTH, { health: 1 });
+		MessageBus.sendMessage(EventType.PLAYER_HEALTH, { health: 5 });
 	}
 
 	private onPlayerHealth(data: { health: number }) {
@@ -29,22 +30,15 @@ export default class PlayerHealthSystem implements System {
 
 	private onDamage(data: { damage: number }) {
 		const playerEntity = this.world.entityProvider.getEntity(this.world.playerId);
-		if (playerEntity?.player?.iframes > 0) return;
 
-		playerEntity.player.iframes = 60;
+		if (InvincibilitySystem.isInvincible(playerEntity)) return;
+
 		MessageBus.sendMessage(EventType.PLAYER_HEALTH, { health: this.currentHealth - data.damage });
+		MessageBus.sendMessage(EventType.ENTITY_MAKE_INVINCIBLE, playerEntity);
+		MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hurt_1' });
 	}
 
 	private onHeal(data: { heal: number }) {
 		MessageBus.sendMessage(EventType.PLAYER_HEALTH, { health: this.currentHealth + data.heal });
-	}
-
-	step(): Promise<void> | void {
-		const playerEntity = this.world.entityProvider.getEntity(this.world.playerId);
-		if (!playerEntity?.player) return;
-
-		if (playerEntity.player.iframes > 0) {
-			playerEntity.player.iframes--;
-		}
 	}
 }
