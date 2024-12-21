@@ -35,6 +35,8 @@ export enum EventType {
 	ENTITY_DELETED = 'entityDeleted',
 	ENTITY_PREINIT = 'entityPreInit',
 	ENTITY_ADDED = 'entityAdded',
+	
+	SPAWN_ENEMY = 'spawnEnemy',
 
 	MUSIC_PLAY = 'musicPlay',
 	MUSIC_STOP = 'musicStop',
@@ -54,4 +56,10 @@ export enum EventType {
 
 	// Game State Events
 	SAVE_GRANDMA = 'saveGrandma'
+}
+
+export interface SpawnData {
+	ticks: number;
+	type: "ant";
+	location: "north" | "south" | "east" | "west";
 }

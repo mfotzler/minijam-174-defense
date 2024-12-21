@@ -16,6 +16,8 @@ import { DebugRenderer } from '../systems/DebugRenderer';
 import { Corpse } from '../entities/Corpse';
 import { PartsSystem } from '../systems/PartsSystem';
 import { Ant } from '../entities/Enemies';
+import SpawnListeningSystem from '../systems/SpawnListeningSystem';
+import EnemySpawnSystem from '../systems/EnemySpawnSystem';
 
 export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
@@ -43,6 +45,8 @@ export default class BugScene extends BaseScene {
 		this.engine.addSystem(new MusicSystem(this));
 		this.engine.addSystem(new SoundEffectSystem(this));
 		this.engine.addSystem(new EnemySystem(this, this.world));
+		this.engine.addSystem(new SpawnListeningSystem());
+		this.engine.addSystem(new EnemySpawnSystem(this.world));
 	}
 
 	preload() {
