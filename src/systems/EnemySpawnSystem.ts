@@ -2,7 +2,7 @@
 import MessageBus from '../messageBus/MessageBus';
 import { World } from '../world';
 import { BugComponents } from '../entities/types';
-import { Ant, Beetle } from '../entities/Enemies';
+import { Ant, BabyEaterAnt, Beetle } from '../entities/Enemies';
 
 type Coordinate = {
 	x: number;
@@ -31,7 +31,8 @@ export default class EnemySpawnSystem implements System {
 
 	private readonly enemyTypes: Record<string, BugComponents> = {
 		ant: Ant,
-		beetle: Beetle
+		beetle: Beetle,
+		babyEaterAnt: BabyEaterAnt
 	};
 
 	constructor(private world: World) {

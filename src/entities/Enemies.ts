@@ -1,6 +1,9 @@
 import { BugComponents, Direction } from './types';
+import AntEnemyBehavior from '../systems/EnemyBehaviors/AntEnemyBehavior';
+import BabyEaterAntBehavior from '../systems/EnemyBehaviors/BabyEaterAntBehavior';
+import BeetleEnemyBehavior from '../systems/EnemyBehaviors/BeetleEnemyBehavior';
 
-export const Ant: BugComponents = {
+const AntBase: BugComponents = {
 	position: { x: 0, y: 0 },
 	movement: {},
 	collision: { tiles: true, player: true, tags: ['projectile', 'baby'] },
@@ -12,7 +15,7 @@ export const Ant: BugComponents = {
 		currentAnimation: 'ant-walk-square'
 	},
 	enemy: {
-		type: 'ant',
+		type: 'PLACEHOLDER',
 		health: 3,
 		damage: 1,
 		speed: 64,
@@ -20,6 +23,27 @@ export const Ant: BugComponents = {
 	},
 	invincibility: {
 		maxDuration: 250
+	}
+};
+
+export const Ant: BugComponents = {
+	...AntBase,
+	enemy: {
+		...AntBase.enemy,
+		type: AntEnemyBehavior.key
+	}
+};
+
+export const BabyEaterAnt: BugComponents = {
+	...AntBase,
+	enemy: {
+		...AntBase.enemy,
+		damage: 2,
+		type: BabyEaterAntBehavior.key
+	},
+	render: {
+		...AntBase.render,
+		fillColor: 0x902060
 	}
 };
 
@@ -35,7 +59,7 @@ export const Beetle: BugComponents = {
 		currentAnimation: 'beetle-walk-square'
 	},
 	enemy: {
-		type: 'beetle',
+		type: BeetleEnemyBehavior.key,
 		health: 5,
 		speed: 120,
 		corpseType: 'beetle'

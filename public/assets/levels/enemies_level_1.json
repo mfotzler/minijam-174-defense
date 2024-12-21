@@ -24,6 +24,16 @@
 			"ticks": 5000,
 			"location": "north",
 			"type": "beetle"
+		},
+		{
+			"ticks": 5500,
+			"location": "west",
+			"type": "babyEaterAnt"
+		},
+		{
+			"ticks": 5600,
+			"location": "east",
+			"type": "babyEaterAnt"
 		}
 	]
 }

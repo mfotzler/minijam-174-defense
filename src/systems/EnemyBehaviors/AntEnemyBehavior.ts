@@ -1,10 +1,12 @@
-﻿import { EntityDefinition } from '../../engine/entities/types';
+﻿import * as Phaser from 'phaser';
+import { EntityDefinition } from '../../engine/entities/types';
 import { BugComponents } from '../../entities/types';
 import { World } from '../../world';
 import { IEnemyBehavior } from './EnemyBehaviorFactory';
-import Phaser from 'phaser';
 
 export default class AntEnemyBehavior implements IEnemyBehavior {
+	static readonly key = 'ant';
+
 	process(world: World, entity: EntityDefinition<BugComponents>): void {
 		const { enemy, render } = entity;
 		const player = world.entityProvider.getEntity(world.playerId);

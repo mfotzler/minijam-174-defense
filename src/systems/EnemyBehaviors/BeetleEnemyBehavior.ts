@@ -1,12 +1,14 @@
-﻿import { EntityDefinition } from '../../engine/entities/types';
+﻿import * as Phaser from 'phaser';
+import { EntityDefinition } from '../../engine/entities/types';
 import { BugComponents } from '../../entities/types';
 import { World } from '../../world';
 import { IEnemyBehavior } from './EnemyBehaviorFactory';
-import Phaser from 'phaser';
 import { cloneDeep } from 'lodash';
 import { Acid } from '../../entities/Weapons';
 
 export default class BeetleEnemyBehavior implements IEnemyBehavior {
+	static readonly key = 'beetle';
+
 	process(world: World, entity: EntityDefinition<BugComponents>): void {
 		const { enemy, render } = entity;
 		const player = world.entityProvider.getEntity(world.playerId);
