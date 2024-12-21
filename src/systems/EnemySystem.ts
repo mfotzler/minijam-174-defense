@@ -18,6 +18,16 @@ export class EnemySystem implements System {
 		MessageBus.subscribe(EventType.PROJECTILE_COLLISION, this.onProjectileCollision.bind(this));
 		MessageBus.subscribe(EventType.KILL_ENEMY, this.onKillEnemy.bind(this));
 		MessageBus.subscribe(EventType.SPAWN_CORPSE, this.onSpawnCorpse.bind(this));
+		MessageBus.subscribe(EventType.PLAYER_PART_COLLISION, this.onPartCollision.bind(this));
+	}
+	
+	private onPartCollision({entityId, partId}: {entityId: string; partId: string;}) {
+		const entity = this.world.entityProvider.getEntity(entityId);
+		const part = this.world.entityProvider.getEntity(partId);
+		
+		if(!entity || !part || !entity.enemy) return;
+		
+		MessageBus.sendMessage(EventType.PLAYER_PART_DESTROY, {partId: partId});
 	}
 	
 	private onPlayerCollision({id}: {id: string}) {
@@ -76,16 +86,22 @@ export class EnemySystem implements System {
 		entity.render.fillColor = color;
 	}
 
-	step() {
+	step({delta}) {
 		this.world.entityProvider.entities.forEach((entity) => {
 			if (entity.enemy) {
 				if (entity.collision.blocked?.down) {
 					entity.render?.sprite?.body.setVelocityX(0);
 				}
-				if (entity.enemy.type) {
+				
+				const hasMovementCooldown = !!entity.enemy.movementCooldown && entity.enemy.movementCooldown >= 0;
+				
+				if (entity.enemy.type && !hasMovementCooldown) {
 					enemyBehaviors[entity.enemy.type]?.(this.world, entity);
 				}
-				entity.enemy.iframes = Math.max(0, (entity.enemy.iframes ?? 0) - 1);
+				entity.enemy.iframes = Math.max(0, (entity.enemy.iframes ?? 0) - delta);
+				
+				if(hasMovementCooldown)
+					entity.enemy.movementCooldown = Math.max(0, (entity.enemy.movementCooldown ?? 0) - delta);
 			}
 		});
 	}
