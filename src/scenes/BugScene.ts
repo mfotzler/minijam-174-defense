@@ -27,6 +27,7 @@ import InvincibilitySystem from '../systems/InvincibilitySystem';
 import EnemyCountUseCase from '../useCases/EnemyCountUseCase';
 import WinConditionUseCase from '../useCases/WinConditionUseCase';
 import GameOverUseCase from '../useCases/GameOverUseCase';
+import { SpriteRenderer } from '../systems/SpriteRenderer';
 
 export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
@@ -46,7 +47,7 @@ export default class BugScene extends BaseScene {
 		this.engine.addSystem(new MovementSystem(this.world.entityProvider, this));
 		this.engine.addSystem(new CollisionSystem(this, this.world));
 		this.engine.addSystem(
-			new RenderSystem(this, this.world.entityProvider, new DebugRenderer(this))
+			new RenderSystem(this, this.world.entityProvider, new SpriteRenderer(this))
 		);
 		this.engine.addSystem(new InputSystem(this, this.world.entityProvider));
 		this.engine.addSystem(new PartsSystem(this.world));
