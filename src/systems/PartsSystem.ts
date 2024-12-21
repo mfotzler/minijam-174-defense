@@ -2,10 +2,7 @@ import { StepData, System } from '../engine/types';
 import { World } from '../world';
 
 export class PartsSystem implements System {
-	constructor(private world: World) {
-	}
-	
-
+	constructor(private world: World) {}
 
 	step(data: StepData) {
 		const player = this.world.entityProvider.getEntity(this.world.playerId);

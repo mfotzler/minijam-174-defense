@@ -19,12 +19,14 @@ import SpawnListeningSystem from '../systems/SpawnListeningSystem';
 import EnemySpawnSystem from '../systems/EnemySpawnSystem';
 import { WeaponSystem } from '../systems/WeaponSystem';
 import BabySystem from '../systems/BabySystem';
-import { GameStateSystem } from '../systems/GameStateSystem';
 import PlayerHealthSystem from '../systems/PlayerHealthSystem';
 import EntityKnockbackUseCase from '../useCases/EntityKnockbackUseCase';
 import PlayerPartDestroyUseCase from '../useCases/PlayerPartDestroyUseCase';
 import PlayerPartRotationUseCase from '../useCases/PlayerPartRotationUseCase';
 import InvincibilitySystem from '../systems/InvincibilitySystem';
+import EnemyCountUseCase from '../useCases/EnemyCountUseCase';
+import WinConditionUseCase from '../useCases/WinConditionUseCase';
+import GameOverUseCase from '../useCases/GameOverUseCase';
 
 export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
@@ -55,7 +57,6 @@ export default class BugScene extends BaseScene {
 		this.engine.addSystem(new EnemySpawnSystem(this.world));
 		this.engine.addSystem(new WeaponSystem(this.world));
 		this.engine.addSystem(new BabySystem(this.world));
-		this.engine.addSystem(new GameStateSystem(this));
 		this.engine.addSystem(new PlayerHealthSystem(this.world));
 		this.engine.addSystem(new InvincibilitySystem(this.world, this));
 
@@ -63,6 +64,9 @@ export default class BugScene extends BaseScene {
 		this.engine.addUseCase(new EntityKnockbackUseCase(this.world));
 		this.engine.addUseCase(new PlayerPartDestroyUseCase(this.world));
 		this.engine.addUseCase(new PlayerPartRotationUseCase(this.world));
+		this.engine.addUseCase(new EnemyCountUseCase());
+		this.engine.addUseCase(new WinConditionUseCase(this));
+		this.engine.addUseCase(new GameOverUseCase(this));
 	}
 
 	preload() {
@@ -126,7 +130,7 @@ export default class BugScene extends BaseScene {
 			repeat: -1
 		});
 
-        this.anims.create({
+		this.anims.create({
 			key: 'beetle-walk-square',
 			frames: this.anims.generateFrameNames('textures', {
 				prefix: 'beetleSquare',

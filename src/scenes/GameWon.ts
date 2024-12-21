@@ -63,7 +63,7 @@ export default class GameWon extends BaseScene {
 			],
 			() => {
 				GameStateSystem.clearState();
-				this.fadeToScene(MainScene.key, { fadeInDuration: 300 });
+				this.fadeToScene(MainMenu.key, { fadeInDuration: 300 });
 			}
 		);
 		this.add.existing<Container>(dialogueBox);

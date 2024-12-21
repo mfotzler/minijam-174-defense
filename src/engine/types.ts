@@ -37,9 +37,11 @@ export enum EventType {
 	ENTITY_ADDED = 'entityAdded',
 	ENTITY_KNOCKBACK = 'entityKnockback',
 	ENTITY_MAKE_INVINCIBLE = 'entityMakeInvincible',
-	
+
 	SPAWN_ENEMY = 'spawnEnemy',
 	KILL_ENEMY = 'killEnemy',
+	ALL_ENEMIES_SPAWNED = 'allEnemiesSpawned',
+	ALL_ENEMIES_KILLED = 'allEnemiesKilled',
 	SPAWN_CORPSE = 'spawnCorpse',
 
 	MUSIC_PLAY = 'musicPlay',
@@ -59,20 +61,20 @@ export enum EventType {
 	PLAYER_PART_DESTROY = 'playerPartDestroy',
 	PLAYER_MELEE = 'playerMelee',
 	PLAYER_ROTATE = 'playerRotate',
-	
+
 	BABY_COLLISION = 'babyCollision',
 	BABY_DEATH = 'babyDeath',
 	LAST_BABY_DEATH = 'lastBabyDeath',
-	
+
 	GAME_OVER = 'gameOver',
 
 	// Game State Events
 	SAVE_GRANDMA = 'saveGrandma',
-	ENABLE_INFINITE_MODE = 'enableInfiniteMode',
+	ENABLE_INFINITE_MODE = 'enableInfiniteMode'
 }
 
 export interface SpawnData {
 	ticks: number;
-	type: "ant";
-	location: "north" | "south" | "east" | "west";
+	type: 'ant';
+	location: 'north' | 'south' | 'east' | 'west';
 }
