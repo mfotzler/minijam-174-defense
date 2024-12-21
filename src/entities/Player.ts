@@ -6,7 +6,8 @@ export const Player: BugComponents = {
 	render: {
 		fillColor: 0x0000ff,
 		width: 8,
-		height: 8
+		height: 8,
+		spriteKey: 'mainCharacterSquare0'
 	},
 	player: { parts: [] },
 	facing: { direction: Direction.RIGHT },

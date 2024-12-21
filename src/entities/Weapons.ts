@@ -11,7 +11,7 @@ export const Acid: BugComponents = {
 	position: { x: 0, y: 0 },
 	movement: {},
 	collision: { tiles: true, player: true },
-	render: { width: 8, height: 4, fillColor: 0x90b040 },
+	render: { spriteKey: 'larvae0', width: 4, height: 4, fillColor: 0x90b040 },
 	projectile: { type: 'acid', speed: 256, cooldown: 30, lifetime: 1000, damage: 1 }
 };
 
