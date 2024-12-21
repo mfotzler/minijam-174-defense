@@ -8,5 +8,8 @@ export const Baby : BugComponents = {
 		width: 4,
 		height: 4,
 		fillColor: 0x69420e
+	},
+	invincibility: {
+		maxDuration: 1000
 	}
 }

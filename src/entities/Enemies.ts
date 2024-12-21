@@ -10,6 +10,9 @@ export const Ant: BugComponents = {
 		health: 3,
 		damage: 1,
 		speed: 64
+	},
+	invincibility: {
+		maxDuration: 250
 	}
 };
 

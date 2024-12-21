@@ -25,6 +25,7 @@ import PlayerHealthSystem from '../systems/PlayerHealthSystem';
 import EntityKnockbackUseCase from '../useCases/EntityKnockbackUseCase';
 import PlayerPartDestroyUseCase from '../useCases/PlayerPartDestroyUseCase';
 import PlayerPartRotationUseCase from '../useCases/PlayerPartRotationUseCase';
+import InvincibilitySystem from '../systems/InvincibilitySystem';
 
 export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
@@ -58,6 +59,7 @@ export default class BugScene extends BaseScene {
 		this.engine.addSystem(new BabySystem(this.world));
 		this.engine.addSystem(new GameStateSystem(this));
 		this.engine.addSystem(new PlayerHealthSystem(this.world));
+		this.engine.addSystem(new InvincibilitySystem(this.world, this));
 		
 		this.engine.addUseCase(new EntityKnockbackUseCase(this.world));
 		this.engine.addUseCase(new PlayerPartDestroyUseCase(this.world));

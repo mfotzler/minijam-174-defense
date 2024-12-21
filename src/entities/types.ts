@@ -18,6 +18,7 @@ export interface BugComponents {
 	projectile?: ProjectileComponent;
 	weaponPickup?: WeaponPickupComponent;
 	enemy?: EnemyComponent;
+	invincibility?: InvincibilityComponent;
 	isCorpse?: boolean;
 	isBaby?: boolean;
 }
@@ -105,4 +106,9 @@ export interface EnemyComponent {
 	iframes?: number;
 	shotCooldown?: number;
 	movementCooldown?: number;
+}
+
+export interface InvincibilityComponent {
+  currentDuration?: number;
+	maxDuration?: number;
 }
