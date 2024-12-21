@@ -8,7 +8,7 @@ export const Player: BugComponents = {
 		width: 8,
 		height: 8
 	},
-	player: { parts: [] },
+	player: { parts: [], shotCooldown: 0 },
 	facing: { direction: Direction.RIGHT },
 	collision: { tiles: true }
 };

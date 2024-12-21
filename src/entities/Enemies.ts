@@ -9,7 +9,8 @@ export const Ant: BugComponents = {
 		type: 'ant',
 		health: 3,
 		damage: 1,
-		speed: 64
+		speed: 64,
+		corpseType: 'ant'
 	},
 	invincibility: {
 		maxDuration: 250
@@ -24,6 +25,7 @@ export const Beetle: BugComponents = {
 	enemy: {
 		type: 'beetle',
 		health: 5,
-		speed: 120
+		speed: 120,
+		corpseType: 'beetle'
 	}
 };

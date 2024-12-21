@@ -1,121 +1,49 @@
-import { System, EventType } from '../engine/types';
+import { System, EventType, StepData } from '../engine/types';
 import { WeaponType, Weapons } from '../entities/Weapons';
-import { BugComponents, Direction } from '../entities/types';
+import { BugComponents, Direction, PlayerPart } from '../entities/types';
 import MessageBus from '../messageBus/MessageBus';
 import { World } from '../world';
+import { WeaponBehaviorFactory } from './WeaponBehaviors/WeaponBehaviorFactory';
 
 export class WeaponSystem implements System {
 	constructor(private world: World) {
-		MessageBus.subscribe(EventType.PLAYER_SHOOT, ({ mousePos }) => {
-			const playerEntity = world.entityProvider.getEntity(world.playerId);
-			const { player: playerData } = playerEntity;
-
-			if (playerData.shotCooldown > 0) {
-				return;
-			}
-
-			const weapon = Weapons.larvae;
-
-			playerData.shotCooldown = weapon.projectile.cooldown;
-
-			const currentlyAlive = world.entityProvider.entities.filter(
-				(e) => e.projectile?.type === weapon.projectile?.type).length;
-			if (currentlyAlive >= 5) {
-				return;
-			}
-
-			weaponBehaviors.larvae(world, playerEntity);
-		});
+		MessageBus.subscribe(EventType.PLAYER_SHOOT, this.onPlayerShoot.bind(this));
 	}
 
-	step() {
+	private onPlayerShoot() {
 		const playerEntity = this.world.entityProvider.getEntity(this.world.playerId);
-		if (!playerEntity?.player) return;
-		playerEntity.player.shotCooldown = Math.max(0, playerEntity.player.shotCooldown - 1);
+
+		const weaponBehaviorFactory = new WeaponBehaviorFactory(this.world);
+
+		for (const part of playerEntity.player.parts) {
+			const weapon = weaponBehaviorFactory.Create(part);
+
+			weapon.shoot();
+		}
+		this.setCooldownsForAllWeapons();
 	}
-}
 
-const weaponBehaviors = {
-	larvae: (world: World, playerEntity: BugComponents) => {
-		const { render, facing, player } = playerEntity;
-
-		const weapon = Weapons.larvae;
-
-		const {speed} = weapon.projectile;
-
-		for(const part of player.parts) {
-			const startingPoint = {
-				x: render.sprite.transform.x + part.positionOffset.x,
-				y: render.sprite.transform.y + part.positionOffset.y
+	private setCooldownsForAllWeapons() {
+		for (const weapon of Object.values(Weapons)) {
+			if (
+				weapon.projectile &&
+				(weapon.projectile.currentCooldown <= 0 || !weapon.projectile.currentCooldown)
+			) {
+				weapon.projectile.currentCooldown = weapon.projectile.cooldown;
 			}
-			
-			const angle = Math.floor(Math.random() * 360);
-			
-			const initialVelocity = {
-				x: Math.cos(angle) * speed,
-				y: Math.sin(angle) * speed
-			};
-			
-			world.createEntity(
-				{
-					...weapon,
-					movement: {
-						...weapon.movement,
-						initialVelocity
-					}
-				},
-				startingPoint
+		}
+	}
+
+	step(data: StepData) {
+		const weapons = Object.values(Weapons);
+
+		for (const weapon of weapons) {
+			if (!weapon.projectile) continue;
+
+			weapon.projectile.currentCooldown = Math.max(
+				0,
+				weapon.projectile.currentCooldown - data.delta
 			);
 		}
-	},
-	// frosting: (mousePos: { x: number; y: number }, world: World, playerEntity: BugComponents) => {
-	// 	const { render } = playerEntity;
-	// 	const weapon = Weapons.larvae;
-	// 	const velocityDirection = {
-	// 		x: mousePos.x - (render?.sprite?.x ?? 0),
-	// 		y: mousePos.y - (render?.sprite?.y ?? 0)
-	// 	};
-	// 	const magnitude = Math.sqrt(velocityDirection.x ** 2 + velocityDirection.y ** 2);
-	// 	const initialVelocity = {
-	// 		x: (velocityDirection.x / magnitude) * weapon.projectile.speed,
-	// 		y: (velocityDirection.y / magnitude) * weapon.projectile.speed
-	// 	};
-	//
-	// 	world.createEntity(
-	// 		{
-	// 			...weapon,
-	// 			movement: {
-	// 				...weapon.movement,
-	// 				initialVelocity
-	// 			}
-	// 		},
-	// 		{ x: (render?.sprite?.x ?? 0) + Math.sign(initialVelocity.x) * 50, y: render?.sprite?.y ?? 0 }
-	// 	);
-	// },
-	// sprinkle: (_, world: World, playerEntity: BugComponents) => {
-	// 	const { render, facing } = playerEntity;
-	// 	const weapon = Weapons.sprinkle;
-	//
-	// 	const sign = facing?.direction === Direction.LEFT ? -1 : 1;
-	//
-	// 	for (let i = -1; i <= 1; i++) {
-	// 		const angle = (i * 30 * Math.PI) / 180;
-	// 		const { speed } = weapon.projectile;
-	// 		const initialVelocity = {
-	// 			x: Math.cos(angle) * speed * sign,
-	// 			y: Math.sin(angle) * speed
-	// 		};
-	//
-	// 		world.createEntity(
-	// 			{
-	// 				...weapon,
-	// 				movement: {
-	// 					...weapon.movement,
-	// 					initialVelocity
-	// 				}
-	// 			},
-	// 			{ x: (render?.sprite?.x ?? 0) + sign * 50, y: render?.sprite?.y ?? 0 }
-	// 		);
-	// 	}
-	// }
-};
+	}
+}

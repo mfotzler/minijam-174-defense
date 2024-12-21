@@ -12,7 +12,7 @@ import { EventType } from '../engine/types';
 import { WeaponSystem } from '../systems/WeaponSystem';
 import HealthDisplay from '../entities/HealthDisplay';
 import { Grandma, SprinkeShotPickup } from '../entities/Pickups';
-import { PickupSystem } from '../systems/PickupSystem';
+import { CorpsePickupUseCase } from '../useCases/CorpsePickupUseCase';
 import { MeleeSystem } from '../systems/MeleeSystem';
 import { EnemySystem } from '../systems/EnemySystem';
 import { MusicSystem } from '../systems/MusicSystem';
@@ -42,7 +42,7 @@ export default class MainScene extends BaseScene {
 		this.engine.addSystem(new InputSystem(this, this.world.entityProvider));
 		this.engine.addSystem(new PlayerHealthSystem(this.world));
 		this.engine.addSystem(new WeaponSystem(this.world));
-		this.engine.addSystem(new PickupSystem(this, this.world));
+		this.engine.addSystem(new CorpsePickupUseCase(this, this.world));
 		this.engine.addSystem(new MeleeSystem(this.world));
 		this.engine.addSystem(new EnemySystem(this, this.world));
 		this.engine.addSystem(new MusicSystem(this));

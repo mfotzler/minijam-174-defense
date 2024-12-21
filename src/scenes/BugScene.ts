@@ -8,14 +8,13 @@ import { World } from '../world';
 import { CollisionSystem } from '../systems/CollisionSystem';
 import MessageBus from '../messageBus/MessageBus';
 import { EventType } from '../engine/types';
-import { PickupSystem } from '../systems/PickupSystem';
+import { CorpsePickupUseCase } from '../useCases/CorpsePickupUseCase';
 import { EnemySystem } from '../systems/EnemySystem';
 import { MusicSystem } from '../systems/MusicSystem';
 import { SoundEffectSystem } from '../systems/SoundEffectSystem';
 import { DebugRenderer } from '../systems/DebugRenderer';
-import { Corpse } from '../entities/Corpse';
+import { AntCorpse, BeetleCorpse } from '../entities/Corpses';
 import { PartsSystem } from '../systems/PartsSystem';
-import { Ant, Beetle } from '../entities/Enemies';
 import SpawnListeningSystem from '../systems/SpawnListeningSystem';
 import EnemySpawnSystem from '../systems/EnemySpawnSystem';
 import { WeaponSystem } from '../systems/WeaponSystem';
@@ -48,7 +47,6 @@ export default class BugScene extends BaseScene {
 			new RenderSystem(this, this.world.entityProvider, new DebugRenderer(this))
 		);
 		this.engine.addSystem(new InputSystem(this, this.world.entityProvider));
-		this.engine.addSystem(new PickupSystem(this, this.world));
 		this.engine.addSystem(new PartsSystem(this.world));
 		this.engine.addSystem(new MusicSystem(this));
 		this.engine.addSystem(new SoundEffectSystem(this));
@@ -60,12 +58,13 @@ export default class BugScene extends BaseScene {
 		this.engine.addSystem(new GameStateSystem(this));
 		this.engine.addSystem(new PlayerHealthSystem(this.world));
 		this.engine.addSystem(new InvincibilitySystem(this.world, this));
-		
+
+		this.engine.addUseCase(new CorpsePickupUseCase(this.world));
 		this.engine.addUseCase(new EntityKnockbackUseCase(this.world));
 		this.engine.addUseCase(new PlayerPartDestroyUseCase(this.world));
 		this.engine.addUseCase(new PlayerPartRotationUseCase(this.world));
 	}
-	
+
 	preload() {
 		super.preload();
 		this.debugGraphics = this.add.graphics();
@@ -79,7 +78,10 @@ export default class BugScene extends BaseScene {
 		for (let i = 0; i < 10; i++) {
 			const x = Phaser.Math.Between(0, 256);
 			const y = Phaser.Math.Between(0, 256);
-			this.world.createEntity(Corpse, { x, y });
+
+			const corpse = Math.random() > 0.5 ? AntCorpse : BeetleCorpse;
+
+			this.world.createEntity(corpse, { x, y });
 		}
 	}
 

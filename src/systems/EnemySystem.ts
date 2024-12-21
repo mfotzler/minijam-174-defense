@@ -6,8 +6,7 @@ import MessageBus from '../messageBus/MessageBus';
 import BaseScene from '../scenes/BaseScene';
 import { World } from '../world';
 import { cloneDeep } from 'lodash';
-import { GameStateSystem } from './GameStateSystem';
-import { Corpse } from '../entities/Corpse';
+import { AntCorpse, BeetleCorpse } from '../entities/Corpses';
 import { Acid } from '../entities/Weapons';
 import InvincibilitySystem from './InvincibilitySystem';
 
@@ -22,14 +21,14 @@ export class EnemySystem implements System {
 		MessageBus.subscribe(EventType.SPAWN_CORPSE, this.onSpawnCorpse.bind(this));
 		MessageBus.subscribe(EventType.PLAYER_PART_COLLISION, this.onPartCollision.bind(this));
 	}
-	
-	private onPartCollision({entityId, partId}: {entityId: string; partId: string;}) {
+
+	private onPartCollision({ entityId, partId }: { entityId: string; partId: string }) {
 		const entity = this.world.entityProvider.getEntity(entityId);
 		const part = this.world.entityProvider.getEntity(partId);
-		
-		if(!entity || !part || !entity.enemy) return;
-		
-		MessageBus.sendMessage(EventType.PLAYER_PART_DESTROY, {partId: partId});
+
+		if (!entity || !part || !entity.enemy) return;
+
+		MessageBus.sendMessage(EventType.PLAYER_PART_DESTROY, { partId: partId });
 	}
 
 	private onPlayerCollision({ id }: { id: string }) {
@@ -52,10 +51,10 @@ export class EnemySystem implements System {
 			MessageBus.sendMessage(EventType.KILL_ENEMY, { entityId: id });
 			MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hurt_2' });
 		} else {
-			if(InvincibilitySystem.canBeMadeInvincible(enemyEntity)) {
+			if (InvincibilitySystem.canBeMadeInvincible(enemyEntity)) {
 				MessageBus.sendMessage(EventType.ENTITY_MAKE_INVINCIBLE, enemyEntity);
 			}
-			
+
 			MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hurt_1' });
 		}
 	}
@@ -68,42 +67,39 @@ export class EnemySystem implements System {
 		MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId });
 	}
 
-	private onSpawnCorpse(entity: EntityDefinition<BugComponents>) {
-		this.world.createEntity(Corpse, entity.render?.sprite?.transform ?? { x: 0, y: 0 });
-	}
+	private corpseTypes: Record<string, BugComponents> = {
+		ant: AntCorpse,
+		beetle: BeetleCorpse
+	};
 
-	private flashEnemy(enemyEntity: BugComponents & { id: string }, scene: BaseScene) {
-		this.setTint(enemyEntity, 0xff0000);
-		for (let i = 1; i <= 5; i++) {
-			scene.time.delayedCall(i * 50, () => {
-				if (i % 2 === 0) {
-					this.setTint(enemyEntity, 0xff0000);
-				} else {
-					this.setTint(enemyEntity, 0xffffff);
-				}
-			});
-		}
+	private onSpawnCorpse(entity: EntityDefinition<BugComponents>) {
+		const corpse = this.corpseTypes[entity.enemy?.corpseType ?? 'ant'];
+
+		if (!corpse) return;
+
+		this.world.createEntity(corpse, entity.render?.sprite?.transform ?? { x: 0, y: 0 });
 	}
 
 	private setTint(entity: EntityDefinition<BugComponents>, color: number) {
 		entity.render.fillColor = color;
 	}
 
-	step({delta}) {
+	step({ delta }) {
 		this.world.entityProvider.entities.forEach((entity) => {
 			if (entity.enemy) {
 				if (entity.collision.blocked?.down) {
 					entity.render?.sprite?.body.setVelocityX(0);
 				}
-				
-				const hasMovementCooldown = !!entity.enemy.movementCooldown && entity.enemy.movementCooldown >= 0;
-				
+
+				const hasMovementCooldown =
+					!!entity.enemy.movementCooldown && entity.enemy.movementCooldown >= 0;
+
 				if (entity.enemy.type && !hasMovementCooldown) {
 					enemyBehaviors[entity.enemy.type]?.(this.world, entity);
 				}
 				entity.enemy.iframes = Math.max(0, (entity.enemy.iframes ?? 0) - delta);
-				
-				if(hasMovementCooldown)
+
+				if (hasMovementCooldown)
 					entity.enemy.movementCooldown = Math.max(0, (entity.enemy.movementCooldown ?? 0) - delta);
 			}
 		});
