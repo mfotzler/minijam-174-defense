@@ -80,10 +80,6 @@ export class EnemySystem implements System {
 		this.world.createEntity(corpse, entity.render?.sprite?.transform ?? { x: 0, y: 0 });
 	}
 
-	private setTint(entity: EntityDefinition<BugComponents>, color: number) {
-		entity.render.fillColor = color;
-	}
-
 	step({ delta }) {
 		this.world.entityProvider.entities.forEach((entity) => {
 			if (entity.enemy) {
@@ -190,6 +186,10 @@ const enemyBehaviors = {
 		acid.movement.initialVelocity = {
 			x: Math.cos(angle) * acid.projectile?.speed,
 			y: Math.sin(angle) * acid.projectile?.speed
+		};
+
+		acid.enemy = {
+			damage: 1
 		};
 
 		world.createEntity(acid, {
