@@ -57,7 +57,7 @@ export default class BabySystem implements System {
 			return;
 		
 		MessageBus.sendMessage(EventType.DELETE_ENTITY, { entityId });
-		MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, {key: ""})
+		MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, {key: "loss_4"})
 		
 		
 		this.babiesLeft--;
