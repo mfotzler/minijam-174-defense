@@ -37,6 +37,8 @@ export enum EventType {
 	ENTITY_ADDED = 'entityAdded',
 	
 	SPAWN_ENEMY = 'spawnEnemy',
+	KILL_ENEMY = 'killEnemy',
+	SPAWN_CORPSE = 'spawnCorpse',
 
 	MUSIC_PLAY = 'musicPlay',
 	MUSIC_STOP = 'musicStop',

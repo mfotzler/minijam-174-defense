@@ -86,6 +86,7 @@ export interface PlayerComponent {
 		entityId: string;
 		positionOffset: Point;
 	}[];
+	shotCooldown: number;
 }
 
 export interface WeaponPickupComponent {

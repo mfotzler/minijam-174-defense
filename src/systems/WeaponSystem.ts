@@ -14,18 +14,17 @@ export class WeaponSystem implements System {
 				return;
 			}
 
-			const weapon = Weapons[playerData.currentWeapon];
+			const weapon = Weapons.larvae;
 
 			playerData.shotCooldown = weapon.projectile.cooldown;
 
 			const currentlyAlive = world.entityProvider.entities.filter(
-				(e) => e.projectile?.type === playerData.currentWeapon
-			).length;
+				(e) => e.projectile?.type === weapon.projectile?.type).length;
 			if (currentlyAlive >= 5) {
 				return;
 			}
 
-			weaponBehaviors[playerData.currentWeapon]?.(mousePos, world, playerEntity);
+			weaponBehaviors.larvae(world, playerEntity);
 		});
 	}
 
@@ -37,44 +36,26 @@ export class WeaponSystem implements System {
 }
 
 const weaponBehaviors = {
-	frosting: (mousePos: { x: number; y: number }, world: World, playerEntity: BugComponents) => {
-		const { render } = playerEntity;
-		const weapon = Weapons.frosting;
-		const velocityDirection = {
-			x: mousePos.x - (render?.sprite?.x ?? 0),
-			y: mousePos.y - (render?.sprite?.y ?? 0)
-		};
-		const magnitude = Math.sqrt(velocityDirection.x ** 2 + velocityDirection.y ** 2);
-		const initialVelocity = {
-			x: (velocityDirection.x / magnitude) * weapon.projectile.speed,
-			y: (velocityDirection.y / magnitude) * weapon.projectile.speed
-		};
+	larvae: (world: World, playerEntity: BugComponents) => {
+		const { render, facing, player } = playerEntity;
 
-		world.createEntity(
-			{
-				...weapon,
-				movement: {
-					...weapon.movement,
-					initialVelocity
-				}
-			},
-			{ x: (render?.sprite?.x ?? 0) + Math.sign(initialVelocity.x) * 50, y: render?.sprite?.y ?? 0 }
-		);
-	},
-	sprinkle: (_, world: World, playerEntity: BugComponents) => {
-		const { render, facing } = playerEntity;
-		const weapon = Weapons.sprinkle;
+		const weapon = Weapons.larvae;
 
-		const sign = facing?.direction === Direction.LEFT ? -1 : 1;
+		const {speed} = weapon.projectile;
 
-		for (let i = -1; i <= 1; i++) {
-			const angle = (i * 30 * Math.PI) / 180;
-			const { speed } = weapon.projectile;
+		for(const part of player.parts) {
+			const startingPoint = {
+				x: render.sprite.transform.x + part.positionOffset.x,
+				y: render.sprite.transform.y + part.positionOffset.y
+			}
+			
+			const angle = Math.floor(Math.random() * 360);
+			
 			const initialVelocity = {
-				x: Math.cos(angle) * speed * sign,
+				x: Math.cos(angle) * speed,
 				y: Math.sin(angle) * speed
 			};
-
+			
 			world.createEntity(
 				{
 					...weapon,
@@ -83,8 +64,58 @@ const weaponBehaviors = {
 						initialVelocity
 					}
 				},
-				{ x: (render?.sprite?.x ?? 0) + sign * 50, y: render?.sprite?.y ?? 0 }
+				startingPoint
 			);
 		}
-	}
+	},
+	// frosting: (mousePos: { x: number; y: number }, world: World, playerEntity: BugComponents) => {
+	// 	const { render } = playerEntity;
+	// 	const weapon = Weapons.larvae;
+	// 	const velocityDirection = {
+	// 		x: mousePos.x - (render?.sprite?.x ?? 0),
+	// 		y: mousePos.y - (render?.sprite?.y ?? 0)
+	// 	};
+	// 	const magnitude = Math.sqrt(velocityDirection.x ** 2 + velocityDirection.y ** 2);
+	// 	const initialVelocity = {
+	// 		x: (velocityDirection.x / magnitude) * weapon.projectile.speed,
+	// 		y: (velocityDirection.y / magnitude) * weapon.projectile.speed
+	// 	};
+	//
+	// 	world.createEntity(
+	// 		{
+	// 			...weapon,
+	// 			movement: {
+	// 				...weapon.movement,
+	// 				initialVelocity
+	// 			}
+	// 		},
+	// 		{ x: (render?.sprite?.x ?? 0) + Math.sign(initialVelocity.x) * 50, y: render?.sprite?.y ?? 0 }
+	// 	);
+	// },
+	// sprinkle: (_, world: World, playerEntity: BugComponents) => {
+	// 	const { render, facing } = playerEntity;
+	// 	const weapon = Weapons.sprinkle;
+	//
+	// 	const sign = facing?.direction === Direction.LEFT ? -1 : 1;
+	//
+	// 	for (let i = -1; i <= 1; i++) {
+	// 		const angle = (i * 30 * Math.PI) / 180;
+	// 		const { speed } = weapon.projectile;
+	// 		const initialVelocity = {
+	// 			x: Math.cos(angle) * speed * sign,
+	// 			y: Math.sin(angle) * speed
+	// 		};
+	//
+	// 		world.createEntity(
+	// 			{
+	// 				...weapon,
+	// 				movement: {
+	// 					...weapon.movement,
+	// 					initialVelocity
+	// 				}
+	// 			},
+	// 			{ x: (render?.sprite?.x ?? 0) + sign * 50, y: render?.sprite?.y ?? 0 }
+	// 		);
+	// 	}
+	// }
 };
