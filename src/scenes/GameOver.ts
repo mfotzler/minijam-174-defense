@@ -1,8 +1,8 @@
-import MainScene from './MainScene';
 import UIHelpers from '../UIHelpers';
 import BaseScene from './BaseScene';
 import DialogueBox from '../entities/DialogueBox';
 import Container = Phaser.GameObjects.Container;
+import MainMenu from './MainMenu';
 
 export default class GameOver extends BaseScene {
 	static readonly key = 'GameOver';
@@ -54,6 +54,6 @@ export default class GameOver extends BaseScene {
 	}
 
 	private startScene() {
-		this.scene.start(MainScene.key);
+		this.scene.start(MainMenu.key);
 	}
 }
