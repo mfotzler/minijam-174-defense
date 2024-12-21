@@ -5,6 +5,7 @@ import MessageBus from '../messageBus/MessageBus';
 import * as Phaser from 'phaser';
 import { BugComponents } from '../entities/types';
 import { EntityKnockbackData } from '../useCases/EntityKnockbackUseCase';
+import InvincibilitySystem from './InvincibilitySystem';
 
 export class CollisionSystem implements System {
 	constructor(
@@ -144,7 +145,9 @@ export class CollisionSystem implements System {
 				babyBoundingBox
 			);
 
-			if (isOverlapping) {
+			const babyIsInvincible = InvincibilitySystem.isInvincible(baby);
+
+			if (isOverlapping && !babyIsInvincible) {
 				MessageBus.sendMessage(EventType.ENTITY_KNOCKBACK, {
 					knockbackerId: baby.id,
 					knockbackeeId: babyStealer.id
