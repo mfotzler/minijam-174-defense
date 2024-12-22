@@ -43,7 +43,38 @@ export default class BugScene extends BaseScene {
 
 		this.engine = new GameEngine();
 		this.world = new World(this);
+	}
 
+	preload() {
+		super.preload();
+
+		this.load.tilemapTiledJSON('bugworldbackground', 'assets/bugworldbackground.json');
+		this.load.image('tiles', 'assets/background.png');
+
+		this.debugGraphics = this.add.graphics();
+	}
+
+	create(): void {
+		super.create();
+		this.world.initializeMap('bugworldbackground');
+
+		this.initializeGameMechanics();
+
+		this.world.addPlayer();
+
+		for (let i = 0; i < 10; i++) {
+			const x = Phaser.Math.Between(0, 256);
+			const y = Phaser.Math.Between(0, 256);
+
+			const corpse = Math.random() > 0.5 ? AntCorpse : BeetleCorpse;
+
+			this.world.createEntity(corpse, { x, y });
+		}
+
+		this.initializeAnimations();
+	}
+
+	initializeGameMechanics() {
 		this.engine.addSystem(new MovementSystem(this.world.entityProvider, this));
 		this.engine.addSystem(new CollisionSystem(this, this.world));
 		this.engine.addSystem(
@@ -69,33 +100,6 @@ export default class BugScene extends BaseScene {
 		this.engine.addUseCase(new GameOverUseCase(this));
 		this.engine.addUseCase(new PlayerHealthUseCase(this.world));
 		this.engine.addUseCase(new PlayerPartDamageUseCase(this.world));
-	}
-
-	preload() {
-		super.preload();
-
-		this.load.tilemapTiledJSON('bugworldbackground', 'assets/bugworldbackground.json');
-		this.load.image('tiles', 'assets/background.png');
-
-		this.debugGraphics = this.add.graphics();
-	}
-
-	create(): void {
-		super.create();
-		this.world.initializeMap('bugworldbackground');
-
-		this.world.addPlayer();
-
-		for (let i = 0; i < 10; i++) {
-			const x = Phaser.Math.Between(0, 256);
-			const y = Phaser.Math.Between(0, 256);
-
-			const corpse = Math.random() > 0.5 ? AntCorpse : BeetleCorpse;
-
-			this.world.createEntity(corpse, { x, y });
-		}
-
-		this.initializeAnimations();
 	}
 
 	protected startMusic() {
