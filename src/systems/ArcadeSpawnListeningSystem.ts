@@ -2,17 +2,18 @@
 import MessageBus from '../messageBus/MessageBus';
 
 export default class ArcadeSpawnListeningSystem implements System {
-	private static readonly INITIAL_SPAWN_BATCH_SIZE = 3;
+	private static readonly INITIAL_SPAWN_BATCH_SIZE = 1;
 	private static readonly SPAWN_BATCH_SIZE_GROWTH = 2;
 	private static readonly SPAWN_BATCH_SIZE_LIMIT = 50;
-	private static readonly TIME_BETWEEN_BATCHES = 10000;
+	private static readonly TIME_BETWEEN_BATCHES = 30000;
 	private static readonly TIME_BETWEEN_SPAWNS_IN_BATCH = 500;
+	private static readonly INITIAL_BATCH_TIME = 5000;
 
-	private elapsedTicks = 0;
+	private elapsedTicks = ArcadeSpawnListeningSystem.INITIAL_BATCH_TIME;
 	private currentBatchSize = ArcadeSpawnListeningSystem.INITIAL_SPAWN_BATCH_SIZE;
 
 	async step(data: StepData) {
-		this.elapsedTicks += data.delta;
+		this.elapsedTicks -= data.delta;
 
 		if (this.isTimeToSpawn()) {
 			this.processPostBatch();
@@ -21,7 +22,7 @@ export default class ArcadeSpawnListeningSystem implements System {
 	}
 
 	private isTimeToSpawn() {
-		return this.elapsedTicks >= ArcadeSpawnListeningSystem.TIME_BETWEEN_BATCHES;
+		return this.elapsedTicks <= 0;
 	}
 
 	private async spawnBatch() {
@@ -33,7 +34,7 @@ export default class ArcadeSpawnListeningSystem implements System {
 	}
 
 	private processPostBatch() {
-		this.elapsedTicks = 0;
+		this.elapsedTicks = ArcadeSpawnListeningSystem.TIME_BETWEEN_BATCHES;
 		this.currentBatchSize = Math.min(
 			this.currentBatchSize + ArcadeSpawnListeningSystem.SPAWN_BATCH_SIZE_GROWTH,
 			ArcadeSpawnListeningSystem.SPAWN_BATCH_SIZE_LIMIT
