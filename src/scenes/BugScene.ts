@@ -15,7 +15,7 @@ import { SoundEffectSystem } from '../systems/SoundEffectSystem';
 import { DebugRenderer } from '../systems/DebugRenderer';
 import { Corpse } from '../entities/Corpse';
 import { PartsSystem } from '../systems/PartsSystem';
-import { Ant, Beetle } from '../entities/Enemies';
+import { Ant, Beetle, CentipedeHead } from '../entities/Enemies';
 import SpawnListeningSystem from '../systems/SpawnListeningSystem';
 import EnemySpawnSystem from '../systems/EnemySpawnSystem';
 import { WeaponSystem } from '../systems/WeaponSystem';
@@ -60,12 +60,12 @@ export default class BugScene extends BaseScene {
 		this.engine.addSystem(new GameStateSystem(this));
 		this.engine.addSystem(new PlayerHealthSystem(this.world));
 		this.engine.addSystem(new InvincibilitySystem(this.world, this));
-		
+
 		this.engine.addUseCase(new EntityKnockbackUseCase(this.world));
 		this.engine.addUseCase(new PlayerPartDestroyUseCase(this.world));
 		this.engine.addUseCase(new PlayerPartRotationUseCase(this.world));
 	}
-	
+
 	preload() {
 		super.preload();
 		this.debugGraphics = this.add.graphics();
@@ -81,6 +81,8 @@ export default class BugScene extends BaseScene {
 			const y = Phaser.Math.Between(0, 256);
 			this.world.createEntity(Corpse, { x, y });
 		}
+
+		this.world.createEntity(CentipedeHead, { x: 64, y: 16 });
 	}
 
 	protected startMusic() {

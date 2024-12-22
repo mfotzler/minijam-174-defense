@@ -4,7 +4,9 @@ import { WeaponType } from './Weapons';
 
 export enum Direction {
 	LEFT = 0,
-	RIGHT = 1
+	RIGHT = 1,
+	UP = 2,
+	DOWN = 3
 }
 
 export interface BugComponents {
@@ -21,6 +23,7 @@ export interface BugComponents {
 	invincibility?: InvincibilityComponent;
 	baby?: BabyComponent;
 	isCorpse?: boolean;
+	centipede?: CentipedeComponent;
 }
 
 export interface RenderComponent {
@@ -108,8 +111,16 @@ export interface EnemyComponent {
 	movementCooldown?: number;
 }
 
+export interface CentipedeComponent {
+	segments: string[];
+	positions: Point[];
+	direction: Direction;
+	nextTurn: Direction;
+	turnDelay?: number;
+}
+
 export interface InvincibilityComponent {
-  currentDuration?: number;
+	currentDuration?: number;
 	maxDuration?: number;
 }
 

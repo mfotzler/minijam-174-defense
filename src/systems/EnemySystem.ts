@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import { EntityDefinition } from '../engine/entities/types';
 import { EventType, System } from '../engine/types';
-import { BugComponents } from '../entities/types';
+import { BugComponents, Direction } from '../entities/types';
 import MessageBus from '../messageBus/MessageBus';
 import BaseScene from '../scenes/BaseScene';
 import { World } from '../world';
@@ -10,6 +10,7 @@ import { GameStateSystem } from './GameStateSystem';
 import { Corpse } from '../entities/Corpse';
 import { Acid } from '../entities/Weapons';
 import InvincibilitySystem from './InvincibilitySystem';
+import { CentipedeSegment } from '../entities/Enemies';
 
 export class EnemySystem implements System {
 	constructor(
@@ -22,14 +23,14 @@ export class EnemySystem implements System {
 		MessageBus.subscribe(EventType.SPAWN_CORPSE, this.onSpawnCorpse.bind(this));
 		MessageBus.subscribe(EventType.PLAYER_PART_COLLISION, this.onPartCollision.bind(this));
 	}
-	
-	private onPartCollision({entityId, partId}: {entityId: string; partId: string;}) {
+
+	private onPartCollision({ entityId, partId }: { entityId: string; partId: string }) {
 		const entity = this.world.entityProvider.getEntity(entityId);
 		const part = this.world.entityProvider.getEntity(partId);
-		
-		if(!entity || !part || !entity.enemy) return;
-		
-		MessageBus.sendMessage(EventType.PLAYER_PART_DESTROY, {partId: partId});
+
+		if (!entity || !part || !entity.enemy) return;
+
+		MessageBus.sendMessage(EventType.PLAYER_PART_DESTROY, { partId: partId });
 	}
 
 	private onPlayerCollision({ id }: { id: string }) {
@@ -52,10 +53,10 @@ export class EnemySystem implements System {
 			MessageBus.sendMessage(EventType.KILL_ENEMY, { entityId: id });
 			MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hurt_2' });
 		} else {
-			if(InvincibilitySystem.canBeMadeInvincible(enemyEntity)) {
+			if (InvincibilitySystem.canBeMadeInvincible(enemyEntity)) {
 				MessageBus.sendMessage(EventType.ENTITY_MAKE_INVINCIBLE, enemyEntity);
 			}
-			
+
 			MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, { key: 'hurt_1' });
 		}
 	}
@@ -89,21 +90,22 @@ export class EnemySystem implements System {
 		entity.render.fillColor = color;
 	}
 
-	step({delta}) {
+	step({ delta }) {
 		this.world.entityProvider.entities.forEach((entity) => {
 			if (entity.enemy) {
 				if (entity.collision.blocked?.down) {
 					entity.render?.sprite?.body.setVelocityX(0);
 				}
-				
-				const hasMovementCooldown = !!entity.enemy.movementCooldown && entity.enemy.movementCooldown >= 0;
-				
+
+				const hasMovementCooldown =
+					!!entity.enemy.movementCooldown && entity.enemy.movementCooldown >= 0;
+
 				if (entity.enemy.type && !hasMovementCooldown) {
 					enemyBehaviors[entity.enemy.type]?.(this.world, entity);
 				}
 				entity.enemy.iframes = Math.max(0, (entity.enemy.iframes ?? 0) - delta);
-				
-				if(hasMovementCooldown)
+
+				if (hasMovementCooldown)
 					entity.enemy.movementCooldown = Math.max(0, (entity.enemy.movementCooldown ?? 0) - delta);
 			}
 		});
@@ -202,5 +204,54 @@ const enemyBehaviors = {
 		});
 
 		entity.enemy.shotCooldown = acid.projectile.cooldown;
+	},
+	centipedehead: (world: World, entity: EntityDefinition<BugComponents>) => {
+		const { enemy, render, centipede } = entity;
+
+		if (!enemy?.speed || !centipede || !render?.sprite) return;
+
+		enemy.stateTime = (enemy.stateTime ?? 0) + 1;
+
+		if (centipede.direction === Direction.RIGHT) {
+			render.sprite.body.setVelocityX(enemy.speed);
+			render.sprite.body.setVelocityY(0);
+			if (render.sprite.transform.x > 240) {
+				centipede.direction = Direction.DOWN;
+				centipede.turnDelay = 0;
+				centipede.nextTurn = Direction.LEFT;
+			}
+		} else if (centipede.direction === Direction.LEFT) {
+			render.sprite.body.setVelocityX(-enemy.speed);
+			render.sprite.body.setVelocityY(0);
+			if (render.sprite.transform.x < 16) {
+				centipede.direction = Direction.DOWN;
+				centipede.turnDelay = 0;
+				centipede.nextTurn = Direction.RIGHT;
+			}
+		} else if (centipede.direction === Direction.DOWN) {
+			render.sprite.body.setVelocityX(0);
+			render.sprite.body.setVelocityY(enemy.speed);
+			centipede.turnDelay = (centipede.turnDelay ?? 0) + 1;
+			if (centipede.turnDelay > 8) {
+				centipede.direction = centipede.nextTurn;
+				enemy.stateTime = 0;
+			}
+		} // no up case
+
+		const segmentSpacing = 6;
+		centipede.positions.push({ x: render.sprite.transform.x, y: render.sprite.transform.y });
+		if (centipede.segments.length < 12 && enemy.stateTime % segmentSpacing === 0) {
+			const segment = cloneDeep(CentipedeSegment);
+			centipede.segments.push(world.createEntity(segment, centipede.positions[0]));
+		}
+
+		centipede.segments.forEach((id, i) => {
+			const segment = world.entityProvider.getEntity(id);
+			if (!segment.render?.sprite) return;
+
+			const positionIndex = centipede.positions.length - 1 - i * segmentSpacing;
+			const { x, y } = centipede.positions[positionIndex] ?? { x: 0, y: 0 };
+			segment.render.sprite.transform.setPosition(x, y);
+		});
 	}
 };
