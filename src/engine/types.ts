@@ -62,6 +62,7 @@ export enum EventType {
 	PLAYER_PART_DESTROY = 'playerPartDestroy',
 	PLAYER_MELEE = 'playerMelee',
 	PLAYER_ROTATE = 'playerRotate',
+	PLAYER_ROTATION_ANGLE = 'playerRotationAngle',
 
 	BABY_COLLISION = 'babyCollision',
 	BABY_DEATH = 'babyDeath',
@@ -71,7 +72,7 @@ export enum EventType {
 
 	// Game State Events
 	SAVE_GRANDMA = 'saveGrandma',
-	ENABLE_INFINITE_MODE = 'enableInfiniteMode'
+	ENABLE_INFINITE_MODE = 'enableInfiniteMode',
 }
 
 export type SpawnType = 'ant' | 'beetle' | 'babyEaterAnt';

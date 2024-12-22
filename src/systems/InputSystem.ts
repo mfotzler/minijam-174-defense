@@ -16,11 +16,11 @@ export default class InputSystem implements System {
 	private decrementHealthKey: Phaser.Input.Keyboard.Key;
 	private cheatCode: Phaser.Input.Keyboard.Key;
 	private shootKey: Phaser.Input.Keyboard.Key;
-	private : Gamepad;
+	private: Gamepad;
 
 	constructor(
 		private scene: Phaser.Scene,
-		private entityProvider: EntityProvider<BugComponents>,
+		private entityProvider: EntityProvider<BugComponents>
 	) {
 		this.arrows = scene.input.keyboard.createCursorKeys();
 		this.clockwise = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
@@ -77,9 +77,15 @@ export default class InputSystem implements System {
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.clockwise)) {
-			MessageBus.sendMessage(EventType.PLAYER_ROTATE, {  rotationMode: 'relative', clockwise: true });
+			MessageBus.sendMessage(EventType.PLAYER_ROTATE, {
+				rotationMode: 'relative',
+				clockwise: true
+			});
 		} else if (Phaser.Input.Keyboard.JustDown(this.counterClockwise)) {
-			MessageBus.sendMessage(EventType.PLAYER_ROTATE, { rotationMode: 'relative', clockwise: false });
+			MessageBus.sendMessage(EventType.PLAYER_ROTATE, {
+				rotationMode: 'relative',
+				clockwise: false
+			});
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.incrementHealthKey))
@@ -101,7 +107,7 @@ export default class InputSystem implements System {
 	private processGamepadInput(body: Phaser.Physics.Arcade.Body, moveSpeed: number) {
 		const gamepad = this.scene.input.gamepad.getPad(0);
 
-		if(!gamepad) return;
+		if (!gamepad) return;
 
 		const axisLeftHorizontal = gamepad.axes[0].getValue();
 		const axisLeftVertical = gamepad.axes[1].getValue();
@@ -113,11 +119,15 @@ export default class InputSystem implements System {
 		if (axisMeetsThreshold(axisLeftHorizontal)) {
 			body.velocity.x = moveSpeed * axisLeftHorizontal;
 		}
-		if(axisMeetsThreshold(axisLeftVertical)) {
+		if (axisMeetsThreshold(axisLeftVertical)) {
 			body.velocity.y = moveSpeed * axisLeftVertical;
 		}
 		if (axisMeetsThreshold(axisRightHorizontal) || axisMeetsThreshold(axisRightVertical)) {
-			MessageBus.sendMessage(EventType.PLAYER_ROTATE, { rotationMode: 'absolute', stickHorizontal: axisRightHorizontal, stickVertical: axisRightVertical });
+			MessageBus.sendMessage(EventType.PLAYER_ROTATE, {
+				rotationMode: 'absolute',
+				stickHorizontal: axisRightHorizontal,
+				stickVertical: axisRightVertical
+			});
 			MessageBus.sendMessage(EventType.PLAYER_SHOOT, {
 				mousePos: this.scene.input.mousePointer.positionToCamera(this.scene.cameras.main)
 			});
