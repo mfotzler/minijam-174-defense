@@ -1,8 +1,8 @@
-﻿import { LarvaeShot } from '../../entities/Weapons';
+﻿import { AntSmash } from '../../entities/Weapons';
 import WeaponBehavior from './WeaponBehavior';
 
 export default class AntWeaponBehavior extends WeaponBehavior {
 	shoot() {
-		this.defaultShoot(LarvaeShot);
+		this.defaultShoot(AntSmash);
 	}
 }

@@ -17,7 +17,7 @@ export class WeaponBehaviorFactory {
 		const weaponType = entity?.corpse?.weaponType;
 
 		switch (weaponType) {
-			case 'larvae':
+			case 'antSmash':
 				return new AntWeaponBehavior(this.world, part);
 			case 'acid':
 				return new BeetleWeaponBehavior(this.world, part);

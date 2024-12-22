@@ -11,7 +11,7 @@ export const AntCorpse: BugComponents = {
 		spriteKey: 'shieldBugSquare3'
 	},
 	corpse: {
-		weaponType: 'larvae'
+		weaponType: 'antSmash'
 	}
 };
 
@@ -26,7 +26,7 @@ export const BabyEaterAntCorpse: BugComponents = {
 		spriteKey: 'babyEaterSquare3'
 	},
 	corpse: {
-		weaponType: 'larvae'
+		weaponType: 'antSmash'
 	}
 };
 

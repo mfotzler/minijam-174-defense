@@ -1,10 +1,10 @@
 import { BugComponents } from './types';
 
-export const LarvaeShot: BugComponents = {
+export const AntSmash: BugComponents = {
 	movement: { hasGravity: false },
 	collision: { killOnCollision: true, tiles: false },
 	render: { spriteKey: 'antProjectile', scale: 1 },
-	projectile: { type: 'larvae', speed: 800, cooldown: 500, lifetime: 750, damage: 1 }
+	projectile: { type: 'antSmash', speed: 800, cooldown: 500, lifetime: 750, damage: 1 }
 };
 
 export const Acid: BugComponents = {
@@ -16,7 +16,7 @@ export const Acid: BugComponents = {
 };
 
 export const Weapons = {
-	larvae: LarvaeShot,
+	antSmash: AntSmash,
 	acid: Acid
 };
 
