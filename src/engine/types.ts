@@ -77,4 +77,5 @@ export interface SpawnData {
 	ticks: number;
 	type: 'ant';
 	location: 'north' | 'south' | 'east' | 'west';
+	count?: number;
 }

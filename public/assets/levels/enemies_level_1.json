@@ -2,38 +2,63 @@
 	"spawns": [
 		{
 			"ticks": 1000,
+			"location": "north",
+			"type": "babyEaterAnt",
+			"count": 3
+		},
+		{
+			"ticks": 1100,
+			"location": "north",
 			"type": "ant",
-			"location": "north"
+			"count": 3
 		},
 		{
-			"ticks": 2000,
-			"type": "ant",
-			"location": "west"
-		},
-		{
-			"ticks": 3000,
-			"location": "east",
-			"type": "ant"
-		},
-		{
-			"ticks": 4000,
-			"location": "south",
-			"type": "ant"
+			"ticks": 1400,
+			"location": "north",
+			"type": "beetle",
+			"count": 3
 		},
 		{
 			"ticks": 5000,
 			"location": "north",
-			"type": "beetle"
+			"type": "babyEaterAnt",
+			"count": 5
 		},
 		{
-			"ticks": 5500,
-			"location": "west",
-			"type": "babyEaterAnt"
-		},
-		{
-			"ticks": 5600,
+			"ticks": 5050,
 			"location": "east",
-			"type": "babyEaterAnt"
+			"type": "ant",
+			"count": 7
+		},
+		{
+			"ticks": 5150,
+			"location": "east",
+			"type": "beetle",
+			"count": 5 
+		},
+		{
+			"ticks": 10000,
+			"location": "north",
+			"type": "babyEaterAnt",
+			"count": 5
+		},
+		{
+			"ticks": 12000,
+			"location": "east",
+			"type": "babyEaterAnt",
+			"count": 3
+		},
+		{
+			"ticks": 11000,
+			"location": "south",
+			"type": "beetle",
+			"count": 4
+		},
+		{
+			"ticks": 11000,
+			"location": "east",
+			"type": "ant",
+			"count": 4
 		}
 	]
 }

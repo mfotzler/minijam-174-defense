@@ -1,5 +1,6 @@
 ﻿import { EventType, SpawnData, StepData, System } from '../engine/types';
 import MessageBus from '../messageBus/MessageBus';
+import { cloneDeep } from 'lodash';
 
 export default class SpawnListeningSystem implements System {
 	private elapsedTicks = 0;
@@ -12,7 +13,7 @@ export default class SpawnListeningSystem implements System {
 		fetch(`/assets/levels/enemies_level_${level}.json`)
 			.then((res) => res.json())
 			.then((json) => {
-				this.data = json.spawns;
+				this.data = this.expandData(json.spawns);
 				this.getNextSpawnIndex();
 			});
 
@@ -23,6 +24,26 @@ export default class SpawnListeningSystem implements System {
 
 			this.resetData();
 		});
+	}
+
+	expandData(data: SpawnData[]): SpawnData[] {
+		let result: SpawnData[] = [];
+
+		for (const spawn of data) {
+			let count = spawn.count || 1;
+
+			for (let i = 0; i < count; i++) {
+				let offset = i * 50;
+
+				let ticks = spawn.ticks + offset;
+
+				result.push({ ...cloneDeep(spawn), ticks, count: 1 });
+			}
+		}
+
+		console.log(result);
+
+		return result;
 	}
 
 	step(data: StepData) {
@@ -50,7 +71,7 @@ export default class SpawnListeningSystem implements System {
 
 		let spawn = this.data[this.nextSpawnIndex];
 
-		if (!spawn) return false;
+		if (!spawn || !spawn.ticks) return false;
 
 		return spawn.ticks <= this.elapsedTicks;
 	}
@@ -65,7 +86,7 @@ export default class SpawnListeningSystem implements System {
 		this.nextSpawnIndex = this.data.findIndex((spawn, index, array) => {
 			if (this.spawnedIndexes.includes(index)) return false;
 
-			return spawn.ticks === nextSpawnTick.ticks;
+			return spawn?.ticks === nextSpawnTick?.ticks;
 		});
 
 		if (this.nextSpawnIndex === -1) {
