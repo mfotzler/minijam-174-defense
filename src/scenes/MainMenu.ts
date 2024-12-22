@@ -3,7 +3,7 @@ import UIHelpers from '../UIHelpers';
 import BaseScene from './BaseScene';
 import TutorialScene from './TutorialScene';
 import { GameStateSystem } from '../systems/GameStateSystem';
-import BugScene from './BugScene';
+import BugScene, { BugSceneMode } from './BugScene';
 
 export default class MainMenu extends BaseScene {
 	static readonly key = 'MainMenu';
@@ -14,7 +14,7 @@ export default class MainMenu extends BaseScene {
 	create(): void {
 		this.addTitle();
 		this.addIntroButton();
-		this.addPlayButton();
+		this.addPlayButtons();
 	}
 
 	override preload() {
@@ -58,15 +58,20 @@ export default class MainMenu extends BaseScene {
 	}
 
 	private addIntroButton() {
-		UIHelpers.addCenteredButton(this, 160, 'Intro', () => {
+		UIHelpers.addCenteredButton(this, 135, 'Intro', () => {
 			this.scene.start(TutorialScene.key);
 		});
 	}
 
-	private addPlayButton() {
-		UIHelpers.addCenteredButton(this, 220, 'Play', () => {
+	private addPlayButtons() {
+		UIHelpers.addCenteredButton(this, 175, 'Classic', () => {
 			GameStateSystem.clearState();
-			this.fadeToScene(BugScene.key, { fadeInDuration: 300 });
+			this.fadeToScene(BugScene.key, { fadeInDuration: 300, mode: BugSceneMode.CLASSIC });
+		});
+
+		UIHelpers.addCenteredButton(this, 215, 'Arcade', () => {
+			GameStateSystem.clearState();
+			this.fadeToScene(BugScene.key, { fadeInDuration: 300, mode: BugSceneMode.ARCADE });
 		});
 	}
 }

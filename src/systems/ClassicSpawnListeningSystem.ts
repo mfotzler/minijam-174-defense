@@ -2,7 +2,7 @@
 import MessageBus from '../messageBus/MessageBus';
 import { cloneDeep } from 'lodash';
 
-export default class SpawnListeningSystem implements System {
+export default class ClassicSpawnListeningSystem implements System {
 	private elapsedTicks = 0;
 	private data: SpawnData[];
 	private spawnedIndexes: number[] = [];

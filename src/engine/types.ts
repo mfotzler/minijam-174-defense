@@ -74,9 +74,12 @@ export enum EventType {
 	ENABLE_INFINITE_MODE = 'enableInfiniteMode'
 }
 
+export type SpawnType = 'ant' | 'beetle' | 'babyEaterAnt';
+export type SpawnLocation = 'north' | 'south' | 'east' | 'west';
+
 export interface SpawnData {
 	ticks: number;
-	type: 'ant';
-	location: 'north' | 'south' | 'east' | 'west';
+	type: SpawnType;
+	location: SpawnLocation;
 	count?: number;
 }
