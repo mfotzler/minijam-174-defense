@@ -11,7 +11,11 @@ export const AntCorpse: BugComponents = {
 		spriteKey: 'shieldBugSquare3'
 	},
 	corpse: {
-		weaponType: 'antSmash'
+		weaponType: 'antSmash',
+		maxHealth: 3
+	},
+	invincibility: {
+		maxDuration: 500
 	}
 };
 
@@ -26,7 +30,11 @@ export const BabyEaterAntCorpse: BugComponents = {
 		spriteKey: 'babyEaterSquare3'
 	},
 	corpse: {
-		weaponType: 'antSmash'
+		weaponType: 'antSmash',
+		maxHealth: 3
+	},
+	invincibility: {
+		maxDuration: 500
 	}
 };
 
@@ -41,6 +49,7 @@ export const BeetleCorpse: BugComponents = {
 		spriteKey: 'beetleSquare3'
 	},
 	corpse: {
-		weaponType: 'acid'
+		weaponType: 'acid',
+		maxHealth: 1
 	}
 };

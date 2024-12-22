@@ -128,4 +128,6 @@ export interface BabyComponent {
 export interface CorpseComponent {
 	weaponType: WeaponType;
 	isPickedUp?: boolean;
+	maxHealth: number;
+	currentHealth?: number;
 }

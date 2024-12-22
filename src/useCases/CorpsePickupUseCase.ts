@@ -29,5 +29,6 @@ export class CorpsePickupUseCase {
 			positionOffset: { x: offsetX, y: offsetY }
 		});
 		corpseEntity.corpse.isPickedUp = true;
+		corpseEntity.corpse.currentHealth = corpseEntity.corpse.maxHealth;
 	}
 }

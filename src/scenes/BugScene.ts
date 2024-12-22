@@ -27,6 +27,7 @@ import WinConditionUseCase from '../useCases/WinConditionUseCase';
 import GameOverUseCase from '../useCases/GameOverUseCase';
 import { SpriteRenderer } from '../systems/SpriteRenderer';
 import PlayerHealthUseCase from '../useCases/PlayerHealthUseCase';
+import PlayerPartDamageUseCase from '../useCases/PlayerPartDamageUseCase';
 
 export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
@@ -67,6 +68,7 @@ export default class BugScene extends BaseScene {
 		this.engine.addUseCase(new WinConditionUseCase(this));
 		this.engine.addUseCase(new GameOverUseCase(this));
 		this.engine.addUseCase(new PlayerHealthUseCase(this.world));
+		this.engine.addUseCase(new PlayerPartDamageUseCase(this.world));
 	}
 
 	preload() {

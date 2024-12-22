@@ -18,16 +18,6 @@ export class EnemySystem implements System {
 		MessageBus.subscribe(EventType.PROJECTILE_COLLISION, this.onProjectileCollision.bind(this));
 		MessageBus.subscribe(EventType.KILL_ENEMY, this.onKillEnemy.bind(this));
 		MessageBus.subscribe(EventType.SPAWN_CORPSE, this.onSpawnCorpse.bind(this));
-		MessageBus.subscribe(EventType.PLAYER_PART_COLLISION, this.onPartCollision.bind(this));
-	}
-
-	private onPartCollision({ entityId, partId }: { entityId: string; partId: string }) {
-		const entity = this.world.entityProvider.getEntity(entityId);
-		const part = this.world.entityProvider.getEntity(partId);
-
-		if (!entity || !part || !entity.enemy) return;
-
-		MessageBus.sendMessage(EventType.PLAYER_PART_DESTROY, { partId: partId });
 	}
 
 	private onPlayerCollision({ id }: { id: string }) {
