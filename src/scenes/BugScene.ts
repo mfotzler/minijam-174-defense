@@ -30,6 +30,7 @@ import PlayerHealthUseCase from '../useCases/PlayerHealthUseCase';
 import PlayerPartDamageUseCase from '../useCases/PlayerPartDamageUseCase';
 import ArcadeSpawnListeningSystem from '../systems/ArcadeSpawnListeningSystem';
 import ScoreTrackingUseCase from '../useCases/ScoreTrackingUseCase';
+import GameHUD from '../entities/GameHUD';
 
 export enum BugSceneMode {
 	// A mode with a finite number of enemies and a win condition
@@ -43,6 +44,7 @@ export default class BugScene extends BaseScene {
 	debugGraphics: Phaser.GameObjects.Graphics;
 	private world: World;
 	private mode: BugSceneMode;
+	private hud: GameHUD;
 
 	constructor() {
 		super({ key: BugScene.key });
@@ -79,6 +81,7 @@ export default class BugScene extends BaseScene {
 		this.initializeGameMechanics();
 
 		this.world.addPlayer();
+		this.hud = new GameHUD(this);
 
 		for (let i = 0; i < 10; i++) {
 			const x = Phaser.Math.Between(0, 256);

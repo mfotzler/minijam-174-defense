@@ -12,5 +12,7 @@ export default class ScoreTrackingUseCase {
 
 	private onEnemyKilled() {
 		ScoreTrackingUseCase.currentScore += 1;
+
+		MessageBus.sendMessage(EventType.SCORE_UPDATED, ScoreTrackingUseCase.currentScore);
 	}
 }
