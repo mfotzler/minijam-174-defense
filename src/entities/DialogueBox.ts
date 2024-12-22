@@ -45,11 +45,11 @@ export default class DialogueBox extends Container {
 		background.setOrigin(0, 0);
 		this.add(background);
 
-		this.nameText = scene.add.bitmapText(200, 5, 'main-font', '', 10);
+		this.nameText = scene.add.bitmapText(10, 5, 'main-font', '', 10);
 		this.nameText.setOrigin(0, 0);
 		this.add(this.nameText);
 
-		this.text = scene.add.bitmapText(200, 70, 'main-font', '', 10);
+		this.text = scene.add.bitmapText(10, 145, 'main-font', '', 10);
 		this.text.setOrigin(0, 0);
 		this.add(this.text);
 

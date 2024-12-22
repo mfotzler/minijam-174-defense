@@ -1,8 +1,6 @@
 import UIHelpers from '../UIHelpers';
 import BaseScene from './BaseScene';
 import MainMenu from './MainMenu';
-import DialogueBox from '../entities/DialogueBox';
-import Container = Phaser.GameObjects.Container;
 import MessageBus from '../messageBus/MessageBus';
 import { EventType } from '../engine/types';
 import { GameEngine } from '../engine/gameEngine';
@@ -11,8 +9,7 @@ import { musicTracks } from '../utils/soundTracks';
 
 export default class TutorialScene extends BaseScene {
 	static readonly key = 'Tutorial';
-	private music: Phaser.Sound.BaseSound;
-	private background: Phaser.GameObjects.TileSprite;
+	private background: Phaser.GameObjects.Image;
 	constructor() {
 		super({ key: TutorialScene.key });
 	}
@@ -26,55 +23,21 @@ export default class TutorialScene extends BaseScene {
 	override create(): void {
 		this.addGraphic();
 		this.addPlayButton();
-		this.addGraphic();
-
-		const dialogueBox = new DialogueBox(
-			this.scene.scene,
-			0,
-			this.renderer.height - DialogueBox.height,
-			[
-				{
-					text: 'Hey, I need your help!',
-					name: 'Mr. Cupcake',
-					image: 'cupcake-face'
-				},
-				{
-					text: 'The Evil Shady Vegetable Empire has' + '\nkidnapped all the grandmas!',
-					name: 'Mr. Cupcake',
-					image: 'cupcake-face'
-				},
-				{
-					text: 'No one will get to have dessert ' + '\never again at this rate!',
-					name: 'Mr. Cupcake',
-					image: 'cupcake-face'
-				},
-				{
-					text: 'You can move me around with ' + '\nthe W, A, S, and D keys!',
-					name: 'Mr. Cupcake',
-					image: 'cupcake-face'
-				},
-				{
-					text: 'Click to shoot! I can bonk them' + '\nwith my rolling pin if you press F.',
-					name: 'Mr. Cupcake',
-					image: 'cupcake-face'
-				}
-			]
-		);
-		this.add.existing<Container>(dialogueBox);
 
 		super.create();
 	}
 
-	addGraphic() {
-		this.background = this.add
-			.tileSprite(0, 0, this.renderer.width, this.renderer.width, 'background')
-			.setScale(3)
-			.setOrigin(0, 0)
-			.setDepth(-1);
+	update(time: number, delta: number) {
+		super.update(time, delta);
+
+		if (this.input.gamepad.getPad(0)?.buttons[0].pressed)
+			this.fadeToScene(MainMenu.key, { fadeInDuration: 300 });
 	}
 
-	update(time: number, delta: number): void {
-		this.background.setTilePosition(time / 75, 0);
+	addGraphic() {
+		this.background = this.add
+			.image(this.renderer.width / 2, this.renderer.height / 2, 'tutorial-graphic')
+			.setScale(0.3, 0.3);
 	}
 
 	override preload() {
@@ -82,7 +45,7 @@ export default class TutorialScene extends BaseScene {
 
 		this.load.image('background', 'assets/background.png');
 		this.load.audio('lil_blower_san_theme', 'assets/lil_blower_san_theme.mp3');
-		this.load.image('tutorial-graphic', 'assets/tutorial.png');
+		this.load.image('tutorial-graphic', 'assets/tutorial-infographic.png');
 
 		for (const track of musicTracks) {
 			this.load.audio(track, `assets/music/${track}.wav`);
@@ -94,7 +57,7 @@ export default class TutorialScene extends BaseScene {
 	}
 
 	private addPlayButton() {
-		UIHelpers.addButton(this, this.renderer.width / 2, 50, 'Back to Main Menu', () => {
+		UIHelpers.addButton(this, this.renderer.width / 2, 18, 'Main Menu', () => {
 			this.fadeToScene(MainMenu.key, { fadeInDuration: 300 });
 		});
 	}
