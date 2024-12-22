@@ -21,9 +21,12 @@ export default class PlayerPartRotationUseCase {
 	}) {
 		const player = this.world.entityProvider.getEntity(this.world.playerId);
 		if (!player?.player) return;
-		if (rotationMode == 'relative') this.rotate45Degrees(player, clockwise);
-		if (rotationMode == 'absolute')
+		if (rotationMode == 'relative') {
+			this.rotate45Degrees(player, clockwise);
+		}
+		if (rotationMode == 'absolute') {
 			this.rotateAbsoluteAngle(player, stickHorizontal, stickVertical);
+		}
 	}
 
 	private rotate45Degrees(player: EntityDefinition<BugComponents>, clockwise: boolean) {
@@ -53,14 +56,15 @@ export default class PlayerPartRotationUseCase {
 		stickHorizontal: number,
 		stickVertical: number
 	) {
+		const angle = this.getStickAngle(stickHorizontal, stickVertical);
+		player.render.sprite.transform.angle = angle;
 		player.player.parts.forEach((part) => {
 			const partEntity = this.world.entityProvider.getEntity(part.entityId);
 			if (!partEntity?.render?.sprite) return;
 
-			const oldAngle = partEntity.render.sprite.transform.angle;
-
 			const angle = this.getStickAngle(stickHorizontal, stickVertical);
-			partEntity.render.sprite.transform.angle = angle;
+			const oldAngle = part.rotationAngle ?? angle;
+			part.rotationAngle = angle;
 
 			const currentOffset = part.positionOffset;
 			const currentOffsetAngle = Math.atan2(currentOffset.y, currentOffset.x) * (180 / Math.PI);

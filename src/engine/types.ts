@@ -71,7 +71,7 @@ export enum EventType {
 
 	// Game State Events
 	SAVE_GRANDMA = 'saveGrandma',
-	ENABLE_INFINITE_MODE = 'enableInfiniteMode'
+	ENABLE_INFINITE_MODE = 'enableInfiniteMode',
 }
 
 export type SpawnType = 'ant' | 'beetle' | 'babyEaterAnt';
