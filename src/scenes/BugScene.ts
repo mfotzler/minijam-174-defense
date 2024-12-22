@@ -29,6 +29,7 @@ import { SpriteRenderer } from '../systems/SpriteRenderer';
 import PlayerHealthUseCase from '../useCases/PlayerHealthUseCase';
 import PlayerPartDamageUseCase from '../useCases/PlayerPartDamageUseCase';
 import ArcadeSpawnListeningSystem from '../systems/ArcadeSpawnListeningSystem';
+import ScoreTrackingUseCase from '../useCases/ScoreTrackingUseCase';
 
 export enum BugSceneMode {
 	// A mode with a finite number of enemies and a win condition
@@ -98,7 +99,7 @@ export default class BugScene extends BaseScene {
 		this.engine.addSystem(
 			new RenderSystem(this, this.world.entityProvider, new SpriteRenderer(this))
 		);
-		this.engine.addSystem(new InputSystem(this, this.world.entityProvider, this.world.gamepad));
+		this.engine.addSystem(new InputSystem(this, this.world.entityProvider));
 		this.engine.addSystem(new PartsSystem(this.world));
 		this.engine.addSystem(new MusicSystem(this));
 		this.engine.addSystem(new SoundEffectSystem(this));
@@ -116,6 +117,7 @@ export default class BugScene extends BaseScene {
 		this.engine.addUseCase(new GameOverUseCase(this));
 		this.engine.addUseCase(new PlayerHealthUseCase(this.world));
 		this.engine.addUseCase(new PlayerPartDamageUseCase(this.world));
+		this.engine.addUseCase(new ScoreTrackingUseCase());
 	}
 
 	private initializeSpawnListeningSystem() {

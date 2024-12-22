@@ -17,11 +17,11 @@ export default class UIHelpers {
 		text: string,
 		onClick: () => void
 	): Phaser.GameObjects.NineSlice {
-		const button = scene.add.nineslice(0, 0, 'textures', 'menu-button', 140, 40, 20, 20, 20, 20);
+		const button = scene.add.nineslice(0, 0, 'textures', 'menu-button2', 70, 32, 16, 16, 16, 16);
 		button.setPosition(x, y);
 		button.setInteractive();
 		button.on('pointerdown', onClick);
-		scene.add.bitmapText(x, y, 'main-font', text, 20).setOrigin(0.5, 0.5);
+		scene.add.bitmapText(x, y, 'main-font', text, 10).setOrigin(0.5, 0.5);
 
 		return button;
 	}

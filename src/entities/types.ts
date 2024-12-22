@@ -91,13 +91,11 @@ export interface InputComponent {}
 export interface PlayerPart {
 	entityId: string;
 	positionOffset: Point;
+	rotationAngle?: number;
 }
 
 export interface PlayerComponent {
-	parts: {
-		entityId: string;
-		positionOffset: Point;
-	}[];
+	parts: PlayerPart[];
 	shotCooldown: number;
 }
 
