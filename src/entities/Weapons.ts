@@ -4,7 +4,7 @@ export const AntSmash: BugComponents = {
 	movement: { hasGravity: false },
 	collision: { killOnCollision: true, tiles: false },
 	render: { spriteKey: 'antProjectile', scale: 1 },
-	projectile: { type: 'antSmash', speed: 1000, cooldown: 500, lifetime: 12, damage: 2 }
+	projectile: { type: 'antSmash', speed: 250, cooldown: 500, lifetime: 100, damage: 3 }
 };
 
 export const Acid: BugComponents = {
