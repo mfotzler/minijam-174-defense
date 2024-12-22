@@ -21,6 +21,16 @@ export default class BaseScene extends Phaser.Scene {
 			'assets/fonts/minogram_6x10.png',
 			'assets/fonts/minogram_6x10.xml'
 		);
+		this.load.bitmapFont(
+			'main-font-black',
+			'assets/fonts/minogram_6x10_black.png',
+			'assets/fonts/minogram_6x10.xml'
+		);
+		this.load.bitmapFont(
+			'main-font-contrast',
+			'assets/fonts/minogram_6x10_contrast.png',
+			'assets/fonts/minogram_6x10.xml'
+		);
 
 		for (const track of musicTracks) {
 			this.load.audio(track, `assets/music/${track}.wav`);
