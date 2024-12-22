@@ -2,6 +2,7 @@ import { BugComponents, Direction } from './types';
 import AntEnemyBehavior from '../systems/EnemyBehaviors/AntEnemyBehavior';
 import BabyEaterAntBehavior from '../systems/EnemyBehaviors/BabyEaterAntBehavior';
 import BeetleEnemyBehavior from '../systems/EnemyBehaviors/BeetleEnemyBehavior';
+import CentipedeEnemyBehavior from '../systems/EnemyBehaviors/CentipedeEnemyBehavior';
 
 const AntBase: BugComponents = {
 	position: { x: 0, y: 0 },
@@ -66,5 +67,33 @@ export const Beetle: BugComponents = {
 		health: 5,
 		speed: 120,
 		corpseType: 'beetle'
+	}
+};
+
+export const CentipedeHead: BugComponents = {
+	position: { x: 0, y: 0 },
+	movement: {},
+	collision: { player: true },
+	render: { width: 8, height: 8, fillColor: 0x40ff00 },
+	enemy: {
+		type: CentipedeEnemyBehavior.key,
+		health: 5,
+		speed: 96
+	},
+	centipede: {
+		segments: [],
+		positions: [],
+		direction: Direction.RIGHT,
+		nextTurn: Direction.LEFT
+	}
+};
+
+export const CentipedeSegment: BugComponents = {
+	position: { x: 0, y: 0 },
+	movement: {},
+	collision: { player: true },
+	render: { width: 8, height: 8, fillColor: 0x40ff00 },
+	enemy: {
+		health: 2
 	}
 };

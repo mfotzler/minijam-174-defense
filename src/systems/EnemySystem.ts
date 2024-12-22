@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import { EntityDefinition } from '../engine/entities/types';
 import { EventType, System } from '../engine/types';
-import { BugComponents } from '../entities/types';
+import { BugComponents, Direction } from '../entities/types';
 import MessageBus from '../messageBus/MessageBus';
 import BaseScene from '../scenes/BaseScene';
 import { World } from '../world';

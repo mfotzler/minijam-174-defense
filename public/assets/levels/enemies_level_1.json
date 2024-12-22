@@ -7,6 +7,12 @@
 			"count": 3
 		},
 		{
+			"ticks": 1050,
+			"location": "north",
+			"type": "centipede",
+			"count": 1
+		},
+		{
 			"ticks": 1100,
 			"location": "north",
 			"type": "ant",
@@ -34,7 +40,7 @@
 			"ticks": 5150,
 			"location": "east",
 			"type": "beetle",
-			"count": 5 
+			"count": 5
 		},
 		{
 			"ticks": 10000,
