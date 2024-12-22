@@ -210,5 +210,14 @@ export default class BugScene extends BaseScene {
 			frameRate: 8,
 			repeat: -1
 		});
+		this.anims.create({
+			key: 'beetle-walk-angle',
+			frames: this.anims.generateFrameNames('textures', {
+				prefix: 'beetleAngle',
+				frames: [0, 1, 2, 1]
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
 	}
 }
