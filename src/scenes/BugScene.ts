@@ -89,6 +89,7 @@ export default class BugScene extends BaseScene {
 		}
 
 		this.initializeAnimations();
+		this.startMusic();
 	}
 
 	initializeGameMechanics() {
