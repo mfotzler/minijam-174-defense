@@ -54,19 +54,21 @@ export default class TutorialScene extends BaseScene {
 		);
 
 		UIHelpers.addCenteredText(this, 52, 'SAVE THE BABIES!');
-		UIHelpers.addCenteredText(this, 66, 'When the babies are dead...');
-		UIHelpers.addCenteredText(this, 78, 'YOU LOSE!').setDropShadow(1, 1, 0xff0000);
+		UIHelpers.addCenteredText(this, 76, 'When the babies are dead...');
+		UIHelpers.addCenteredText(this, 88, 'YOU LOSE!').setDropShadow(1, 1, 0xff0000);
 
-		UIHelpers.addCenteredText(this, 98, '--- CONTROLS ---').setDropShadow(1, 1, 0x4cb05e);
-		UIHelpers.addInfoSquare(this, 70, 132, 'KEYBOARD\nArrow keys move\nA/D keys rotate', 112, 54);
+		UIHelpers.addCenteredText(this, 116, '--- CONTROLS ---').setDropShadow(1, 1, 0x4cb05e);
+		UIHelpers.addInfoSquare(this, 70, 150, 'KEYBOARD\nArrow keys move\nA/D keys rotate', 112, 54);
 		UIHelpers.addInfoSquare(
 			this,
 			renderWidth - 70,
-			132,
+			150,
 			'GAMEPAD\nLeft stick move\nRight stick rotate',
 			112,
 			54
 		);
+
+		UIHelpers.addCenteredText(this, 212, 'Wear the corpses of your foes\nto defend the babies.');
 	}
 
 	private addGenericBackground() {
