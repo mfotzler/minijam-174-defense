@@ -17,13 +17,13 @@ export default class Timer extends Container {
 			0,
 			0,
 			'textures',
-			'menu-button',
+			'menu-button2',
 			Timer.TimerWidth,
 			100,
-			20,
-			20,
-			20,
-			20
+			16,
+			16,
+			16,
+			16
 		);
 		this.add(background);
 		this.setDepth(10);

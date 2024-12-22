@@ -15,13 +15,13 @@ export default class ScoreBox extends Container {
 			0,
 			0,
 			'textures',
-			'menu-button',
+			'menu-button2',
 			ScoreBox.ScoreBoxWidth,
 			100,
-			20,
-			20,
-			20,
-			20
+			16,
+			16,
+			16,
+			16
 		);
 		this.add(background);
 		this.setDepth(9.99);
