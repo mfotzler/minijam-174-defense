@@ -29,4 +29,11 @@ jobs:
       with:
           name: dist
           path: dist
+    - uses: manleydev/butler-publish-itchio-action@master
+      env:
+        BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+        CHANNEL: web
+        ITCH_GAME: flesh-shield
+        ITCH_USER: mafcho
+        PACKAGE: dist
   
