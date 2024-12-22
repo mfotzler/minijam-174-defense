@@ -48,15 +48,15 @@ export default class MainMenu extends BaseScene {
 
 	private addTitle() {
 		this.add.image(this.renderWidth / 2, this.renderHeight / 2, 'title-screen');
-		this.add.image(this.renderWidth / 2, 40, 'textures', 'title').setScale(0.8, 1);
+		this.add.image(this.renderWidth / 2 - 12, 76, 'textures', 'title');
 		this.add
 			.bitmapText(
-				this.renderWidth / 2,
-				125,
+				this.renderWidth / 2 + 40,
+				138,
 				'main-font',
 				'a game by tesserex, slowback1,\n bugvevo, and mafcho',
 				10,
-				1
+				2
 			)
 			.setOrigin(0.5, 0.5)
 			.setDropShadow(1, 1, 0x000000, 1);
