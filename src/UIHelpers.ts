@@ -26,4 +26,16 @@ export default class UIHelpers {
 
 		return button;
 	}
+
+	static addCenteredText(
+		scene: Phaser.Scene,
+		y: number,
+		text: string
+	): Phaser.GameObjects.BitmapText {
+		const textObject = scene.add
+			.bitmapText(scene.renderer.width / 2, y, 'main-font', text, 10, 1)
+			.setOrigin(0.5, 0.5);
+
+		return textObject;
+	}
 }
