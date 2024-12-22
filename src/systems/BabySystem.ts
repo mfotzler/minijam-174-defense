@@ -35,6 +35,7 @@ export default class BabySystem implements System {
 
 	private spawnBabies() {
 		this.babiesLeft = this.babySpawnLocations.length;
+		MessageBus.sendMessage(EventType.BABIES_LEFT, this.babiesLeft);
 
 		for (let i = 0; i < this.babiesLeft; i++) {
 			const baby = cloneDeep(Baby);
