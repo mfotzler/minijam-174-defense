@@ -67,6 +67,9 @@ export const Beetle: BugComponents = {
 		health: 5,
 		speed: 120,
 		corpseType: 'beetle'
+	},
+	invincibility: {
+		maxDuration: 250
 	}
 };
 
