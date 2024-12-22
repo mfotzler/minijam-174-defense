@@ -1,4 +1,4 @@
-﻿import { World } from '../world';
+﻿import { Point, World } from '../world';
 import MessageBus from '../messageBus/MessageBus';
 import { EventType } from '../engine/types';
 import { BugComponents } from '../entities/types';
@@ -40,19 +40,7 @@ export default class PlayerPartRotationUseCase {
 			const y = currentOffset.x * Math.sin(rads) + currentOffset.y * Math.cos(rads);
 			part.positionOffset = { x, y };
 
-			const { sprite: renderable } = partEntity.render;
-			const sprite = renderable.transform as Phaser.GameObjects.Sprite;
-			if (!sprite.setFrame) return;
-
-			const offsetAngle = Math.atan2(y, x);
-			const roundedAngle = Math.round(offsetAngle / (Math.PI / 4)) * (Math.PI / 4);
-			if (Math.abs((roundedAngle + 0.01) % (Math.PI / 2)) > 0.02) {
-				sprite.setFrame(partEntity.render.angledSpriteKey);
-				sprite.setRotation(roundedAngle - Math.PI / 4);
-			} else {
-				sprite.setFrame(partEntity.render.spriteKey);
-				sprite.setRotation(roundedAngle - Math.PI / 2);
-			}
+			this.rotatePartSprite(partEntity, part.positionOffset);
 		});
 	}
 
@@ -82,6 +70,24 @@ export default class PlayerPartRotationUseCase {
 			const x = currentOffsetMagnitude * Math.cos(rads);
 			const y = currentOffsetMagnitude * Math.sin(rads);
 			part.positionOffset = { x, y };
+
+			this.rotatePartSprite(partEntity, part.positionOffset);
 		});
+	}
+
+	private rotatePartSprite(partEntity: EntityDefinition<BugComponents>, offset: Point) {
+		const { sprite: renderable } = partEntity.render;
+		const sprite = renderable.transform as Phaser.GameObjects.Sprite;
+		if (!sprite.setFrame) return;
+
+		const offsetAngle = Math.atan2(offset.y, offset.x);
+		const roundedAngle = Math.round(offsetAngle / (Math.PI / 4)) * (Math.PI / 4);
+		if (Math.abs((roundedAngle + 0.01) % (Math.PI / 2)) > 0.02) {
+			sprite.setFrame(partEntity.render.angledSpriteKey);
+			sprite.setRotation(roundedAngle - Math.PI / 4);
+		} else {
+			sprite.setFrame(partEntity.render.spriteKey);
+			sprite.setRotation(roundedAngle - Math.PI / 2);
+		}
 	}
 }
