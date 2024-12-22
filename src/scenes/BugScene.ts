@@ -43,7 +43,7 @@ export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
 	debugGraphics: Phaser.GameObjects.Graphics;
 	private world: World;
-	private mode: BugSceneMode;
+	private mode: BugSceneMode = BugSceneMode.ARCADE;
 	private hud: GameHUD;
 
 	constructor() {
@@ -52,10 +52,6 @@ export default class BugScene extends BaseScene {
 
 	override start(_scene: Phaser.Scene, { fadeInDuration, mode }: any = {}) {
 		super.start(_scene, { fadeInDuration });
-
-		this.mode = mode ?? BugSceneMode.CLASSIC;
-
-		this.initializeSpawnListeningSystem();
 	}
 
 	init() {
@@ -119,6 +115,7 @@ export default class BugScene extends BaseScene {
 		this.engine.addUseCase(new WinConditionUseCase(this));
 		this.engine.addUseCase(new GameOverUseCase(this));
 		// this.engine.addUseCase(new PlayerHealthUseCase(this.world));
+		this.initializeSpawnListeningSystem();
 		this.engine.addUseCase(new PlayerPartDamageUseCase(this.world));
 		this.engine.addUseCase(new ScoreTrackingUseCase());
 	}
