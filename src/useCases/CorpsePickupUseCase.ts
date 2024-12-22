@@ -19,8 +19,11 @@ export class CorpsePickupUseCase {
 		if (!playerEntity?.player || !corpseEntity?.corpse || corpseEntity.corpse.isPickedUp) return;
 
 		const { transform } = corpseEntity.render.sprite;
-		const offsetX = transform.x - playerEntity?.render?.sprite?.transform.x;
-		const offsetY = transform.y - playerEntity?.render?.sprite?.transform.y;
+
+		const suckFactor = 0.5;
+
+		const offsetX = (transform.x - playerEntity?.render?.sprite?.transform.x) * suckFactor;
+		const offsetY = (transform.y - playerEntity?.render?.sprite?.transform.y) * suckFactor;
 
 		playerEntity.player.parts.push({
 			entityId: id,
