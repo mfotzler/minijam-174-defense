@@ -162,7 +162,7 @@ export default class BugScene extends BaseScene {
 				prefix: 'larvae',
 				frames: [0, 1]
 			}),
-			frameRate: 4,
+			frameRate: 2,
 			repeat: -1
 		});
 

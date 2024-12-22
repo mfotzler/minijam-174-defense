@@ -1,24 +1,26 @@
-﻿import { EventType, System } from '../engine/types';
+﻿import * as Phaser from 'phaser';
+import { EventType, System } from '../engine/types';
 import MessageBus from '../messageBus/MessageBus';
 import { World } from '../world';
 import { Baby } from '../entities/Baby';
+import { cloneDeep } from 'lodash';
 
 export default class BabySystem implements System {
 	private babiesLeft: number;
 
 	private babySpawnLocations: { x: number; y: number }[] = [
-		{ x: 124, y: 124 },
-		{ x: 124, y: 128 },
-		{ x: 124, y: 132 },
-		{ x: 124, y: 120 },
+		{ x: 116, y: 120 },
 		{ x: 124, y: 116 },
-		{ x: 120, y: 124 },
-		{ x: 128, y: 124 },
-		{ x: 120, y: 128 },
-		{ x: 120, y: 132 },
-		{ x: 128, y: 132 },
-		{ x: 128, y: 128 },
-		{ x: 132, y: 142 }
+		{ x: 130, y: 120 },
+		{ x: 136, y: 124 },
+		{ x: 116, y: 128 },
+		{ x: 124, y: 124 },
+		{ x: 132, y: 128 },
+		{ x: 140, y: 132 },
+		{ x: 112, y: 132 },
+		{ x: 120, y: 136 },
+		{ x: 128, y: 136 },
+		{ x: 136, y: 140 }
 	];
 
 	constructor(private world: World) {
@@ -35,7 +37,9 @@ export default class BabySystem implements System {
 		this.babiesLeft = this.babySpawnLocations.length;
 
 		for (let i = 0; i < this.babiesLeft; i++) {
-			this.world.createEntity(Baby, this.babySpawnLocations[i]);
+			const baby = cloneDeep(Baby);
+			baby.render.tickDelay = Phaser.Math.Between(0, 5) * 100;
+			this.world.createEntity(baby, this.babySpawnLocations[i]);
 		}
 	}
 

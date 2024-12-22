@@ -34,6 +34,7 @@ export interface RenderComponent {
 	sprite?: Renderable;
 	followWithCamera?: boolean;
 	currentAnimation?: string;
+	tickDelay?: number;
 	width?: number;
 	height?: number;
 	fillColor?: number;

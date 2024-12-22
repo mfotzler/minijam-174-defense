@@ -37,7 +37,12 @@ export class SpriteRenderer implements Renderer {
 		const { render, facing } = entity;
 
 		if (render.currentAnimation) {
-			this.sprites[entity.id].anims.play(render.currentAnimation, true);
+			if (this.sprites[entity.id].anims?.currentAnim?.key !== render.currentAnimation) {
+				this.sprites[entity.id].anims.play(render.currentAnimation, true);
+				if (render.tickDelay) {
+					this.sprites[entity.id].anims.nextTick = render.tickDelay;
+				}
+			}
 		} else {
 			this.sprites[entity.id].anims.stop();
 		}

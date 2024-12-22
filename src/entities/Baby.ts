@@ -11,7 +11,8 @@ export const Baby: BugComponents = {
 		height: 4,
 		fillColor: 0x69420e,
 		spriteKey: 'larvae0',
-		currentAnimation: 'larvae-wiggle'
+		currentAnimation: 'larvae-wiggle',
+		tickDelay: 0
 	},
 	invincibility: {
 		maxDuration: 1000
