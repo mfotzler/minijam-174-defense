@@ -3,6 +3,7 @@ import { IEnemyBehavior } from './EnemyBehaviorFactory';
 import { EntityDefinition } from '../../engine/entities/types';
 import { BugComponents } from '../../entities/types';
 import { World } from '../../world';
+import EnemySpeedSystem from '../EnemySpeedSystem';
 
 export default class BabyEaterAntBehavior implements IEnemyBehavior {
 	static readonly key = 'babyEaterAnt';
@@ -31,9 +32,11 @@ export default class BabyEaterAntBehavior implements IEnemyBehavior {
 			closestBaby.baby.render.sprite.transform
 		);
 
+		const speed = enemy.speed * EnemySpeedSystem.getCurrentSpeedMultiplier();
+
 		if (closestBaby.distance > 4) {
-			render.sprite.body.setVelocityX(Math.cos(angle) * enemy.speed);
-			render.sprite.body.setVelocityY(Math.sin(angle) * enemy.speed);
+			render.sprite.body.setVelocityX(Math.cos(angle) * speed);
+			render.sprite.body.setVelocityY(Math.sin(angle) * speed);
 		} else {
 			render.sprite.body.setVelocity(0, 0);
 		}

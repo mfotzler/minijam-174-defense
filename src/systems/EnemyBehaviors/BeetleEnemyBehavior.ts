@@ -5,6 +5,7 @@ import { World } from '../../world';
 import { IEnemyBehavior } from './EnemyBehaviorFactory';
 import { cloneDeep } from 'lodash';
 import { Acid } from '../../entities/Weapons';
+import EnemySpeedSystem from '../EnemySpeedSystem';
 
 export default class BeetleEnemyBehavior implements IEnemyBehavior {
 	static readonly key = 'beetle';
@@ -39,10 +40,9 @@ export default class BeetleEnemyBehavior implements IEnemyBehavior {
 		}
 		const moveAngle = angle + moveAngleOffset;
 
-		render.sprite.body.setVelocity(
-			Math.cos(moveAngle) * enemy.speed,
-			Math.sin(moveAngle) * enemy.speed
-		);
+		const speed = enemy.speed * EnemySpeedSystem.getCurrentSpeedMultiplier();
+
+		render.sprite.body.setVelocity(Math.cos(moveAngle) * speed, Math.sin(moveAngle) * speed);
 
 		// we move for 60 frames before shooting
 		enemy.stateTime = (enemy.stateTime ?? 0) + 1;

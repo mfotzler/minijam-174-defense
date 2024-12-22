@@ -3,6 +3,7 @@ import { EntityDefinition } from '../../engine/entities/types';
 import { BugComponents } from '../../entities/types';
 import { World } from '../../world';
 import { IEnemyBehavior } from './EnemyBehaviorFactory';
+import EnemySpeedSystem from '../EnemySpeedSystem';
 
 export default class AntEnemyBehavior implements IEnemyBehavior {
 	static readonly key = 'ant';
@@ -33,9 +34,11 @@ export default class AntEnemyBehavior implements IEnemyBehavior {
 		const angle = Math.atan2(dy, dx);
 		const roundedAngle = Math.round(angle / (Math.PI / 4)) * (Math.PI / 4);
 
+		const speed = enemy.speed * EnemySpeedSystem.getCurrentSpeedMultiplier();
+
 		if (closestPart.distance > 16) {
-			render.sprite.body.setVelocityX(Math.cos(roundedAngle) * enemy.speed);
-			render.sprite.body.setVelocityY(Math.sin(roundedAngle) * enemy.speed);
+			render.sprite.body.setVelocityX(Math.cos(roundedAngle) * speed);
+			render.sprite.body.setVelocityY(Math.sin(roundedAngle) * speed);
 		} else {
 			render.sprite.body.setVelocity(0, 0);
 		}

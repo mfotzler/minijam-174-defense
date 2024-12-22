@@ -42,6 +42,7 @@ export enum EventType {
 	KILL_ENEMY = 'killEnemy',
 	ALL_ENEMIES_SPAWNED = 'allEnemiesSpawned',
 	ALL_ENEMIES_KILLED = 'allEnemiesKilled',
+	ENEMY_SPEED_CHANGED = 'enemySpeedChanged',
 	SPAWN_CORPSE = 'spawnCorpse',
 
 	MUSIC_PLAY = 'musicPlay',
