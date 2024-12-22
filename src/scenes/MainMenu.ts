@@ -27,8 +27,7 @@ export default class MainMenu extends BaseScene {
 	}
 
 	update(time: number, delta: number): void {
-		if(this.input.gamepad.getPad(0)?.buttons[0].pressed)
-			this.startArcadeMode();
+		if (this.input.gamepad.getPad(0)?.buttons[0].pressed) this.startArcadeMode();
 	}
 
 	private addTitle() {
@@ -39,7 +38,7 @@ export default class MainMenu extends BaseScene {
 				this.renderWidth / 2 + 40,
 				138,
 				'main-font',
-				'a game by tesserex, slowback1,\n bugvevo, and mafcho',
+				'a game by tesserex, slowback1,\n bugvevo, and mafcho (v1)',
 				10,
 				2
 			)
