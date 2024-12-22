@@ -43,6 +43,17 @@ export default class AntEnemyBehavior implements IEnemyBehavior {
 			render.sprite.body.setVelocity(0, 0);
 		}
 
+		if (
+			Math.abs(render.sprite.body.velocity.x) > 0.01 &&
+			Math.abs(render.sprite.body.velocity.y) > 0.01
+		) {
+			entity.render.currentAnimation = 'ant-walk-angle';
+			render.sprite.transform.setRotation(roundedAngle + (3 * Math.PI) / 4);
+		} else {
+			entity.render.currentAnimation = 'ant-walk-square';
+			render.sprite.transform.setRotation(roundedAngle + Math.PI / 2);
+		}
+
 		enemy.stateTime = (enemy.stateTime ?? 0) + 1;
 	}
 }
