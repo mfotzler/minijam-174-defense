@@ -14,7 +14,7 @@ import { MusicSystem } from '../systems/MusicSystem';
 import { SoundEffectSystem } from '../systems/SoundEffectSystem';
 import { AntCorpse, BeetleCorpse } from '../entities/Corpses';
 import { PartsSystem } from '../systems/PartsSystem';
-import SpawnListeningSystem from '../systems/SpawnListeningSystem';
+import ClassicSpawnListeningSystem from '../systems/ClassicSpawnListeningSystem';
 import EnemySpawnSystem from '../systems/EnemySpawnSystem';
 import { WeaponSystem } from '../systems/WeaponSystem';
 import BabySystem from '../systems/BabySystem';
@@ -28,14 +28,31 @@ import GameOverUseCase from '../useCases/GameOverUseCase';
 import { SpriteRenderer } from '../systems/SpriteRenderer';
 import PlayerHealthUseCase from '../useCases/PlayerHealthUseCase';
 import PlayerPartDamageUseCase from '../useCases/PlayerPartDamageUseCase';
+import ArcadeSpawnListeningSystem from '../systems/ArcadeSpawnListeningSystem';
+
+export enum BugSceneMode {
+	// A mode with a finite number of enemies and a win condition
+	CLASSIC = 0,
+	// A mode with an infinite number of enemies and no win condition.  Keep going til you lose!
+	ARCADE = 1
+}
 
 export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
 	debugGraphics: Phaser.GameObjects.Graphics;
 	private world: World;
+	private mode: BugSceneMode;
 
 	constructor() {
 		super({ key: BugScene.key });
+	}
+
+	override start(_scene: Phaser.Scene, { fadeInDuration, mode }: any = {}) {
+		super.start(_scene, { fadeInDuration });
+
+		this.mode = mode ?? BugSceneMode.CLASSIC;
+
+		this.initializeSpawnListeningSystem();
 	}
 
 	init() {
@@ -85,12 +102,10 @@ export default class BugScene extends BaseScene {
 		this.engine.addSystem(new MusicSystem(this));
 		this.engine.addSystem(new SoundEffectSystem(this));
 		this.engine.addSystem(new EnemySystem(this, this.world));
-		this.engine.addSystem(new SpawnListeningSystem());
 		this.engine.addSystem(new EnemySpawnSystem(this.world));
 		this.engine.addSystem(new WeaponSystem(this.world));
 		this.engine.addSystem(new BabySystem(this.world));
 		this.engine.addSystem(new InvincibilitySystem(this.world, this));
-
 		this.engine.addUseCase(new CorpsePickupUseCase(this.world));
 		this.engine.addUseCase(new EntityKnockbackUseCase(this.world));
 		this.engine.addUseCase(new PlayerPartDestroyUseCase(this.world));
@@ -100,6 +115,14 @@ export default class BugScene extends BaseScene {
 		this.engine.addUseCase(new GameOverUseCase(this));
 		this.engine.addUseCase(new PlayerHealthUseCase(this.world));
 		this.engine.addUseCase(new PlayerPartDamageUseCase(this.world));
+	}
+
+	private initializeSpawnListeningSystem() {
+		if (this.mode === BugSceneMode.CLASSIC) {
+			this.engine.addSystem(new ClassicSpawnListeningSystem());
+		} else if (this.mode === BugSceneMode.ARCADE) {
+			this.engine.addSystem(new ArcadeSpawnListeningSystem());
+		}
 	}
 
 	protected startMusic() {
