@@ -18,6 +18,15 @@ export default class MainMenu extends BaseScene {
 		this.renderWidth = this.game.renderer.width;
 		this.renderHeight = this.game.renderer.height;
 
+		this.anims.create({
+			key: 'title-jaws',
+			frames: this.anims.generateFrameNames('title-jaws', {
+				frames: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1]
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
+
 		this.addTitle();
 		this.addMenuButtons();
 	}
@@ -32,6 +41,7 @@ export default class MainMenu extends BaseScene {
 
 	private addTitle() {
 		this.add.image(this.renderWidth / 2, this.renderHeight / 2, 'title-screen');
+		this.add.sprite(82, 190, 'title-jaws').play('title-jaws');
 		this.add.image(this.renderWidth / 2 - 12, 76, 'textures', 'title');
 		this.add
 			.bitmapText(
