@@ -26,7 +26,10 @@ export default class GameWon extends BaseScene {
 		MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, 'complete_1');
 	}
 
-	update(time: number, delta: number): void {}
+	update(time: number, delta: number): void {
+		if(this.input.gamepad.getPad(0)?.buttons[0].pressed)
+			this.fadeToScene(MainMenu.key, { fadeInDuration: 300 });
+	}
 
 	override preload() {
 		super.preload();

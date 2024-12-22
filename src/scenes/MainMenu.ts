@@ -26,7 +26,10 @@ export default class MainMenu extends BaseScene {
 		super.preload();
 	}
 
-	update(time: number, delta: number): void {}
+	update(time: number, delta: number): void {
+		if(this.input.gamepad.getPad(0)?.buttons[0].pressed)
+			this.startArcadeMode();
+	}
 
 	private addTitle() {
 		this.add.image(this.renderWidth / 2, this.renderHeight / 2, 'title-screen');
@@ -58,14 +61,13 @@ export default class MainMenu extends BaseScene {
 	}
 
 	private addPlayButtons(yPosition) {
-		UIHelpers.addCenteredButton(this, yPosition, 'Classic', () => {
-			GameStateSystem.clearState();
-			this.fadeToScene(BugScene.key, { fadeInDuration: 300, mode: BugSceneMode.CLASSIC });
-		});
-
 		UIHelpers.addButton(this, this.renderWidth - 45, yPosition, 'Arcade', () => {
-			GameStateSystem.clearState();
-			this.fadeToScene(BugScene.key, { fadeInDuration: 300, mode: BugSceneMode.ARCADE });
+			this.startArcadeMode();
 		});
+	}
+
+	private startArcadeMode() {
+		GameStateSystem.clearState();
+		this.fadeToScene(BugScene.key, { fadeInDuration: 300, mode: BugSceneMode.ARCADE });
 	}
 }

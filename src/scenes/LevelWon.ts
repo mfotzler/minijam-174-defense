@@ -5,6 +5,8 @@ import MessageBus from '../messageBus/MessageBus';
 import DialogueBox from '../entities/DialogueBox';
 import Container = Phaser.GameObjects.Container;
 import { EventType } from '../engine/types';
+import MainMenu from './MainMenu';
+import BugScene from './BugScene';
 
 export default class LevelWon extends BaseScene {
 	static readonly key = 'LevelWon';
@@ -19,7 +21,10 @@ export default class LevelWon extends BaseScene {
 		MessageBus.sendMessage(EventType.SOUND_EFFECT_PLAY, 'complete_1');
 	}
 
-	update(time: number, delta: number): void {}
+	update(time: number, delta: number): void {
+		if(this.input.gamepad.getPad(0)?.buttons[0].pressed)
+			this.scene.start(BugScene.key);
+	}
 
 	override preload() {
 		super.preload();

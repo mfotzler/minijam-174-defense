@@ -20,7 +20,10 @@ export default class GameOver extends BaseScene {
 		this.addDialogueBox(score);
 	}
 
-	update(time: number, delta: number): void {}
+	update(time: number, delta: number): void {
+		if(this.input.gamepad.getPad(0)?.buttons[0].pressed)
+			this.startScene();
+	}
 
 	override preload() {
 		super.preload();
