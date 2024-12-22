@@ -13,7 +13,7 @@ export const AntCorpse: BugComponents = {
 	},
 	corpse: {
 		weaponType: 'antSmash',
-		maxHealth: 3
+		maxHealth: 10
 	},
 	invincibility: {
 		maxDuration: 500
@@ -33,7 +33,7 @@ export const BabyEaterAntCorpse: BugComponents = {
 	},
 	corpse: {
 		weaponType: 'antSmash',
-		maxHealth: 3
+		maxHealth: 10
 	},
 	invincibility: {
 		maxDuration: 500
@@ -53,7 +53,7 @@ export const BeetleCorpse: BugComponents = {
 	},
 	corpse: {
 		weaponType: 'acid',
-		maxHealth: 1
+		maxHealth: 5
 	},
 	invincibility: {
 		maxDuration: 500

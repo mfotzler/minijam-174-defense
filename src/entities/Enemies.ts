@@ -17,8 +17,8 @@ const AntBase: BugComponents = {
 	},
 	enemy: {
 		type: 'PLACEHOLDER',
-		health: 3,
-		damage: 1,
+		health: 20,
+		damage: 3,
 		speed: 64,
 		corpseType: 'ant'
 	},
@@ -39,9 +39,10 @@ export const BabyEaterAnt: BugComponents = {
 	...AntBase,
 	enemy: {
 		...AntBase.enemy,
-		damage: 2,
+		damage: 3,
 		type: BabyEaterAntBehavior.key,
-		corpseType: 'babyEaterAnt'
+		corpseType: 'babyEaterAnt',
+		health: 20
 	},
 	render: {
 		...AntBase.render,
@@ -64,9 +65,10 @@ export const Beetle: BugComponents = {
 	},
 	enemy: {
 		type: BeetleEnemyBehavior.key,
-		health: 5,
+		health: 10,
 		speed: 120,
-		corpseType: 'beetle'
+		corpseType: 'beetle',
+		damage: 3
 	},
 	invincibility: {
 		maxDuration: 250
