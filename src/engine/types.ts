@@ -64,6 +64,8 @@ export enum EventType {
 	PLAYER_PART_DESTROY = 'playerPartDestroy',
 	PLAYER_MELEE = 'playerMelee',
 	PLAYER_ROTATE = 'playerRotate',
+	PICKUP_CORPSE = 'pickupCorpse',
+	MEATBALL_SIZE_CHANGED = 'meatballSizeChanged',
 
 	BABY_COLLISION = 'babyCollision',
 	BABY_DEATH = 'babyDeath',

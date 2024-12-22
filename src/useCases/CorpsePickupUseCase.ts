@@ -31,6 +31,8 @@ export class CorpsePickupUseCase {
 		});
 		corpseEntity.corpse.isPickedUp = true;
 		corpseEntity.corpse.currentHealth = corpseEntity.corpse.maxHealth;
+		MessageBus.sendMessage(EventType.PICKUP_CORPSE, id);
+		MessageBus.sendMessage(EventType.MEATBALL_SIZE_CHANGED, playerEntity.player.parts.length);
 
 		// duplicated in PlayerPartRotationUseCase but I don't care now
 		const offsetAngle = Math.atan2(offsetY, offsetX);
