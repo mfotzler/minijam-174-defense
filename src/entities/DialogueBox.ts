@@ -75,16 +75,20 @@ export default class DialogueBox extends Container {
 		// show the next message on click
 		background.setInteractive();
 		background.on('pointerdown', () => {
-			if (this.currentMessageIndex === messages.length - 1) {
-				MessageBus.sendMessage(Messages.DialogueComplete, {});
-				this.lastMessageCallback && this.lastMessageCallback();
-			}
-
-			if (this.currentMessageIndex < messages.length - 1) {
-				this.currentMessageIndex++;
-				this.showMessage(messages[this.currentMessageIndex]);
-			}
+			this.advanceMessage();
 		});
+	}
+
+	public advanceMessage() {
+		if (this.currentMessageIndex === this.messages.length - 1) {
+			MessageBus.sendMessage(Messages.DialogueComplete, {});
+			this.lastMessageCallback && this.lastMessageCallback();
+		}
+
+		if (this.currentMessageIndex < this.messages.length - 1) {
+			this.currentMessageIndex++;
+			this.showMessage(this.messages[this.currentMessageIndex]);
+		}
 	}
 
 	private showMessage(message: DialogueMessage) {
