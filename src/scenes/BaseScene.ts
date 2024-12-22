@@ -3,6 +3,7 @@ import MessageBus from '../messageBus/MessageBus';
 import { GameEngine } from '../engine/gameEngine';
 import { musicTracks, soundEffectTracks, voiceClipTracks } from '../utils/soundTracks';
 import { EventType } from '../engine/types';
+import Gamepad = Phaser.Input.Gamepad.Gamepad;
 
 interface StartCallbackConfig {
 	fadeInDuration?: number;

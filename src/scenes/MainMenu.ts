@@ -15,6 +15,21 @@ export default class MainMenu extends BaseScene {
 		this.addTitle();
 		this.addIntroButton();
 		this.addPlayButtons();
+
+		const gamepad = window['gamepad'];
+		const text = this.add.bitmapText(10, 10, 'main-font', '', 10);
+		if (gamepad) {
+			text.setText(`Playing with ${gamepad.id}`);
+		} else {
+			text.setText('Press a button on the Gamepad to use');
+		}
+
+		this.input.gamepad.once('down', function (pad, button, index)
+		{
+			text.setText(`Playing with ${pad.id}`);
+
+			window['gamepad'] = pad;
+		}, this);
 	}
 
 	override preload() {
@@ -22,27 +37,6 @@ export default class MainMenu extends BaseScene {
 	}
 
 	update(time: number, delta: number): void {}
-
-	private addCoins() {
-		this.anims.create({
-			key: 'sprinkle-spin',
-			frames: this.anims.generateFrameNames('textures', {
-				prefix: 'sprinkle',
-				frames: [1, 2, 3, 4]
-			}),
-			frameRate: 8,
-			repeat: -1
-		});
-
-		let sprinkle1 = this.add.sprite(150, 90, 'textures', 'sprinkle1');
-		let sprinkle2 = this.add.sprite(this.renderer.width - 150, 90, 'textures', 'sprinkle1');
-
-		sprinkle1.scale = 4;
-		sprinkle2.scale = 4;
-
-		sprinkle1.play('sprinkle-spin');
-		sprinkle2.play('sprinkle-spin');
-	}
 
 	private addTitle() {
 		this.add.image(this.game.renderer.width / 2, 40, 'textures', 'title').setScale(0.8, 1);

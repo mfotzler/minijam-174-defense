@@ -98,7 +98,7 @@ export default class BugScene extends BaseScene {
 		this.engine.addSystem(
 			new RenderSystem(this, this.world.entityProvider, new SpriteRenderer(this))
 		);
-		this.engine.addSystem(new InputSystem(this, this.world.entityProvider));
+		this.engine.addSystem(new InputSystem(this, this.world.entityProvider, this.world.gamepad));
 		this.engine.addSystem(new PartsSystem(this.world));
 		this.engine.addSystem(new MusicSystem(this));
 		this.engine.addSystem(new SoundEffectSystem(this));
