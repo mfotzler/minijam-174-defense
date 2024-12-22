@@ -44,7 +44,6 @@ export default class TutorialScene extends BaseScene {
 		super.preload();
 
 		this.load.image('background', 'assets/background.png');
-		this.load.audio('lil_blower_san_theme', 'assets/lil_blower_san_theme.mp3');
 		this.load.image('tutorial-graphic', 'assets/tutorial-infographic.png');
 
 		for (const track of musicTracks) {
