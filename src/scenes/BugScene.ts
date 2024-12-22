@@ -73,11 +73,16 @@ export default class BugScene extends BaseScene {
 
 	preload() {
 		super.preload();
+
+		this.load.tilemapTiledJSON('bugworldbackground', 'assets/bugworldbackground.json');
+		this.load.image('tiles', 'assets/background.png');
+
 		this.debugGraphics = this.add.graphics();
 	}
 
 	create(): void {
 		super.create();
+		this.world.initializeMap('bugworldbackground');
 
 		this.world.addPlayer();
 

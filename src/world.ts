@@ -23,15 +23,8 @@ export class World {
 
 	initializeMap(key: string): void {
 		this.map = this.scene.make.tilemap({ key });
-		const tileset = this.map.addTilesetImage('walls', 'tiles');
+		const tileset = this.map.addTilesetImage('background', 'tiles');
 		this.wallLayer = this.map.createLayer(0, tileset, 0, 0);
-		this.wallLayer.setCollision(1, true);
-
-		this.scene.add
-			.tileSprite(0, 0, this.map.widthInPixels, 256, 'background')
-			.setScale(4)
-			.setOrigin(0, 0)
-			.setDepth(-1);
 	}
 
 	addPlayer() {
