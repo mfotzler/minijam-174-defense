@@ -20,24 +20,6 @@ export default class MainMenu extends BaseScene {
 
 		this.addTitle();
 		this.addMenuButtons();
-
-		const gamepad = window['gamepad'];
-		const text = this.add.bitmapText(10, 10, 'main-font', '', 10).setDropShadow(1, 1, 0x000000, 1);
-		if (gamepad) {
-			text.setText(`Playing with ${gamepad.id}`);
-		} else {
-			text.setText('Press a button on the Gamepad to use');
-		}
-
-		this.input.gamepad.once(
-			'down',
-			function (pad, button, index) {
-				text.setText(`Playing with ${pad.id}`);
-
-				window['gamepad'] = pad;
-			},
-			this
-		);
 	}
 
 	override preload() {
