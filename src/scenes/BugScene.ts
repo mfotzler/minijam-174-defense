@@ -146,6 +146,15 @@ export default class BugScene extends BaseScene {
 			frameRate: 8,
 			repeat: -1
 		});
+		this.anims.create({
+			key: 'player-walk-angle',
+			frames: this.anims.generateFrameNames('textures', {
+				prefix: 'mainCharacterAngle',
+				frames: [0, 1, 2, 1]
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
 
 		this.anims.create({
 			key: 'larvae-wiggle',
@@ -166,6 +175,15 @@ export default class BugScene extends BaseScene {
 			frameRate: 8,
 			repeat: -1
 		});
+		this.anims.create({
+			key: 'ant-walk-angle',
+			frames: this.anims.generateFrameNames('textures', {
+				prefix: 'shieldBugAngle',
+				frames: [0, 1, 2, 1]
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
 
 		this.anims.create({
 			key: 'baby-eater-walk-square',
@@ -176,11 +194,29 @@ export default class BugScene extends BaseScene {
 			frameRate: 8,
 			repeat: -1
 		});
+		this.anims.create({
+			key: 'baby-eater-walk-angle',
+			frames: this.anims.generateFrameNames('textures', {
+				prefix: 'babyEaterAngle',
+				frames: [0, 1, 2, 1]
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
 
 		this.anims.create({
 			key: 'beetle-walk-square',
 			frames: this.anims.generateFrameNames('textures', {
 				prefix: 'beetleSquare',
+				frames: [0, 1, 2, 1]
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
+		this.anims.create({
+			key: 'beetle-walk-angle',
+			frames: this.anims.generateFrameNames('textures', {
+				prefix: 'beetleAngle',
 				frames: [0, 1, 2, 1]
 			}),
 			frameRate: 8,

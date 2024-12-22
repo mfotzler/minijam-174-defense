@@ -11,7 +11,6 @@ export const Player: BugComponents = {
 		currentAnimation: 'player-walk-square'
 	},
 	player: { parts: [], shotCooldown: 0 },
-	facing: { direction: Direction.RIGHT },
 	collision: { tiles: true },
 	invincibility: {
 		maxDuration: 1000

@@ -8,7 +8,8 @@ export const AntCorpse: BugComponents = {
 		width: 8,
 		height: 8,
 		fillColor: 0xff4400,
-		spriteKey: 'shieldBugSquare3'
+		spriteKey: 'shieldBugSquare3',
+		angledSpriteKey: 'shieldBugAngle3'
 	},
 	corpse: {
 		weaponType: 'antSmash',
@@ -27,7 +28,8 @@ export const BabyEaterAntCorpse: BugComponents = {
 		width: 8,
 		height: 8,
 		fillColor: 0xff4400,
-		spriteKey: 'babyEaterSquare3'
+		spriteKey: 'babyEaterSquare3',
+		angledSpriteKey: 'babyEaterAngle3'
 	},
 	corpse: {
 		weaponType: 'antSmash',
@@ -46,7 +48,8 @@ export const BeetleCorpse: BugComponents = {
 		width: 8,
 		height: 8,
 		fillColor: 0x6791ac,
-		spriteKey: 'beetleSquare3'
+		spriteKey: 'beetleSquare3',
+		angledSpriteKey: 'beetleAngle3'
 	},
 	corpse: {
 		weaponType: 'acid',

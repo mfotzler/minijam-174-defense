@@ -51,6 +51,11 @@ export default class InputSystem implements System {
 				if (body.velocity.x !== 0 && body.velocity.y !== 0) {
 					body.velocity.x *= 0.7071;
 					body.velocity.y *= 0.7071;
+					entity.render.currentAnimation = 'player-walk-angle';
+					transform.setRotation(Math.atan2(body.velocity.y, body.velocity.x) - (3 * Math.PI) / 4);
+				} else {
+					entity.render.currentAnimation = 'player-walk-square';
+					transform.setRotation(Math.atan2(body.velocity.y, body.velocity.x) - Math.PI / 2);
 				}
 			}
 		});
@@ -59,13 +64,10 @@ export default class InputSystem implements System {
 	private processKeyboardInput(body: Phaser.Physics.Arcade.Body, moveSpeed: number) {
 		if (this.arrows.right.isDown) {
 			body.velocity.x = moveSpeed;
-			//entity.render.currentAnimation = 'player-walk';
 		} else if (this.arrows.left.isDown) {
 			body.velocity.x = -moveSpeed;
-			//entity.render.currentAnimation = 'player-walk';
 		} else {
 			body.velocity.x = 0;
-			//entity.render.currentAnimation = undefined;
 		}
 
 		if (this.arrows.up.isDown) {

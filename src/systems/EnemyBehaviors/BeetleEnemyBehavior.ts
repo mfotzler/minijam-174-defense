@@ -44,6 +44,8 @@ export default class BeetleEnemyBehavior implements IEnemyBehavior {
 
 		render.sprite.body.setVelocity(Math.cos(moveAngle) * speed, Math.sin(moveAngle) * speed);
 
+		this.setRotation(render, moveAngle);
+
 		// we move for 60 frames before shooting
 		enemy.stateTime = (enemy.stateTime ?? 0) + 1;
 		if (enemy.stateTime < 60) return;
@@ -51,6 +53,7 @@ export default class BeetleEnemyBehavior implements IEnemyBehavior {
 		enemy.stateTime = 0;
 
 		render.sprite.body.setVelocity(0, 0);
+		this.setRotation(render, angle);
 
 		const acid = cloneDeep(Acid);
 
@@ -69,5 +72,16 @@ export default class BeetleEnemyBehavior implements IEnemyBehavior {
 		});
 
 		entity.enemy.shotCooldown = acid.projectile.cooldown;
+	}
+
+	private setRotation(render: BugComponents['render'], angle: number) {
+		const roundedAngle = Math.round(angle / (Math.PI / 4)) * (Math.PI / 4);
+		if ((roundedAngle + 0.01) % (Math.PI / 2) > 0.02) {
+			render.currentAnimation = 'beetle-walk-angle';
+			render.sprite.transform.setRotation(roundedAngle - Math.PI / 4);
+		} else {
+			render.currentAnimation = 'beetle-walk-square';
+			render.sprite.transform.setRotation(roundedAngle - Math.PI / 2);
+		}
 	}
 }

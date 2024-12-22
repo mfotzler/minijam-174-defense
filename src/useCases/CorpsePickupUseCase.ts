@@ -1,6 +1,5 @@
-import { System, EventType } from '../engine/types';
+import { EventType } from '../engine/types';
 import MessageBus from '../messageBus/MessageBus';
-import BaseScene from '../scenes/BaseScene';
 import { World } from '../world';
 
 export class CorpsePickupUseCase {
@@ -19,10 +18,9 @@ export class CorpsePickupUseCase {
 		const corpseEntity = this.world.entityProvider.getEntity(id);
 		if (!playerEntity?.player || !corpseEntity?.corpse || corpseEntity.corpse.isPickedUp) return;
 
-		const offsetX =
-			corpseEntity?.render?.sprite?.transform.x - playerEntity?.render?.sprite?.transform.x;
-		const offsetY =
-			corpseEntity?.render?.sprite?.transform.y - playerEntity?.render?.sprite?.transform.y;
+		const { transform } = corpseEntity.render.sprite;
+		const offsetX = transform.x - playerEntity?.render?.sprite?.transform.x;
+		const offsetY = transform.y - playerEntity?.render?.sprite?.transform.y;
 
 		playerEntity.player.parts.push({
 			entityId: id,
@@ -30,5 +28,16 @@ export class CorpsePickupUseCase {
 		});
 		corpseEntity.corpse.isPickedUp = true;
 		corpseEntity.corpse.currentHealth = corpseEntity.corpse.maxHealth;
+
+		// duplicated in PlayerPartRotationUseCase but I don't care now
+		const offsetAngle = Math.atan2(offsetY, offsetX);
+		const roundedAngle = Math.round(offsetAngle / (Math.PI / 4)) * (Math.PI / 4);
+		if (Math.abs((roundedAngle + 0.01) % (Math.PI / 2)) > 0.02) {
+			(transform as Phaser.GameObjects.Sprite).setFrame?.(corpseEntity.render.angledSpriteKey);
+			transform.setRotation(roundedAngle - Math.PI / 4);
+		} else {
+			(transform as Phaser.GameObjects.Sprite).setFrame?.(corpseEntity.render.spriteKey);
+			transform.setRotation(roundedAngle - Math.PI / 2);
+		}
 	}
 }
