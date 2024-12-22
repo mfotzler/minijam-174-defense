@@ -54,5 +54,8 @@ export const BeetleCorpse: BugComponents = {
 	corpse: {
 		weaponType: 'acid',
 		maxHealth: 1
+	},
+	invincibility: {
+		maxDuration: 500
 	}
 };

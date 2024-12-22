@@ -7,14 +7,37 @@ import BugScene, { BugSceneMode } from './BugScene';
 
 export default class MainMenu extends BaseScene {
 	static readonly key = 'MainMenu';
+	private renderWidth;
+	private renderHeight;
+
 	constructor() {
 		super({ key: MainMenu.key });
 	}
 
 	create(): void {
+		this.renderWidth = this.game.renderer.width;
+		this.renderHeight = this.game.renderer.height;
+
 		this.addTitle();
-		this.addIntroButton();
-		this.addPlayButtons();
+		this.addMenuButtons();
+
+		const gamepad = window['gamepad'];
+		const text = this.add.bitmapText(10, 10, 'main-font', '', 10).setDropShadow(1, 1, 0x000000, 1);
+		if (gamepad) {
+			text.setText(`Playing with ${gamepad.id}`);
+		} else {
+			text.setText('Press a button on the Gamepad to use');
+		}
+
+		this.input.gamepad.once(
+			'down',
+			function (pad, button, index) {
+				text.setText(`Playing with ${pad.id}`);
+
+				window['gamepad'] = pad;
+			},
+			this
+		);
 	}
 
 	override preload() {
@@ -23,53 +46,42 @@ export default class MainMenu extends BaseScene {
 
 	update(time: number, delta: number): void {}
 
-	private addCoins() {
-		this.anims.create({
-			key: 'sprinkle-spin',
-			frames: this.anims.generateFrameNames('textures', {
-				prefix: 'sprinkle',
-				frames: [1, 2, 3, 4]
-			}),
-			frameRate: 8,
-			repeat: -1
-		});
-
-		let sprinkle1 = this.add.sprite(150, 90, 'textures', 'sprinkle1');
-		let sprinkle2 = this.add.sprite(this.renderer.width - 150, 90, 'textures', 'sprinkle1');
-
-		sprinkle1.scale = 4;
-		sprinkle2.scale = 4;
-
-		sprinkle1.play('sprinkle-spin');
-		sprinkle2.play('sprinkle-spin');
-	}
-
 	private addTitle() {
-		this.add.image(this.game.renderer.width / 2, 40, 'textures', 'title').setScale(0.8, 1);
+		this.add.image(this.renderWidth / 2, this.renderHeight / 2, 'title-screen');
+		this.add.image(this.renderWidth / 2 - 12, 76, 'textures', 'title');
 		this.add
 			.bitmapText(
-				this.game.renderer.width / 2,
-				100,
+				this.renderWidth / 2 + 40,
+				138,
 				'main-font',
 				'a game by tesserex, slowback1,\n bugvevo, and mafcho',
-				10
+				10,
+				2
 			)
-			.setOrigin(0.5, 0.5);
+			.setOrigin(0.5, 0.5)
+			.setDropShadow(1, 1, 0x000000, 1);
 	}
 
-	private addIntroButton() {
-		UIHelpers.addCenteredButton(this, 135, 'Intro', () => {
+	private addMenuButtons() {
+		const yPosition = 230;
+
+		this.addIntroButton(yPosition);
+		this.addPlayButtons(yPosition);
+	}
+
+	private addIntroButton(yPosition) {
+		UIHelpers.addButton(this, 45, yPosition, 'Tutorial', () => {
 			this.scene.start(TutorialScene.key);
 		});
 	}
 
-	private addPlayButtons() {
-		UIHelpers.addCenteredButton(this, 175, 'Classic', () => {
+	private addPlayButtons(yPosition) {
+		UIHelpers.addCenteredButton(this, yPosition, 'Classic', () => {
 			GameStateSystem.clearState();
 			this.fadeToScene(BugScene.key, { fadeInDuration: 300, mode: BugSceneMode.CLASSIC });
 		});
 
-		UIHelpers.addCenteredButton(this, 215, 'Arcade', () => {
+		UIHelpers.addButton(this, this.renderWidth - 45, yPosition, 'Arcade', () => {
 			GameStateSystem.clearState();
 			this.fadeToScene(BugScene.key, { fadeInDuration: 300, mode: BugSceneMode.ARCADE });
 		});

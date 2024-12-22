@@ -22,6 +22,9 @@ new Phaser.Game({
 		mode: Phaser.Scale.ScaleModes.FIT,
 		autoCenter: Phaser.Scale.Center.CENTER_BOTH
 	},
+	input: {
+		gamepad: true
+	},
 	zoom: 1,
 	scene: [GameScene, MainScene, GameOver, TutorialScene, GameWon, LevelWon, BugScene],
 	pixelArt: true,

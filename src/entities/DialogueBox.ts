@@ -34,13 +34,13 @@ export default class DialogueBox extends Container {
 			0,
 			0,
 			'textures',
-			'menu-button',
+			'menu-button2',
 			scene.renderer.width,
 			DialogueBox.height,
-			20,
-			20,
-			20,
-			20
+			16,
+			16,
+			16,
+			16
 		);
 		background.setOrigin(0, 0);
 		this.add(background);
@@ -65,8 +65,8 @@ export default class DialogueBox extends Container {
 			background.width - 420,
 			340,
 			'main-font',
-			'Click to Continue'
-			, 10
+			'Click to Continue',
+			10
 		);
 		this.clickIndicator.setOrigin(0, 0);
 		this.add(this.clickIndicator);

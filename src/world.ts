@@ -16,9 +16,11 @@ export class World {
 	map: Phaser.Tilemaps.Tilemap;
 	wallLayer: Phaser.Tilemaps.TilemapLayer;
 	playerId: string;
+	gamepad: Gamepad;
 
 	constructor(private scene: BaseScene) {
 		this.entityProvider = new EntityCollection();
+		this.gamepad = window['gamepad'];
 	}
 
 	initializeMap(key: string): void {

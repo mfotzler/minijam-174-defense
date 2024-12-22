@@ -3,6 +3,7 @@ import MessageBus from '../messageBus/MessageBus';
 import { GameEngine } from '../engine/gameEngine';
 import { musicTracks, soundEffectTracks, voiceClipTracks } from '../utils/soundTracks';
 import { EventType } from '../engine/types';
+import Gamepad = Phaser.Input.Gamepad.Gamepad;
 
 interface StartCallbackConfig {
 	fadeInDuration?: number;
@@ -14,7 +15,22 @@ export default class BaseScene extends Phaser.Scene {
 
 	preload(): void {
 		this.load.atlas('textures', 'assets/texture.png', 'assets/texture.json');
-		this.load.bitmapFont('main-font', 'assets/fonts/minogram_6x10.png', 'assets/fonts/minogram_6x10.xml');
+		this.load.image('title-screen', 'assets/title-screen.png');
+		this.load.bitmapFont(
+			'main-font',
+			'assets/fonts/minogram_6x10.png',
+			'assets/fonts/minogram_6x10.xml'
+		);
+		this.load.bitmapFont(
+			'main-font-black',
+			'assets/fonts/minogram_6x10_black.png',
+			'assets/fonts/minogram_6x10.xml'
+		);
+		this.load.bitmapFont(
+			'main-font-contrast',
+			'assets/fonts/minogram_6x10_contrast.png',
+			'assets/fonts/minogram_6x10.xml'
+		);
 
 		for (const track of musicTracks) {
 			this.load.audio(track, `assets/music/${track}.wav`);
