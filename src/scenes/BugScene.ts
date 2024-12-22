@@ -119,9 +119,9 @@ export default class BugScene extends BaseScene {
 
 	private initializeSpawnListeningSystem() {
 		if (this.mode === BugSceneMode.CLASSIC) {
-			this.engine.addSystem(new ClassicSpawnListeningSystem());
+			//this.engine.addSystem(new ClassicSpawnListeningSystem());
 		} else if (this.mode === BugSceneMode.ARCADE) {
-			this.engine.addSystem(new ArcadeSpawnListeningSystem());
+			//this.engine.addSystem(new ArcadeSpawnListeningSystem());
 		}
 	}
 
@@ -138,6 +138,15 @@ export default class BugScene extends BaseScene {
 			key: 'player-walk-square',
 			frames: this.anims.generateFrameNames('textures', {
 				prefix: 'mainCharacterSquare',
+				frames: [0, 1, 2, 1]
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
+		this.anims.create({
+			key: 'player-walk-angle',
+			frames: this.anims.generateFrameNames('textures', {
+				prefix: 'mainCharacterAngle',
 				frames: [0, 1, 2, 1]
 			}),
 			frameRate: 8,
