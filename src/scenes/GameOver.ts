@@ -13,6 +13,7 @@ export default class GameOver extends BaseScene {
 	}
 
 	create(): void {
+		this.add.image(this.renderer.width / 2, this.renderer.height / 2, 'generic-background');
 		this.addPlayButton();
 		this.playSound();
 
