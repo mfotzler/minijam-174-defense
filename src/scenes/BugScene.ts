@@ -52,7 +52,7 @@ export default class BugScene extends BaseScene {
 
 		this.mode = mode ?? BugSceneMode.CLASSIC;
 
-		this.initializeSpawnListeningSystem();
+		// this.initializeSpawnListeningSystem();
 	}
 
 	init() {
