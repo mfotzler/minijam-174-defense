@@ -22,9 +22,35 @@ export default class UIHelpers {
 		button.setPosition(x, y);
 		button.setInteractive();
 		button.on('pointerdown', onClick);
-		scene.add.bitmapText(x, y, 'main-font', text, 10).setOrigin(0.5, 0.5);
+		scene.add.bitmapText(x, y, 'main-font', text, 10, 1).setOrigin(0.5, 0.5);
 
 		return button;
+	}
+
+	static addInfoSquare(
+		scene: Phaser.Scene,
+		x: number,
+		y: number,
+		text: string = '',
+		width: number = 82,
+		height: number = 32
+	): Phaser.GameObjects.NineSlice {
+		const rect = scene.add.nineslice(
+			0,
+			0,
+			'textures',
+			'info-square',
+			width,
+			height,
+			16,
+			16,
+			16,
+			16
+		);
+		rect.setPosition(x, y);
+		scene.add.bitmapText(x, y, 'main-font', text, 10, 1).setOrigin(0.5, 0.5);
+
+		return rect;
 	}
 
 	static addCenteredText(

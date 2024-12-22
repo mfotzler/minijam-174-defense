@@ -52,10 +52,20 @@ export default class TutorialScene extends BaseScene {
 			16
 		);
 
-		UIHelpers.addCenteredText(this, 56, 'SAVE THE BABIES!');
-		UIHelpers.addCenteredText(this, 70, 'When the babies are dead...');
-		const youLoseText = UIHelpers.addCenteredText(this, 82, 'YOU LOSE!');
-		youLoseText.setDropShadow(1, 1, 0xff0000);
+		UIHelpers.addCenteredText(this, 52, 'SAVE THE BABIES!');
+		UIHelpers.addCenteredText(this, 66, 'When the babies are dead...');
+		UIHelpers.addCenteredText(this, 78, 'YOU LOSE!').setDropShadow(1, 1, 0xff0000);
+
+		UIHelpers.addCenteredText(this, 100, 'CONTROLS').setDropShadow(1, 1, 0x4cb05e);
+		UIHelpers.addInfoSquare(this, 72, 132, 'KEYBOARD\nArrow keys move\nA/D keys rotate', 110, 54);
+		UIHelpers.addInfoSquare(
+			this,
+			renderWidth - 72,
+			132,
+			'GAMEPAD\nLeft stick move\nRight stick rotate',
+			110,
+			54
+		);
 	}
 
 	private;

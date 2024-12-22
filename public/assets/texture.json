@@ -48,9 +48,33 @@
         "y": 0.5
       }
     },
-    "mouse": {
+    "info-square": {
       "frame": {
         "x": 257,
+        "y": 0,
+        "w": 46,
+        "h": 30
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 1,
+        "w": 46,
+        "h": 30
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 32
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "mouse": {
+      "frame": {
+        "x": 303,
         "y": 0,
         "w": 35,
         "h": 53
@@ -74,8 +98,8 @@
     },
     "beetleAngle0": {
       "frame": {
-        "x": 209,
-        "y": 32,
+        "x": 257,
+        "y": 30,
         "w": 16,
         "h": 16
       },
@@ -98,8 +122,8 @@
     },
     "beetleAngle1": {
       "frame": {
-        "x": 225,
-        "y": 32,
+        "x": 273,
+        "y": 30,
         "w": 16,
         "h": 16
       },
@@ -120,9 +144,57 @@
         "y": 0.5
       }
     },
+    "beetleSquare0": {
+      "frame": {
+        "x": 289,
+        "y": 30,
+        "w": 14,
+        "h": 14
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 0,
+        "w": 14,
+        "h": 14
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "beetleSquare1": {
+      "frame": {
+        "x": 289,
+        "y": 44,
+        "w": 14,
+        "h": 14
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 0,
+        "w": 14,
+        "h": 14
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
     "beetleAngle2": {
       "frame": {
-        "x": 241,
+        "x": 209,
         "y": 32,
         "w": 16,
         "h": 16
@@ -146,6 +218,102 @@
     },
     "mainCharacterAngle0": {
       "frame": {
+        "x": 225,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "mainCharacterAngle1": {
+      "frame": {
+        "x": 241,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "mainCharacterAngle2": {
+      "frame": {
+        "x": 257,
+        "y": 46,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "shieldBugAngle0": {
+      "frame": {
+        "x": 273,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "shieldBugAngle1": {
+      "frame": {
         "x": 209,
         "y": 48,
         "w": 16,
@@ -168,7 +336,7 @@
         "y": 0.5
       }
     },
-    "mainCharacterAngle1": {
+    "shieldBugAngle2": {
       "frame": {
         "x": 225,
         "y": 48,
@@ -192,106 +360,10 @@
         "y": 0.5
       }
     },
-    "mainCharacterAngle2": {
+    "babyEaterAngle0": {
       "frame": {
         "x": 241,
         "y": 48,
-        "w": 16,
-        "h": 16
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 16,
-        "h": 16
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "shieldBugAngle0": {
-      "frame": {
-        "x": 292,
-        "y": 0,
-        "w": 16,
-        "h": 16
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 16,
-        "h": 16
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "shieldBugAngle1": {
-      "frame": {
-        "x": 308,
-        "y": 0,
-        "w": 16,
-        "h": 16
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 16,
-        "h": 16
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "shieldBugAngle2": {
-      "frame": {
-        "x": 324,
-        "y": 0,
-        "w": 16,
-        "h": 16
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 16,
-        "h": 16
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "babyEaterAngle0": {
-      "frame": {
-        "x": 340,
-        "y": 0,
         "w": 15,
         "h": 15
       },
@@ -314,8 +386,8 @@
     },
     "babyEaterAngle1": {
       "frame": {
-        "x": 355,
-        "y": 0,
+        "x": 256,
+        "y": 62,
         "w": 15,
         "h": 15
       },
@@ -338,8 +410,8 @@
     },
     "babyEaterAngle2": {
       "frame": {
-        "x": 370,
-        "y": 0,
+        "x": 241,
+        "y": 63,
         "w": 15,
         "h": 15
       },
@@ -360,58 +432,10 @@
         "y": 0.5
       }
     },
-    "beetleSquare0": {
-      "frame": {
-        "x": 385,
-        "y": 0,
-        "w": 14,
-        "h": 14
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 1,
-        "y": 0,
-        "w": 14,
-        "h": 14
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "beetleSquare1": {
-      "frame": {
-        "x": 399,
-        "y": 0,
-        "w": 14,
-        "h": 14
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 1,
-        "y": 0,
-        "w": 14,
-        "h": 14
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
     "beetleSquare2": {
       "frame": {
-        "x": 413,
-        "y": 0,
+        "x": 256,
+        "y": 77,
         "w": 14,
         "h": 14
       },
@@ -434,8 +458,8 @@
     },
     "shieldBugSquare0": {
       "frame": {
-        "x": 427,
-        "y": 0,
+        "x": 209,
+        "y": 64,
         "w": 13,
         "h": 16
       },
@@ -458,8 +482,8 @@
     },
     "shieldBugSquare2": {
       "frame": {
-        "x": 385,
-        "y": 14,
+        "x": 222,
+        "y": 64,
         "w": 13,
         "h": 16
       },
@@ -482,8 +506,8 @@
     },
     "babyEaterSquare0": {
       "frame": {
-        "x": 398,
-        "y": 14,
+        "x": 235,
+        "y": 78,
         "w": 13,
         "h": 15
       },
@@ -504,10 +528,34 @@
         "y": 0.5
       }
     },
+    "beetleAngle3": {
+      "frame": {
+        "x": 248,
+        "y": 78,
+        "w": 8,
+        "h": 8
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 8,
+        "y": 8,
+        "w": 8,
+        "h": 8
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
     "babyEaterSquare2": {
       "frame": {
-        "x": 411,
-        "y": 14,
+        "x": 209,
+        "y": 80,
         "w": 13,
         "h": 15
       },
@@ -530,8 +578,8 @@
     },
     "mainCharacterSquare0": {
       "frame": {
-        "x": 340,
-        "y": 15,
+        "x": 222,
+        "y": 80,
         "w": 12,
         "h": 16
       },
@@ -554,8 +602,8 @@
     },
     "mainCharacterSquare1": {
       "frame": {
-        "x": 352,
-        "y": 15,
+        "x": 209,
+        "y": 95,
         "w": 12,
         "h": 16
       },
@@ -578,8 +626,8 @@
     },
     "mainCharacterSquare2": {
       "frame": {
-        "x": 364,
-        "y": 15,
+        "x": 0,
+        "y": 104,
         "w": 12,
         "h": 16
       },
@@ -600,58 +648,10 @@
         "y": 0.5
       }
     },
-    "shieldBugAngle3": {
-      "frame": {
-        "x": 376,
-        "y": 15,
-        "w": 9,
-        "h": 9
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 7,
-        "y": 7,
-        "w": 9,
-        "h": 9
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "acid": {
-      "frame": {
-        "x": 376,
-        "y": 24,
-        "w": 9,
-        "h": 7
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 4,
-        "y": 4,
-        "w": 9,
-        "h": 7
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 16
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
     "shieldBugSquare1": {
       "frame": {
-        "x": 292,
-        "y": 16,
+        "x": 12,
+        "y": 104,
         "w": 12,
         "h": 16
       },
@@ -674,8 +674,8 @@
     },
     "babyEaterSquare1": {
       "frame": {
-        "x": 304,
-        "y": 16,
+        "x": 24,
+        "y": 104,
         "w": 12,
         "h": 15
       },
@@ -698,8 +698,8 @@
     },
     "babyEaterAngle3": {
       "frame": {
-        "x": 316,
-        "y": 16,
+        "x": 36,
+        "y": 104,
         "w": 12,
         "h": 12
       },
@@ -722,8 +722,8 @@
     },
     "babyEaterSquare3": {
       "frame": {
-        "x": 328,
-        "y": 16,
+        "x": 48,
+        "y": 104,
         "w": 12,
         "h": 9
       },
@@ -746,8 +746,8 @@
     },
     "beetleSquare3": {
       "frame": {
-        "x": 328,
-        "y": 25,
+        "x": 60,
+        "y": 104,
         "w": 12,
         "h": 5
       },
@@ -770,8 +770,8 @@
     },
     "larvae1": {
       "frame": {
-        "x": 316,
-        "y": 28,
+        "x": 72,
+        "y": 104,
         "w": 11,
         "h": 12
       },
@@ -794,8 +794,8 @@
     },
     "larvae0": {
       "frame": {
-        "x": 304,
-        "y": 31,
+        "x": 60,
+        "y": 111,
         "w": 10,
         "h": 11
       },
@@ -818,8 +818,8 @@
     },
     "shieldBugSquare3": {
       "frame": {
-        "x": 292,
-        "y": 32,
+        "x": 48,
+        "y": 113,
         "w": 10,
         "h": 9
       },
@@ -842,8 +842,8 @@
     },
     "antProjectile": {
       "frame": {
-        "x": 292,
-        "y": 41,
+        "x": 36,
+        "y": 116,
         "w": 10,
         "h": 7
       },
@@ -864,20 +864,44 @@
         "y": 0.5
       }
     },
-    "beetleAngle3": {
+    "shieldBugAngle3": {
       "frame": {
-        "x": 327,
-        "y": 30,
-        "w": 8,
-        "h": 8
+        "x": 24,
+        "y": 119,
+        "w": 9,
+        "h": 9
       },
       "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
-        "x": 8,
-        "y": 8,
-        "w": 8,
-        "h": 8
+        "x": 7,
+        "y": 7,
+        "w": 9,
+        "h": 9
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "acid": {
+      "frame": {
+        "x": 0,
+        "y": 120,
+        "w": 9,
+        "h": 7
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 4,
+        "w": 9,
+        "h": 7
       },
       "sourceSize": {
         "w": 16,
@@ -895,8 +919,8 @@
     "image": "texture.png",
     "format": "RGBA8888",
     "size": {
-      "w": 440,
-      "h": 104
+      "w": 338,
+      "h": 128
     },
     "scale": 1
   }
