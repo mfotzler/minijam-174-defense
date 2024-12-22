@@ -41,8 +41,6 @@ export default class SpawnListeningSystem implements System {
 			}
 		}
 
-		console.log(result);
-
 		return result;
 	}
 
