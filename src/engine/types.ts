@@ -62,7 +62,6 @@ export enum EventType {
 	PLAYER_PART_DESTROY = 'playerPartDestroy',
 	PLAYER_MELEE = 'playerMelee',
 	PLAYER_ROTATE = 'playerRotate',
-	PLAYER_ROTATION_ANGLE = 'playerRotationAngle',
 
 	BABY_COLLISION = 'babyCollision',
 	BABY_DEATH = 'babyDeath',
