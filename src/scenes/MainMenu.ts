@@ -28,6 +28,7 @@ export default class MainMenu extends BaseScene {
 
 	update(time: number, delta: number): void {
 		if (this.input.gamepad.getPad(0)?.buttons[0].pressed) this.startArcadeMode();
+		if (this.input.gamepad.getPad(0)?.buttons[3].pressed) this.startTutorial();
 	}
 
 	private addTitle() {
@@ -54,15 +55,19 @@ export default class MainMenu extends BaseScene {
 	}
 
 	private addIntroButton(yPosition) {
-		UIHelpers.addButton(this, 45, yPosition, 'Tutorial', () => {
-			this.scene.start(TutorialScene.key);
+		UIHelpers.addButton(this, 45, yPosition, 'Tutorial (Y)', () => {
+			this.startTutorial();
 		});
 	}
 
 	private addPlayButtons(yPosition) {
-		UIHelpers.addButton(this, this.renderWidth - 45, yPosition, 'Arcade', () => {
+		UIHelpers.addButton(this, this.renderWidth - 45, yPosition, 'Arcade (A)', () => {
 			this.startArcadeMode();
 		});
+	}
+
+	private startTutorial() {
+		this.scene.start(TutorialScene.key);
 	}
 
 	private startArcadeMode() {
