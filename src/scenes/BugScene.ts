@@ -115,7 +115,7 @@ export default class BugScene extends BaseScene {
 		this.engine.addUseCase(new EnemyCountUseCase());
 		this.engine.addUseCase(new WinConditionUseCase(this));
 		this.engine.addUseCase(new GameOverUseCase(this));
-		this.engine.addUseCase(new PlayerHealthUseCase(this.world));
+		// this.engine.addUseCase(new PlayerHealthUseCase(this.world));
 		this.engine.addUseCase(new PlayerPartDamageUseCase(this.world));
 		this.engine.addUseCase(new ScoreTrackingUseCase());
 	}
