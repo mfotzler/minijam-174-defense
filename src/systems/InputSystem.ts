@@ -6,6 +6,8 @@ import MessageBus from '../messageBus/MessageBus';
 import PHYSICS_CONSTANTS from '../utils/physicsConstants';
 
 export default class InputSystem implements System {
+	private autofire = true;
+
 	private arrows: Phaser.Types.Input.Keyboard.CursorKeys;
 	private clockwise: Phaser.Input.Keyboard.Key;
 	private counterClockwise: Phaser.Input.Keyboard.Key;
@@ -80,7 +82,7 @@ export default class InputSystem implements System {
 					MessageBus.sendMessage(EventType.ENABLE_INFINITE_MODE, true);
 				}
 
-				if (this.scene.input.mousePointer.primaryDown || this.shootKey.isDown) {
+				if (this.scene.input.mousePointer.primaryDown || this.shootKey.isDown || this.autofire) {
 					MessageBus.sendMessage(EventType.PLAYER_SHOOT, {
 						mousePos: this.scene.input.mousePointer.positionToCamera(this.scene.cameras.main)
 					});
