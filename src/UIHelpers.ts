@@ -15,14 +15,27 @@ export default class UIHelpers {
 		x: number,
 		y: number,
 		text: string,
-		onClick: () => void
+		onClick: () => void,
+		width: number = 82
 	): Phaser.GameObjects.NineSlice {
-		const button = scene.add.nineslice(0, 0, 'textures', 'menu-button2', 70, 32, 16, 16, 16, 16);
+		const button = scene.add.nineslice(0, 0, 'textures', 'menu-button2', width, 32, 16, 16, 16, 16);
 		button.setPosition(x, y);
 		button.setInteractive();
 		button.on('pointerdown', onClick);
 		scene.add.bitmapText(x, y, 'main-font', text, 10).setOrigin(0.5, 0.5);
 
 		return button;
+	}
+
+	static addCenteredText(
+		scene: Phaser.Scene,
+		y: number,
+		text: string
+	): Phaser.GameObjects.BitmapText {
+		const textObject = scene.add
+			.bitmapText(scene.renderer.width / 2, y, 'main-font', text, 10, 1)
+			.setOrigin(0.5, 0.5);
+
+		return textObject;
 	}
 }

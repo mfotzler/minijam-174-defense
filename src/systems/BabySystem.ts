@@ -35,6 +35,7 @@ export default class BabySystem implements System {
 
 	private spawnBabies() {
 		this.babiesLeft = this.babySpawnLocations.length;
+		MessageBus.sendMessage(EventType.BABIES_LEFT, this.babiesLeft);
 
 		for (let i = 0; i < this.babiesLeft; i++) {
 			const baby = cloneDeep(Baby);
@@ -72,6 +73,8 @@ export default class BabySystem implements System {
 
 		if (onlyOneThirdOfBabiesLeft && !isPlayingTheme1)
 			MessageBus.sendMessage(EventType.MUSIC_PLAY, 'theme_1');
+
+		MessageBus.sendMessage(EventType.BABIES_LEFT, this.babiesLeft);
 
 		if (this.babiesLeft <= 0) MessageBus.sendMessage(EventType.LAST_BABY_DEATH, {});
 	}

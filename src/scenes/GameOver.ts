@@ -7,6 +7,7 @@ import ScoreTrackingUseCase from '../useCases/ScoreTrackingUseCase';
 
 export default class GameOver extends BaseScene {
 	static readonly key = 'GameOver';
+	private dialogueBox: DialogueBox;
 	constructor() {
 		super({ key: GameOver.key });
 	}
@@ -21,8 +22,7 @@ export default class GameOver extends BaseScene {
 	}
 
 	update(time: number, delta: number): void {
-		if(this.input.gamepad.getPad(0)?.buttons[0].pressed)
-			this.startScene();
+		if (this.input.gamepad.getPad(0)?.buttons[0].pressed) this.dialogueBox.advanceMessage();
 	}
 
 	override preload() {
@@ -42,25 +42,24 @@ export default class GameOver extends BaseScene {
 	}
 
 	private addDialogueBox(score: number) {
-		const dialogueBox = new DialogueBox(
+		this.dialogueBox = new DialogueBox(
 			this,
 			0,
 			this.renderer.height / 2 - 100,
 			[
 				{
-					text: 'Too bad! You lost!',
-					name: 'Mr. Cupcake',
-					image: 'cupcake-face'
-				},
-				{
-					text: `${score} kills!`,
-					name: 'Mr. Cupcake',
+					text: `Too bad! Yo! 
+ ${score} kills!  And picked up...
+ ${ScoreTrackingUseCase.corpsesPickedUp} corpses!  Your largest 'meatball' was...
+ ${ScoreTrackingUseCase.largestMeatball}!`,
+					name: 'The Flesh Shield',
 					image: 'cupcake-face'
 				}
 			],
 			this.startScene.bind(this)
 		);
-		this.add.existing<Container>(dialogueBox);
+
+		this.add.existing<Container>(this.dialogueBox);
 	}
 
 	private addPlayButton() {

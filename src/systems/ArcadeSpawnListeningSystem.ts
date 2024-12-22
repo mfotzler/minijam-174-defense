@@ -9,11 +9,14 @@ export default class ArcadeSpawnListeningSystem implements System {
 	private static readonly TIME_BETWEEN_SPAWNS_IN_BATCH = 500;
 	private static readonly INITIAL_BATCH_TIME = 5000;
 
-	private elapsedTicks = ArcadeSpawnListeningSystem.INITIAL_BATCH_TIME;
+	private timeToNextWave = ArcadeSpawnListeningSystem.INITIAL_BATCH_TIME;
 	private currentBatchSize = ArcadeSpawnListeningSystem.INITIAL_SPAWN_BATCH_SIZE;
+	private waveNumber = 1;
 
 	async step(data: StepData) {
-		this.elapsedTicks -= data.delta;
+		this.timeToNextWave -= data.delta;
+
+		this.broadcastHowLongUntilNextWave();
 
 		if (this.isTimeToSpawn()) {
 			this.processPostBatch();
@@ -21,12 +24,18 @@ export default class ArcadeSpawnListeningSystem implements System {
 		}
 	}
 
+	private broadcastHowLongUntilNextWave() {
+		let timeInSeconds = Math.floor(this.timeToNextWave / 1000);
+		MessageBus.sendMessage(EventType.WAVE_COUNTDOWN, timeInSeconds);
+	}
+
 	private isTimeToSpawn() {
-		return this.elapsedTicks <= 0;
+		return this.timeToNextWave <= 0;
 	}
 
 	private async spawnBatch() {
 		let batch = this.getBatchToSpawn();
+		MessageBus.sendMessage(EventType.NEW_WAVE, this.waveNumber++);
 
 		for (let i = 0; i < batch.length; i++) {
 			await this.spawnBatchItem(batch[i]);
@@ -34,7 +43,7 @@ export default class ArcadeSpawnListeningSystem implements System {
 	}
 
 	private processPostBatch() {
-		this.elapsedTicks = ArcadeSpawnListeningSystem.TIME_BETWEEN_BATCHES;
+		this.timeToNextWave = ArcadeSpawnListeningSystem.TIME_BETWEEN_BATCHES;
 		this.currentBatchSize = Math.min(
 			this.currentBatchSize + ArcadeSpawnListeningSystem.SPAWN_BATCH_SIZE_GROWTH,
 			ArcadeSpawnListeningSystem.SPAWN_BATCH_SIZE_LIMIT

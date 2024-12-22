@@ -37,16 +37,17 @@ export default class MainMenu extends BaseScene {
 
 	update(time: number, delta: number): void {
 		if (this.input.gamepad.getPad(0)?.buttons[0].pressed) this.startArcadeMode();
+		if (this.input.gamepad.getPad(0)?.buttons[3].pressed) this.startTutorial();
 	}
 
 	private addTitle() {
 		this.add.image(this.renderWidth / 2, this.renderHeight / 2, 'title-screen');
 		this.add.sprite(82, 190, 'title-jaws').play('title-jaws');
-		this.add.image(this.renderWidth / 2 - 12, 76, 'textures', 'title');
+		this.add.image(this.renderWidth / 2 - 12, 68, 'textures', 'title');
 		this.add
 			.bitmapText(
 				this.renderWidth / 2 + 40,
-				138,
+				134,
 				'main-font',
 				'a game by tesserex, slowback1,\n bugvevo, and mafcho (v1)',
 				10,
@@ -60,19 +61,23 @@ export default class MainMenu extends BaseScene {
 		const yPosition = 230;
 
 		this.addIntroButton(yPosition);
-		this.addPlayButtons(yPosition);
+		this.addPlayButton(yPosition);
 	}
 
 	private addIntroButton(yPosition) {
-		UIHelpers.addButton(this, 45, yPosition, 'Tutorial', () => {
-			this.scene.start(TutorialScene.key);
+		UIHelpers.addButton(this, 65, yPosition, 'Tutorial (Y)', () => {
+			this.startTutorial();
 		});
 	}
 
-	private addPlayButtons(yPosition) {
-		UIHelpers.addButton(this, this.renderWidth - 45, yPosition, 'Arcade', () => {
+	private addPlayButton(yPosition) {
+		UIHelpers.addButton(this, this.renderWidth - 65, yPosition, 'Arcade (A)', () => {
 			this.startArcadeMode();
 		});
+	}
+
+	private startTutorial() {
+		this.scene.start(TutorialScene.key);
 	}
 
 	private startArcadeMode() {

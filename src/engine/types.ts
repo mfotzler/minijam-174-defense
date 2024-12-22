@@ -38,6 +38,8 @@ export enum EventType {
 	ENTITY_KNOCKBACK = 'entityKnockback',
 	ENTITY_MAKE_INVINCIBLE = 'entityMakeInvincible',
 
+	NEW_WAVE = 'newWave',
+	WAVE_COUNTDOWN = 'waveCountdown',
 	SPAWN_ENEMY = 'spawnEnemy',
 	KILL_ENEMY = 'killEnemy',
 	ALL_ENEMIES_SPAWNED = 'allEnemiesSpawned',
@@ -62,16 +64,20 @@ export enum EventType {
 	PLAYER_PART_DESTROY = 'playerPartDestroy',
 	PLAYER_MELEE = 'playerMelee',
 	PLAYER_ROTATE = 'playerRotate',
+	PICKUP_CORPSE = 'pickupCorpse',
+	MEATBALL_SIZE_CHANGED = 'meatballSizeChanged',
 
 	BABY_COLLISION = 'babyCollision',
 	BABY_DEATH = 'babyDeath',
 	LAST_BABY_DEATH = 'lastBabyDeath',
+	BABIES_LEFT = 'babiesLeft',
 
 	GAME_OVER = 'gameOver',
+	SCORE_UPDATED = 'scoreUpdated',
 
 	// Game State Events
 	SAVE_GRANDMA = 'saveGrandma',
-	ENABLE_INFINITE_MODE = 'enableInfiniteMode',
+	ENABLE_INFINITE_MODE = 'enableInfiniteMode'
 }
 
 export type SpawnType = 'ant' | 'beetle' | 'babyEaterAnt';

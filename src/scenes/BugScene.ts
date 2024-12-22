@@ -30,6 +30,7 @@ import PlayerHealthUseCase from '../useCases/PlayerHealthUseCase';
 import PlayerPartDamageUseCase from '../useCases/PlayerPartDamageUseCase';
 import ArcadeSpawnListeningSystem from '../systems/ArcadeSpawnListeningSystem';
 import ScoreTrackingUseCase from '../useCases/ScoreTrackingUseCase';
+import GameHUD from '../entities/GameHUD';
 
 export enum BugSceneMode {
 	// A mode with a finite number of enemies and a win condition
@@ -42,7 +43,8 @@ export default class BugScene extends BaseScene {
 	static readonly key = 'BugScene';
 	debugGraphics: Phaser.GameObjects.Graphics;
 	private world: World;
-	private mode: BugSceneMode;
+	private mode: BugSceneMode = BugSceneMode.ARCADE;
+	private hud: GameHUD;
 
 	constructor() {
 		super({ key: BugScene.key });
@@ -50,10 +52,6 @@ export default class BugScene extends BaseScene {
 
 	override start(_scene: Phaser.Scene, { fadeInDuration, mode }: any = {}) {
 		super.start(_scene, { fadeInDuration });
-
-		this.mode = mode ?? BugSceneMode.CLASSIC;
-
-		this.initializeSpawnListeningSystem();
 	}
 
 	init() {
@@ -79,6 +77,7 @@ export default class BugScene extends BaseScene {
 		this.initializeGameMechanics();
 
 		this.world.addPlayer();
+		this.hud = new GameHUD(this);
 
 		for (let i = 0; i < 10; i++) {
 			const x = Phaser.Math.Between(0, 256);
@@ -116,6 +115,7 @@ export default class BugScene extends BaseScene {
 		this.engine.addUseCase(new WinConditionUseCase(this));
 		this.engine.addUseCase(new GameOverUseCase(this));
 		// this.engine.addUseCase(new PlayerHealthUseCase(this.world));
+		this.initializeSpawnListeningSystem();
 		this.engine.addUseCase(new PlayerPartDamageUseCase(this.world));
 		this.engine.addUseCase(new ScoreTrackingUseCase());
 	}
