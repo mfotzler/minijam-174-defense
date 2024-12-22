@@ -12,7 +12,6 @@ interface StartCallbackConfig {
 export default class BaseScene extends Phaser.Scene {
 	private isFading = false;
 	protected engine: GameEngine;
-	protected gamepad: Gamepad;
 
 	preload(): void {
 		this.load.atlas('textures', 'assets/texture.png', 'assets/texture.json');
@@ -33,7 +32,6 @@ export default class BaseScene extends Phaser.Scene {
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	init(data?: unknown) {
-		this.gamepad = window['gamepad'];
 		MessageBus.clearAllSubscribers();
 
 		this.events.on('create', () => this.start(this, this.scene.settings.data), this);

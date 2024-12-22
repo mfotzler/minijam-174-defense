@@ -18,7 +18,8 @@ export default class InputSystem implements System {
 
 	constructor(
 		private scene: Phaser.Scene,
-		private entityProvider: EntityProvider<BugComponents>
+		private entityProvider: EntityProvider<BugComponents>,
+		private gamepad: Gamepad
 	) {
 		this.arrows = scene.input.keyboard.createCursorKeys();
 		this.clockwise = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
