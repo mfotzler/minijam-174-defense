@@ -30,6 +30,7 @@ export interface RenderComponent {
 	scale?: number;
 	spriteSheet?: string;
 	spriteKey?: string;
+	angledSpriteKey?: string;
 	sprite?: Renderable;
 	followWithCamera?: boolean;
 	currentAnimation?: string;
