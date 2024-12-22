@@ -22,6 +22,7 @@ export default class TutorialScene extends BaseScene {
 	}
 
 	override create(): void {
+		this.addGenericBackground();
 		this.addTutorialText();
 		this.addBackButton();
 
@@ -44,7 +45,7 @@ export default class TutorialScene extends BaseScene {
 			renderHeight / 2 + 6,
 			'textures',
 			'menu-button2',
-			renderWidth - 20,
+			renderWidth - 16,
 			renderHeight - 28,
 			16,
 			16,
@@ -56,24 +57,20 @@ export default class TutorialScene extends BaseScene {
 		UIHelpers.addCenteredText(this, 66, 'When the babies are dead...');
 		UIHelpers.addCenteredText(this, 78, 'YOU LOSE!').setDropShadow(1, 1, 0xff0000);
 
-		UIHelpers.addCenteredText(this, 100, 'CONTROLS').setDropShadow(1, 1, 0x4cb05e);
-		UIHelpers.addInfoSquare(this, 72, 132, 'KEYBOARD\nArrow keys move\nA/D keys rotate', 110, 54);
+		UIHelpers.addCenteredText(this, 98, '--- CONTROLS ---').setDropShadow(1, 1, 0x4cb05e);
+		UIHelpers.addInfoSquare(this, 70, 132, 'KEYBOARD\nArrow keys move\nA/D keys rotate', 112, 54);
 		UIHelpers.addInfoSquare(
 			this,
-			renderWidth - 72,
+			renderWidth - 70,
 			132,
 			'GAMEPAD\nLeft stick move\nRight stick rotate',
-			110,
+			112,
 			54
 		);
 	}
 
-	private;
-
-	private addGraphic() {
-		this.background = this.add
-			.image(this.renderer.width / 2, this.renderer.height / 2, 'tutorial-graphic')
-			.setScale(0.3, 0.3);
+	private addGenericBackground() {
+		this.add.image(this.renderer.width / 2, this.renderer.height / 2, 'generic-background');
 	}
 
 	override preload() {

@@ -16,6 +16,7 @@ export default class BaseScene extends Phaser.Scene {
 	preload(): void {
 		this.load.atlas('textures', 'assets/texture.png', 'assets/texture.json');
 		this.load.image('title-screen', 'assets/title-screen.png');
+		this.load.image('generic-background', 'assets/generic-background.png');
 		this.load.spritesheet('title-jaws', 'assets/title-jaws.png', {
 			frameWidth: 16,
 			frameHeight: 16
