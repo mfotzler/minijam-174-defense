@@ -1,29 +1,27 @@
 import UIHelpers from '../UIHelpers';
 import BaseScene from './BaseScene';
-import DialogueBox from '../entities/DialogueBox';
-import Container = Phaser.GameObjects.Container;
+
 import MainMenu from './MainMenu';
 import ScoreTrackingUseCase from '../useCases/ScoreTrackingUseCase';
 
 export default class GameOver extends BaseScene {
 	static readonly key = 'GameOver';
-	private dialogueBox: DialogueBox;
 	constructor() {
 		super({ key: GameOver.key });
 	}
 
 	create(): void {
 		this.add.image(this.renderer.width / 2, this.renderer.height / 2, 'generic-background');
-		this.addPlayButton();
 		this.playSound();
 
 		let score = this.getScore();
-
-		this.addDialogueBox(score);
+		this.addLoseScreenBackground();
+		this.addLoseScreenText(score);
+		this.addPlayButton();
 	}
 
 	update(time: number, delta: number): void {
-		if (this.input.gamepad.getPad(0)?.buttons[0].pressed) this.dialogueBox.advanceMessage();
+		if (this.input.gamepad.getPad(0)?.buttons[0].pressed) this.startScene();
 	}
 
 	override preload() {
@@ -42,29 +40,38 @@ export default class GameOver extends BaseScene {
 		music.play();
 	}
 
-	private addDialogueBox(score: number) {
-		this.dialogueBox = new DialogueBox(
-			this,
-			0,
-			this.renderer.height / 2 - 100,
-			[
-				{
-					text: `Too bad! Yo! 
- ${score} kills!
- And picked up... ${ScoreTrackingUseCase.corpsesPickedUp} corpses! 
- Your largest 'meatball' was... ${ScoreTrackingUseCase.largestMeatball}!`,
-					name: 'The Flesh Shield',
-					image: 'cupcake-face'
-				}
-			],
-			this.startScene.bind(this)
-		);
+	private addLoseScreenBackground() {
+		const renderWidth = this.game.renderer.width;
+		const renderHeight = this.game.renderer.height;
 
-		this.add.existing<Container>(this.dialogueBox);
+		this.add.nineslice(
+			renderWidth / 2,
+			renderHeight / 2,
+			'textures',
+			'menu-button2',
+			renderWidth - 16,
+			renderHeight - 16,
+			16,
+			16,
+			16,
+			16
+		);
+	}
+
+	private addLoseScreenText(score: number) {
+		UIHelpers.addCenteredText(this, 28, 'Thanks for playing...').setDropShadow(1, 1, 0xff0000);
+		this.add.image(this.renderer.width / 2, 86, 'textures', 'title');
+
+		UIHelpers.addCenteredText(this, 158, 'YOU LOSE!').setDropShadow(1, 1, 0xff0000);
+		UIHelpers.addCenteredText(
+			this,
+			196,
+			`Too bad! Yo!\n ${score} kills!\nAnd picked up... ${ScoreTrackingUseCase.corpsesPickedUp} corpses!\nYour largest 'meatball' was... ${ScoreTrackingUseCase.largestMeatball}!`
+		);
 	}
 
 	private addPlayButton() {
-		UIHelpers.addButton(this, this.renderer.width / 2, 50, 'Play Again', () => {
+		UIHelpers.addButton(this, this.renderer.width / 2, 238, 'Play Again', () => {
 			this.startScene();
 		});
 	}
