@@ -72,6 +72,7 @@ export enum EventType {
 	LAST_BABY_DEATH = 'lastBabyDeath',
 	BABIES_LEFT = 'babiesLeft',
 
+	GAME_START = 'gameStart',
 	GAME_OVER = 'gameOver',
 	SCORE_UPDATED = 'scoreUpdated',
 

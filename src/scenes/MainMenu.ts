@@ -4,6 +4,8 @@ import BaseScene from './BaseScene';
 import TutorialScene from './TutorialScene';
 import { GameStateSystem } from '../systems/GameStateSystem';
 import BugScene, { BugSceneMode } from './BugScene';
+import MessageBus from '../messageBus/MessageBus';
+import { EventType } from '../engine/types';
 
 export default class MainMenu extends BaseScene {
 	static readonly key = 'MainMenu';
@@ -82,6 +84,7 @@ export default class MainMenu extends BaseScene {
 
 	private startArcadeMode() {
 		GameStateSystem.clearState();
+		MessageBus.sendMessage(EventType.GAME_START, null);
 		this.fadeToScene(BugScene.key, { fadeInDuration: 300, mode: BugSceneMode.ARCADE });
 	}
 }
