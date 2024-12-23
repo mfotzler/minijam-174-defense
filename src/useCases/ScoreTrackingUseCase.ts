@@ -12,10 +12,9 @@ export default class ScoreTrackingUseCase {
 		MessageBus.subscribe(EventType.KILL_ENEMY, this.onEnemyKilled.bind(this));
 		MessageBus.subscribe(EventType.PICKUP_CORPSE, this.onCorpsePickedUp.bind(this));
 		MessageBus.subscribe(EventType.MEATBALL_SIZE_CHANGED, this.onCurrentMeatballSize.bind(this));
-		MessageBus.subscribe(EventType.GAME_START, this.onGameStart.bind(this));
 	}
 
-	private onGameStart() {
+	static reset() {
 		ScoreTrackingUseCase.currentScore = 0;
 		ScoreTrackingUseCase.corpsesPickedUp = 0;
 		ScoreTrackingUseCase.largestMeatball = 0;
