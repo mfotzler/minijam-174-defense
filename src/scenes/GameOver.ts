@@ -21,7 +21,12 @@ export default class GameOver extends BaseScene {
 	}
 
 	update(time: number, delta: number): void {
-		if (this.input.gamepad.getPad(0)?.buttons[0].pressed) this.startScene();
+		// this is a hack to stop it from going immediately into a new game as soon as the menu loads because there isn't a justDown equivalent for gamePad
+		if (this.input.gamepad.getPad(0)?.buttons[0].pressed) {
+			this.time.delayedCall(300, () => {
+				this.startScene();
+			});
+		}
 	}
 
 	override preload() {
