@@ -240,7 +240,7 @@
         "y": 0.5
       }
     },
-    "mainCharacterAngle0": {
+    "centipedeBodySquare1": {
       "frame": {
         "x": 241,
         "y": 32,
@@ -264,7 +264,7 @@
         "y": 0.5
       }
     },
-    "mainCharacterAngle1": {
+    "centipedeBodySquare2": {
       "frame": {
         "x": 257,
         "y": 46,
@@ -288,7 +288,7 @@
         "y": 0.5
       }
     },
-    "mainCharacterAngle2": {
+    "mainCharacterAngle0": {
       "frame": {
         "x": 273,
         "y": 48,
@@ -312,7 +312,7 @@
         "y": 0.5
       }
     },
-    "shieldBugAngle0": {
+    "mainCharacterAngle1": {
       "frame": {
         "x": 209,
         "y": 48,
@@ -336,7 +336,7 @@
         "y": 0.5
       }
     },
-    "shieldBugAngle1": {
+    "mainCharacterAngle2": {
       "frame": {
         "x": 225,
         "y": 48,
@@ -360,7 +360,7 @@
         "y": 0.5
       }
     },
-    "shieldBugAngle2": {
+    "shieldBugAngle0": {
       "frame": {
         "x": 241,
         "y": 48,
@@ -384,10 +384,58 @@
         "y": 0.5
       }
     },
-    "centipedeHeadSquare0": {
+    "shieldBugAngle1": {
       "frame": {
         "x": 257,
         "y": 62,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "shieldBugAngle2": {
+      "frame": {
+        "x": 209,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "centipedeHeadSquare0": {
+      "frame": {
+        "x": 225,
+        "y": 64,
         "w": 16,
         "h": 13
       },
@@ -410,7 +458,7 @@
     },
     "babyEaterAngle0": {
       "frame": {
-        "x": 209,
+        "x": 241,
         "y": 64,
         "w": 15,
         "h": 15
@@ -434,8 +482,8 @@
     },
     "babyEaterAngle1": {
       "frame": {
-        "x": 224,
-        "y": 64,
+        "x": 225,
+        "y": 77,
         "w": 15,
         "h": 15
       },
@@ -458,8 +506,8 @@
     },
     "babyEaterAngle2": {
       "frame": {
-        "x": 239,
-        "y": 64,
+        "x": 209,
+        "y": 80,
         "w": 15,
         "h": 15
       },
