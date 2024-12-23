@@ -63,7 +63,7 @@ export default class MainMenu extends BaseScene {
 				this.renderWidth / 2 + 40,
 				134,
 				'main-font',
-				'a game by tesserex, slowback1,\n bugvevo, and mafcho',
+				'a game by tesserex, slowback1,\n bugvevo, and mafcho\n (v1.1)',
 				10,
 				2
 			)
