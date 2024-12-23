@@ -27,6 +27,20 @@ export default class MainMenu extends BaseScene {
 			repeat: -1
 		});
 
+		this.anims.create({
+			key: 'title-flash',
+			frames: this.anims.generateFrameNumbers('title-flash', {
+				frames: [
+					13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+					13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+					13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0,
+					1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
+				]
+			}),
+			frameRate: 32,
+			repeat: -1
+		});
+
 		this.addTitle();
 		this.addMenuButtons();
 	}
@@ -43,7 +57,7 @@ export default class MainMenu extends BaseScene {
 	private addTitle() {
 		this.add.image(this.renderWidth / 2, this.renderHeight / 2, 'title-screen');
 		this.add.sprite(82, 190, 'title-jaws').play('title-jaws');
-		this.add.image(this.renderWidth / 2 - 12, 68, 'textures', 'title');
+		this.add.sprite(this.renderWidth / 2 - 12, 68, 'title-flash').play('title-flash');
 		this.add
 			.bitmapText(
 				this.renderWidth / 2 + 40,
