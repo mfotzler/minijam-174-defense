@@ -50,9 +50,9 @@ export default class GameOver extends BaseScene {
 			[
 				{
 					text: `Too bad! Yo! 
- ${score} kills!  And picked up...
- ${ScoreTrackingUseCase.corpsesPickedUp} corpses!  Your largest 'meatball' was...
- ${ScoreTrackingUseCase.largestMeatball}!`,
+ ${score} kills!
+ And picked up... ${ScoreTrackingUseCase.corpsesPickedUp} corpses! 
+ Your largest 'meatball' was... ${ScoreTrackingUseCase.largestMeatball}!`,
 					name: 'The Flesh Shield',
 					image: 'cupcake-face'
 				}
