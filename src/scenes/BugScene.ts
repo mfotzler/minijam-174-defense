@@ -222,5 +222,24 @@ export default class BugScene extends BaseScene {
 			frameRate: 8,
 			repeat: -1
 		});
+
+		this.anims.create({
+			key: 'centipede-head-square',
+			frames: this.anims.generateFrameNames('textures', {
+				prefix: 'centipedeHeadSquare',
+				frames: [0, 1, 2, 1]
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
+		this.anims.create({
+			key: 'centipede-body-square',
+			frames: this.anims.generateFrameNames('textures', {
+				prefix: 'centipedeBodySquare',
+				frames: [0, 1, 2, 1]
+			}),
+			frameRate: 8,
+			repeat: -1
+		});
 	}
 }

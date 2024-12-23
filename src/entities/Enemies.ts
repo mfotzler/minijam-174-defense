@@ -2,7 +2,6 @@ import { BugComponents, Direction } from './types';
 import AntEnemyBehavior from '../systems/EnemyBehaviors/AntEnemyBehavior';
 import BabyEaterAntBehavior from '../systems/EnemyBehaviors/BabyEaterAntBehavior';
 import BeetleEnemyBehavior from '../systems/EnemyBehaviors/BeetleEnemyBehavior';
-import CentipedeEnemyBehavior from '../systems/EnemyBehaviors/CentipedeEnemyBehavior';
 
 const AntBase: BugComponents = {
 	position: { x: 0, y: 0 },
@@ -78,27 +77,47 @@ export const Beetle: BugComponents = {
 export const CentipedeHead: BugComponents = {
 	position: { x: 0, y: 0 },
 	movement: {},
-	collision: { player: true },
-	render: { width: 8, height: 8, fillColor: 0x40ff00 },
+	collision: { player: true, tags: ['projectile', 'baby'] },
+	render: {
+		width: 8,
+		height: 8,
+		fillColor: 0x40ff00,
+		spriteKey: 'centipedeHeadSquare0',
+		currentAnimation: 'centipede-head-square'
+	},
 	enemy: {
-		type: CentipedeEnemyBehavior.key,
-		health: 5,
-		speed: 96
+		type: 'centipede',
+		health: 50,
+		speed: 160,
+		corpseType: ''
 	},
 	centipede: {
 		segments: [],
 		positions: [],
 		direction: Direction.RIGHT,
 		nextTurn: Direction.LEFT
+	},
+	invincibility: {
+		maxDuration: 200
 	}
 };
 
 export const CentipedeSegment: BugComponents = {
 	position: { x: 0, y: 0 },
 	movement: {},
-	collision: { player: true },
-	render: { width: 8, height: 8, fillColor: 0x40ff00 },
+	collision: { player: true, tags: ['projectile'] },
+	render: {
+		width: 8,
+		height: 8,
+		fillColor: 0x40ff00,
+		spriteKey: 'centipedeBodySquare0',
+		currentAnimation: 'centipede-body-square'
+	},
 	enemy: {
-		health: 2
+		health: 20,
+		corpseType: ''
+	},
+	invincibility: {
+		maxDuration: 200
 	}
 };

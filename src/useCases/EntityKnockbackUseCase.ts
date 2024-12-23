@@ -16,7 +16,14 @@ export default class EntityKnockbackUseCase {
 		let knockbacker = this.world.entityProvider.getEntity(data.knockbackerId);
 		let knockbackee = this.world.entityProvider.getEntity(data.knockbackeeId);
 
-		if (!knockbacker || !knockbackee || !knockbackee.render || !knockbacker.render) return;
+		if (
+			!knockbacker ||
+			!knockbackee ||
+			!knockbackee.render ||
+			!knockbacker.render ||
+			knockbackee.centipede
+		)
+			return;
 
 		let dx = knockbackee.render.sprite.transform.x - knockbacker.render.sprite.transform.x;
 		let dy = knockbackee.render.sprite.transform.y - knockbacker.render.sprite.transform.y;

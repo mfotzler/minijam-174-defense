@@ -5,6 +5,7 @@ import AntEnemyBehavior from './AntEnemyBehavior';
 import BeetleEnemyBehavior from './BeetleEnemyBehavior';
 import NoOpEnemyBehavior from './NoOpEnemyBehavior';
 import BabyEaterAntBehavior from './BabyEaterAntBehavior';
+import CentipedeEnemyBehavior from './CentipedeEnemyBehavior';
 
 export interface IEnemyBehavior {
 	process(world: World, entity: EntityDefinition<BugComponents>): void;
@@ -19,6 +20,8 @@ export default class EnemyBehaviorFactory {
 				return new BeetleEnemyBehavior();
 			case BabyEaterAntBehavior.key:
 				return new BabyEaterAntBehavior();
+			case CentipedeEnemyBehavior.key:
+				return new CentipedeEnemyBehavior();
 			default:
 				return new NoOpEnemyBehavior();
 		}

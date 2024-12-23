@@ -37,13 +37,17 @@ export default class CentipedeEnemyBehavior implements IEnemyBehavior {
 			render.sprite.body.setVelocityX(0);
 			render.sprite.body.setVelocityY(speed);
 			centipede.turnDelay = (centipede.turnDelay ?? 0) + 1;
-			if (centipede.turnDelay > 8) {
+			if (centipede.turnDelay > 12) {
 				centipede.direction = centipede.nextTurn;
 				enemy.stateTime = 0;
 			}
 		} // no up case
 
-		const segmentSpacing = 6;
+		render.sprite.transform.setRotation(
+			Math.atan2(render.sprite.body.velocity.y, render.sprite.body.velocity.x) - Math.PI / 2
+		);
+
+		const segmentSpacing = 12;
 		centipede.positions.push({ x: render.sprite.transform.x, y: render.sprite.transform.y });
 		if (centipede.segments.length < 12 && enemy.stateTime % segmentSpacing === 0) {
 			const segment = cloneDeep(CentipedeSegment);
@@ -54,9 +58,12 @@ export default class CentipedeEnemyBehavior implements IEnemyBehavior {
 			const segment = world.entityProvider.getEntity(id);
 			if (!segment.render?.sprite) return;
 
-			const positionIndex = centipede.positions.length - 1 - i * segmentSpacing;
+			const positionIndex = centipede.positions.length - (i + 1) * segmentSpacing;
 			const { x, y } = centipede.positions[positionIndex] ?? { x: 0, y: 0 };
+			const dx = x - segment.render.sprite.transform.x;
+			const dy = y - segment.render.sprite.transform.y;
 			segment.render.sprite.transform.setPosition(x, y);
+			segment.render.sprite.transform.setRotation(Math.atan2(dy, dx) - Math.PI / 2);
 		});
 	}
 }

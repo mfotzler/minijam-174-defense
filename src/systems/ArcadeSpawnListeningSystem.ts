@@ -62,9 +62,24 @@ export default class ArcadeSpawnListeningSystem implements System {
 	private getBatchToSpawn(): SpawnData[] {
 		const batch: SpawnData[] = [];
 		const batchSize = this.currentBatchSize;
+		let hasCentipede = false;
 
 		for (let i = 0; i < batchSize; i++) {
-			batch.push(this.makeRandomSpawn());
+			if (
+				!hasCentipede &&
+				batchSize > 3 &&
+				i > batchSize - 3 &&
+				Math.random() < this.currentBatchSize / 50
+			) {
+				batch.push({
+					ticks: 0,
+					type: 'centipede',
+					location: 'north'
+				});
+				hasCentipede = true;
+			} else {
+				batch.push(this.makeRandomSpawn());
+			}
 		}
 
 		return batch;
